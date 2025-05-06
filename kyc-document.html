@@ -114,8 +114,7 @@
       <div class="admin-dropdown" id="admin-dropdown">
         <a href="profile-details.html" class="dropdown-item">My Profile</a>
         <a href="change-password.html" class="dropdown-item">Change Password</a>
-      
-        
+       
       </div>
     </div>
   </nav>
@@ -126,9 +125,9 @@
     <div class="sidebar">
       <i class="fas fa-times sidebar-expand" id="sidebar-expand"></i>
       <h3></h3>
-      <a href="index.html"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
+      <a href="index.html" ><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
       <div class="sidebar-item">
-        <a href="my-account.html" id="my-account-toggle" class="active">
+        <a href="my-account.html" id="my-account-toggle">
           <i class="fas fa-user"></i>
           <span>My Account</span>
           <i class="fas fa-chevron-down dropdown-icon"></i>
@@ -137,6 +136,8 @@
           <a href="profile-details.html"><i class="fas fa-user-edit"></i> <span>Profile Details</span></a>
           <a href="kyc-document.html" class="active"><i class="fas fa-file-upload"></i> <span>Upload KYC Document</span></a>
           <a href="change-password.html"><i class="fas fa-lock"></i> <span>Change Password</span></a>
+          <a href="id-card.html"><i class="fas fa-lock"></i> <span>ID Card</span></a>
+      
         </div>
       </div>
       <div class="sidebar-item">
@@ -168,16 +169,19 @@
       <div class="sidebar-item">
         <a href="topup-fund.html" id="topup-fund-toggle">
           <i class="fas fa-wallet"></i>
-          <span>Topup & Fund</span>
+          <span>Product & Payment</span>
           <i class="fas fa-chevron-down dropdown-icon"></i>
         </a>
         <div class="submenu" id="topup-fund-submenu">
-          <a href="fund.html"><i class="fas fa-money-bill"></i> <span>Fund</span></a>
+          
           <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
+          <a href="product-details.html"><i class="fas fa-credit-card" class="active"></i> <span>product-details</span></a>
+          
           <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
         </div>
       </div>
-      <a href="id-card.html"><i class="fas fa-id-card"></i> <span>ID Card</span></a>
+    
+     
       <a href="#" id="sidebar-sign-out"><i class="fas fa-sign-out-alt"></i> <span>Sign Out</span></a>
     </div>
 
@@ -189,8 +193,39 @@
         <!-- KYC Document Upload -->
         <div class="form-section">
           <h4>Upload KYC Document</h4>
-          <label for="kyc-document">Upload Document (with Photo)</label>
-          <input type="file" id="kyc-document" accept="image/*,application/pdf">
+          <label for="aadhar-number">Aadhar Number</label>
+          <input type="text" id="aadhar-number" placeholder="Aadhar Number">
+          
+          <label for="aadhar-front">Aadhar Front Image</label>
+          <input type="file" id="aadhar-front" accept="image/*,application/pdf">
+          
+          <label for="aadhar-back">Aadhar Back Image</label>
+          <input type="file" id="aadhar-back" accept="image/*,application/pdf">
+          
+          <label for="pan-number">PAN Number</label>
+          <input type="text" id="pan-number" placeholder="PAN Number">
+          
+          <label for="pan-card">PAN Card Image</label>
+          <input type="file" id="pan-card" accept="image/*,application/pdf">
+          
+          <label for="bank-name">Bank Name</label>
+          <input type="text" id="bank-name" placeholder="Bank Name">
+          
+          <label for="account-number">Account Number</label>
+          <input type="text" id="account-number" placeholder="Account Number">
+          
+          <label for="ifsc-code">IFSC Code</label>
+          <input type="text" id="ifsc-code" placeholder="IFSC Code">
+          
+          <label for="bank-branch">Bank Branch</label>
+          <input type="text" id="bank-branch" placeholder="Bank Branch">
+          
+          <label for="account-holder">Account Holder Name</label>
+          <input type="text" id="account-holder" placeholder="Account Holder Name">
+          
+          <label for="passbook">Passbook Image</label>
+          <input type="file" id="passbook" accept="image/*,application/pdf">
+          
           <button>Upload KYC</button>
         </div>
       </div>
@@ -201,83 +236,104 @@
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const sidebarToggle = document.getElementById('sidebar-toggle');
-      const sidebarExpand = document.getElementById('sidebar-expand');
-      const sidebar = document.querySelector('.sidebar');
-      const mainContent = document.querySelector('.main-content');
-      const menuToggle = document.getElementById('menu-toggle');
-      const adminIcon = document.getElementById('admin-icon');
-      const adminDropdown = document.getElementById('admin-dropdown');
-      const myAccountToggle = document.getElementById('my-account-toggle');
-      const myAccountSubmenu = document.getElementById('my-account-submenu');
-      const dropdownIcon = myAccountToggle.querySelector('.dropdown-icon');
-
-      // Sidebar collapse/expand for desktop
-      if (sidebarToggle && sidebarExpand && sidebar && mainContent) {
-        sidebarToggle.addEventListener('click', () => {
-          const isCollapsed = sidebar.classList.toggle('collapsed');
-          mainContent.classList.toggle('collapsed');
-          sidebarExpand.style.display = isCollapsed && window.innerWidth >= 769 ? 'block' : 'none';
-          if (isCollapsed) {
-            myAccountSubmenu.classList.remove('active');
-            dropdownIcon.classList.remove('active');
-          }
-        });
-        sidebarExpand.addEventListener('click', () => {
-          sidebar.classList.remove('collapsed');
-          mainContent.classList.remove('collapsed');
-          sidebarExpand.style.display = 'none';
-        });
+    // Sidebar toggle elements
+    const sidebar = document.querySelector('.sidebar');
+    const mainContent = document.querySelector('.main-content');
+    const sidebarToggle = document.getElementById('sidebar-toggle');
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebarExpand = document.getElementById('sidebar-expand');
+    
+    // Desktop sidebar toggle (collapse/expand)
+    if (sidebarToggle) {
+      sidebarToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('collapsed');
+        mainContent.classList.toggle('collapsed');
+      });
+    }
+    
+    // Mobile sidebar toggle (show/hide)
+    if (menuToggle) {
+      menuToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+      });
+    }
+    
+    // Mobile sidebar close button
+    if (sidebarExpand) {
+      sidebarExpand.addEventListener('click', () => {
+        sidebar.classList.remove('active');
+      });
+    }
+    
+    // Close sidebar on mobile when clicking outside
+    document.addEventListener('click', (e) => {
+      if (window.innerWidth <= 768 && sidebar.classList.contains('active')) {
+        if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+          sidebar.classList.remove('active');
+        }
       }
-
-      // Sidebar toggle for mobile
-      if (menuToggle && sidebar) {
-        menuToggle.addEventListener('click', () => {
-          sidebar.classList.toggle('active');
-        });
+    });
+    
+    // Submenu toggle for multiple items
+    const submenuToggles = [
+      {
+        toggle: document.getElementById('my-account-toggle'),
+        submenu: document.getElementById('my-account-submenu'),
+        icon: document.querySelector('#my-account-toggle .dropdown-icon')
+      },
+      {
+        toggle: document.getElementById('my-team-toggle'),
+        submenu: document.getElementById('my-team-submenu'),
+        icon: document.querySelector('#my-team-toggle .dropdown-icon')
+      },
+      {
+        toggle: document.getElementById('earning-history-toggle'),
+        submenu: document.getElementById('earning-history-submenu'),
+        icon: document.querySelector('#earning-history-toggle .dropdown-icon')
+      },
+      {
+        toggle: document.getElementById('topup-fund-toggle'),
+        submenu: document.getElementById('topup-fund-submenu'),
+        icon: document.querySelector('#topup-fund-toggle .dropdown-icon')
+      },
+      {
+        toggle: document.getElementById('payment-toggle'),
+        submenu: document.getElementById('payment-submenu'),
+        icon: document.querySelector('#payment-toggle .dropdown-icon')
       }
-
-      // Admin dropdown toggle
-      if (adminIcon && adminDropdown) {
-        adminIcon.addEventListener('click', (e) => {
-          e.stopPropagation();
-          adminDropdown.classList.toggle('active');
-        });
-        document.addEventListener('click', (e) => {
-          if (!adminIcon.contains(e.target) && !adminDropdown.contains(e.target)) {
-            adminDropdown.classList.remove('active');
-          }
-        });
-      }
-
-      // My Account submenu toggle
-      if (myAccountToggle && myAccountSubmenu && dropdownIcon) {
-        myAccountToggle.addEventListener('click', (e) => {
+    ];
+    
+    submenuToggles.forEach(({ toggle, submenu, icon }) => {
+      if (toggle && submenu && icon) {
+        toggle.addEventListener('click', (e) => {
           e.preventDefault();
-          myAccountSubmenu.classList.toggle('active');
-          dropdownIcon.classList.toggle('active');
+          submenu.classList.toggle('active');
+          icon.classList.toggle('active');
+          // Close other submenus
+          submenuToggles.forEach(other => {
+            if (other.submenu !== submenu) {
+              other.submenu.classList.remove('active');
+              other.icon.classList.remove('active');
+            }
+          });
         });
-
-        // Close submenu when clicking submenu items (for mobile)
-        const submenuLinks = myAccountSubmenu.querySelectorAll('a');
-        submenuLinks.forEach(link => {
+        // Close submenu when clicking outside
+        document.addEventListener('click', (e) => {
+          if (!toggle.contains(e.target) && !submenu.contains(e.target)) {
+            submenu.classList.remove('active');
+            icon.classList.remove('active');
+          }
+        });
+        // Close sidebar on mobile after submenu item click
+        submenu.querySelectorAll('a').forEach(link => {
           link.addEventListener('click', () => {
             if (window.innerWidth <= 768) {
               sidebar.classList.remove('active');
             }
           });
         });
-
-        // Close submenu when clicking outside
-        document.addEventListener('click', (e) => {
-          if (!myAccountToggle.contains(e.target) && !myAccountSubmenu.contains(e.target)) {
-            myAccountSubmenu.classList.remove('active');
-            dropdownIcon.classList.remove('active');
-          }
-        });
       }
     });
-  </script>
+    </script>
 </body>
 </html>

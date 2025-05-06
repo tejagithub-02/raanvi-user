@@ -3,17 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Raanvi Client Dashboard - Tour</title>
+  <title>Raanvi Client Dashboard - QR Code</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="assets/style.css" rel="stylesheet">
   <style>
-   
     .main-content {
       flex: 1;
       padding: 20px;
-      background: #0f172a;
+      background: #1a1a2e;
       margin-left: 250px;
       overflow-y: auto;
       min-height: calc(100vh - 48px);
@@ -27,7 +26,28 @@
     .section {
       flex: 1 0 auto;
     }
-
+    .form-section {
+      background: #0f3460;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00d4ff;
+      border: 2px solid #00d4ff;
+      margin-bottom: 20px;
+    }
+    .form-section h4 {
+      color: #00ffcc;
+      margin-bottom: 15px;
+      text-shadow: 0 0 5px #00ffcc;
+    }
+    .qr-code-container {
+      text-align: center;
+    }
+    .qr-code-container img {
+      max-width: 200px;
+      border: 2px solid #00d4ff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00d4ff;
+    }
     @media (min-width: 769px) {
       .sidebar-toggle {
         display: block;
@@ -37,9 +57,6 @@
       }
     }
     @media (max-width: 768px) {
-     
-      
-      
       .main-content {
         margin-left: 0;
         padding: 15px;
@@ -47,33 +64,11 @@
       .main-content.collapsed {
         margin-left: 0;
       }
-   
     }
     @media (max-width: 480px) {
       .topbar { padding: 6px; }
       .topbar .admin-icon { font-size: 1.5rem; }
     }
-    .table-responsive {
-      overflow-x: auto;
-    }
-    .table {
-  background: #0f3460; /* Matches sidebar card background */
-  color: #b3e0ff; /* Matches sidebar text color */
-  box-shadow: 0 0 10px #00d4ff; /* Blue glow effect */
-  border: 2px solid #00d4ff; /* Matches sidebar border */
-  border-collapse: collapse;
-}
-.table th, .table td {
-  border: 2px solid #00d4ff; /* Matches sidebar border */
-  padding: 10px;
-  text-align: left;
-}
-.table thead th {
-  background: #0f3460; /* Matches sidebar card background */
-  color: #00ffcc; /* Matches sidebar h3 color */
-  box-shadow: 0 0 5px #00d4ff; /* Subtle glow */
-  text-shadow: 0 0 5px #00ffcc; /* Added glow */
-}
   </style>
 </head>
 <body>
@@ -89,106 +84,96 @@
       <div class="admin-dropdown" id="admin-dropdown">
         <a href="profile-details.html" class="dropdown-item">My Profile</a>
         <a href="change-password.html" class="dropdown-item">Change Password</a>
-      
-    </div>
+      </div>
     </div>
   </nav>
 
   <!-- Main Content -->
   <div class="dashboard-container">
     <!-- Sidebar -->
-    <div class="sidebar">
-      <i class="fas fa-times sidebar-expand" id="sidebar-expand"></i>
-      <h3></h3>
-      <a href="index.html" ><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
-      <div class="sidebar-item">
-        <a href="my-account.html" id="my-account-toggle">
-          <i class="fas fa-user"></i>
-          <span>My Account</span>
-          <i class="fas fa-chevron-down dropdown-icon"></i>
-        </a>
-        <div class="submenu" id="my-account-submenu">
-          <a href="profile-details.html"><i class="fas fa-user-edit"></i> <span>Profile Details</span></a>
-          <a href="kyc-document.html"><i class="fas fa-file-upload"></i> <span>Upload KYC Document</span></a>
-          <a href="change-password.html"><i class="fas fa-lock"></i> <span>Change Password</span></a>
-          <a href="id-card.html"><i class="fas fa-lock"></i> <span>ID Card</span></a>
+  <!-- Sidebar -->
+<div class="sidebar">
+    <i class="fas fa-times sidebar-expand" id="sidebar-expand"></i>
+    <h3></h3>
+    <a href="index.html"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
+    <div class="sidebar-item">
+      <a href="my-account.html" id="my-account-toggle">
+        <i class="fas fa-user"></i>
+        <span>My Account</span>
+        <i class="fas fa-chevron-down dropdown-icon"></i>
+      </a>
+      <div class="submenu" id="my-account-submenu">
+        <a href="profile-details.html"><i class="fas fa-user-edit"></i> <span>Profile Details</span></a>
+        <a href="kyc-document.html"><i class="fas fa-file-upload"></i> <span>Upload KYC Document</span></a>
+        <a href="change-password.html"><i class="fas fa-lock"></i> <span>Change Password</span></a>
+        <a href="id-card.html"><i class="fas fa-lock"></i> <span>ID Card</span></a>
       
-        </div>
       </div>
-      <div class="sidebar-item">
-        <a href="my-team.html" id="my-team-toggle">
-          <i class="fas fa-users"></i>
-          <span>My Team</span>
-          <i class="fas fa-chevron-down dropdown-icon"></i>
-        </a>
-        <div class="submenu" id="my-team-submenu">
-          <a href="binary-tree.html"><i class="fas fa-sitemap"></i> <span>Binary Tree</span></a>
-          <a href="my-downline.html"><i class="fas fa-user-friends"></i> <span>My Downline</span></a>
-          <a href="my-referral.html"><i class="fas fa-user-plus"></i> <span>My Referral</span></a>
-          <a href="binary-carry-forward.html"><i class="fas fa-exchange-alt"></i> <span>Binary Carry Forward</span></a>
-        </div>
+    </div>
+    <div class="sidebar-item">
+      <a href="my-team.html" id="my-team-toggle">
+        <i class="fas fa-users"></i>
+        <span>My Team</span>
+        <i class="fas fa-chevron-down dropdown-icon"></i>
+      </a>
+      <div class="submenu" id="my-team-submenu">
+        <a href="binary-tree.html"><i class="fas fa-sitemap"></i> <span>Binary Tree</span></a>
+        <a href="my-downline.html"><i class="fas fa-user-friends"></i> <span>My Downline</span></a>
+        <a href="my-referral.html"><i class="fas fa-user-plus"></i> <span>My Referral</span></a>
+        <a href="binary-carry-forward.html"><i class="fas fa-exchange-alt"></i> <span>Binary Carry Forward</span></a>
       </div>
-      <div class="sidebar-item">
-        <a href="earning-history.html" id="earning-history-toggle">
-          <i class="fas fa-money-check-alt"></i>
-          <span>Earning History</span>
-          <i class="fas fa-chevron-down dropdown-icon"></i>
-        </a>
-        <div class="submenu" id="earning-history-submenu">
-          <a href="referral-bonus.html"><i class="fas fa-gift"></i> <span>Referral Bonus</span></a>
-          <a href="leadership-bonus.html"><i class="fas fa-trophy"></i> <span>Leadership Bonus</span></a>
-          <a href="rank-reward.html"><i class="fas fa-medal"></i> <span>Rank and Reward</span></a>
-          <a href="tour.html" class="active"><i class="fas fa-plane"></i> <span>Tour</span></a>
-        </div>
+    </div>
+    <div class="sidebar-item">
+      <a href="earning-history.html" id="earning-history-toggle">
+        <i class="fas fa-money-check-alt"></i>
+        <span>Earning History</span>
+        <i class="fas fa-chevron-down dropdown-icon"></i>
+      </a>
+      <div class="submenu" id="earning-history-submenu">
+        <a href="referral-bonus.html"><i class="fas fa-gift"></i> <span>Referral Bonus</span></a>
+        <a href="leadership-bonus.html"><i class="fas fa-trophy"></i> <span>Leadership Bonus</span></a>
+        <a href="rank-reward.html"><i class="fas fa-medal"></i> <span>Rank and Reward</span></a>
+        <a href="tour.html"><i class="fas fa-plane"></i> <span>Tour</span></a>
       </div>
-      <div class="sidebar-item">
-        <a href="topup-fund.html" id="topup-fund-toggle">
-          <i class="fas fa-wallet"></i>
-          <span>Product & Payment</span>
-          <i class="fas fa-chevron-down dropdown-icon"></i>
-        </a>
-        <div class="submenu" id="topup-fund-submenu">
-          
-          <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
-          <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
-        </div>
+    </div>
+    <div class="sidebar-item">
+      <a href="topup-fund.html" id="topup-fund-toggle">
+        <i class="fas fa-wallet"></i>
+        <span>Topup & Fund</span>
+        <i class="fas fa-chevron-down dropdown-icon"></i>
+      </a>
+      <div class="submenu" id="topup-fund-submenu">
+        <a href="fund.html"><i class="fas fa-money-bill"></i> <span>Fund</span></a>
+        <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
+        <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
       </div>
-    
-    
-      <a href="#" id="sidebar-sign-out"><i class="fas fa-sign-out-alt"></i> <span>Sign Out</span></a>
     </div>
 
-    <!-- Tour Section -->
+    <div class="sidebar-item">
+      <a href="payment.html" id="payment-toggle" class="active">
+        <i class="fas fa-money-check"></i>
+        <span>Payment</span>
+        <i class="fas fa-chevron-down dropdown-icon active"></i>
+      </a>
+      <div class="submenu active" id="payment-submenu">
+        <a href="transaction-details.html"><i class="fas fa-receipt"></i> <span>Transaction Details</span></a>
+        <a href="product-details.html"><i class="fas fa-box"></i> <span>Product Details</span></a>
+        <a href="qr-code.html" class="active"><i class="fas fa-qrcode"></i> <span>QR Code</span></a>
+      </div>
+    </div>
+   
+    <a href="#" id="sidebar-sign-out"><i class="fas fa-sign-out-alt"></i> <span>Sign Out</span></a>
+  </div>
+
+    <!-- QR Code Section -->
     <div class="main-content">
       <div class="section">
-        <h2 class="text-2xl font-bold text-[#f4c430] mb-4">Tour</h2>
-        <p class="text-[#e0e0e0] mb-4">View your earned tour incentives and rewards from Raanvi.</p>
-        <div class="table-responsive">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th>SI.NO</th>
-                <th>Date</th>
-                <th>Rank</th>
-                <th>RV Points</th>
-                <th>Tour Destination</th>
-                <th>Reward Type</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>2025-04-12</td>
-                <td>Silver</td>
-                <td>100</td>
-                <td>Paris, France</td>
-                <td>All-Expenses-Paid Trip</td>
-                <td>Confirmed</td>
-              </tr>
-             
-            </tbody>
-          </table>
+        <h2 class="text-2xl font-bold text-[#f4c430] mb-4">QR Code for Payment</h2>
+
+        <!-- QR Code -->
+        <div class="form-section qr-code-container">
+          <h4>Scan to Make Payment</h4>
+          <img src="https://via.placeholder.com/200x200.png?text=QR+Code" alt="QR Code">
         </div>
       </div>
       <footer class="main-footer">

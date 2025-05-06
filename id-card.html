@@ -8,174 +8,206 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="assets/style.css" rel="stylesheet">
- <style>.main-content {
-  flex: 1;
-  padding: 20px;
-  background: #1a1a2e; /* Matches sidebar background */
-  margin-left: 250px;
-  overflow-y: auto;
-  min-height: calc(100vh - 48px);
-  display: flex;
-  flex-direction: column;
-  transition: margin-left 0.3s ease;
-}
-.main-content.collapsed {
-  margin-left: 60px;
-}
-.section {
-  flex: 1 0 auto;
-}
-.form-section {
-  background: #0f3460; /* Matches sidebar card background */
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px #00d4ff; /* Blue glow effect */
-  border: 2px solid #00d4ff; /* Matches sidebar border */
-  margin-bottom: 20px;
-}
-.form-section h4 {
-  color: #00ffcc; /* Matches sidebar h3 color */
-  margin-bottom: 15px;
-  text-shadow: 0 0 5px #00ffcc; /* Added glow */
-}
-.form-section label {
-  color: #b3e0ff; /* Matches sidebar text color */
-  margin-bottom: 5px;
-  display: block;
-}
-.form-section input,
-.form-section select {
-  width: 100%;
-  padding: 8px;
-  border: 2px solid #00d4ff; /* Matches sidebar border */
-  border-radius: 5px;
-  background: #0f3460; /* Matches sidebar card background */
-  color: #b3e0ff; /* Matches sidebar text color */
-  margin-bottom: 10px;
-  box-shadow: 0 0 5px #00d4ff; /* Subtle glow */
-}
-.form-section input:focus,
-.form-section select:focus {
-  outline: none;
-  box-shadow: 0 0 10px #00d4ff; /* Blue glow on focus */
-}
-.form-section button {
-  background: #0f3460; /* Matches sidebar card background */
-  border: 2px solid #00d4ff; /* Matches sidebar border */
-  padding: 10px 20px;
-  border-radius: 5px;
-  color: #b3e0ff; /* Matches sidebar text color */
-  cursor: pointer;
-  box-shadow: 0 0 10px #00d4ff; /* Blue glow */
-  transition: box-shadow 0.3s, transform 0.3s;
-}
-.form-section button:hover {
-  background: #0f3460; /* No background change */
-  transform: scale(1.03); /* Matches sidebar hover effect */
-  box-shadow: 0 0 15px #00d4ff; /* Stronger blue glow */
-  color: #b3e0ff; /* Prevent color change */
-}
-.form-section button:active {
-  color: #b3e0ff; /* Prevent color change on click */
-  box-shadow: 0 0 15px #00d4ff; /* Blue box-shadow only */
-}
-.id-card-container {
-  background: #0f3460; /* Matches sidebar card background */
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px #00d4ff; /* Blue glow effect */
-  border: 2px solid #00d4ff; /* Matches sidebar border */
-  margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.id-card-photo {
-  width: 150px;
-  height: 150px;
-  border-radius: 10px;
-  border: 2px solid #00d4ff; /* Matches sidebar border */
-  margin-bottom: 15px;
-  object-fit: cover;
-  box-shadow: 0 0 5px #00d4ff; /* Subtle glow */
-}
-.id-card-details {
-  width: 100%;
-  color: #b3e0ff; /* Matches sidebar text color */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: left;
-  margin: 0 auto;
-  margin-left: 50px;
-}
-.detail-row {
-  display: flex;
-  gap: 4px;
-  margin: 5px 0;
-  font-size: 1rem;
-  width: 250px;
-}
-.label {
-  width: 80px;
-  font-weight: bold;
-  color: #00ffcc; /* Matches sidebar h3 color */
-}
-.value {
-  flex: 2;
-  color: #b3e0ff; /* Matches sidebar text color */
-}
-@media (min-width: 769px) {
-  .sidebar-toggle {
-    display: block;
-  }
-  .menu-toggle {
-    display: none;
-  }
-  .id-card-details {
-    margin-left: 40px;
-  }
-}
-@media (max-width: 768px) {
-  .main-content {
-    margin-left: 0;
-    padding: 15px;
-  }
-  .main-content.collapsed {
-    margin-left: 0;
-  }
-  .id-card-photo {
-    width: 120px;
-    height: 120px;
-  }
-  .detail-row {
-    font-size: 0.9rem;
-    width: 100%;
-    max-width: 250px;
-    gap: 2px;
-  }
-  .label {
-    width: 70px;
-  }
-  .id-card-details {
-    margin-left: 80px;
-  }
-}
-@media (max-width: 480px) {
-  .topbar {
-    padding: 6px;
-  }
-  .topbar .admin-icon {
-    font-size: 1.5rem;
-  }
-  .id-card-photo {
-    width: 100px;
-    height: 100px;
-  }
-  .detail-row {
-    font-size: 0.8rem;
-  }
-}</style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      background: #1a1a2e; /* Matches sidebar background */
+      margin-left: 250px;
+      overflow-y: auto;
+      min-height: calc(100vh - 48px);
+      display: flex;
+      flex-direction: column;
+      transition: margin-left 0.3s ease;
+    }
+    .main-content.collapsed {
+      margin-left: 60px;
+    }
+    .section {
+      flex: 1 0 auto;
+    }
+    .form-section {
+      background: #0f3460; /* Matches sidebar card background */
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00d4ff; /* Blue glow effect */
+      border: 2px solid #00d4ff; /* Matches sidebar border */
+      margin-bottom: 20px;
+    }
+    .form-section h4 {
+      color: #00ffcc; /* Matches sidebar h3 color */
+      margin-bottom: 15px;
+      text-shadow: 0 0 5px #00ffcc; /* Added glow */
+    }
+    .form-section label {
+      color: #b3e0ff; /* Matches sidebar text color */
+      margin-bottom: 5px;
+      display: block;
+    }
+    .form-section input,
+    .form-section select {
+      width: 100%;
+      padding: 8px;
+      border: 2px solid #00d4ff; /* Matches sidebar border */
+      border-radius: 5px;
+      background: #0f3460; /* Matches sidebar card background */
+      color: #b3e0ff; /* Matches sidebar text color */
+      margin-bottom: 10px;
+      box-shadow: 0 0 5px #00d4ff; /* Subtle glow */
+    }
+    .form-section input:focus,
+    .form-section select:focus {
+      outline: none;
+      box-shadow: 0 0 10px #00d4ff; /* Blue glow on focus */
+    }
+    .form-section button {
+      background: #0f3460; /* Matches sidebar card background */
+      border: 2px solid #00d4ff; /* Matches sidebar border */
+      padding: 10px 20px;
+      border-radius: 5px;
+      color: #b3e0ff; /* Matches sidebar text color */
+      cursor: pointer;
+      box-shadow: 0 0 10px #00d4ff; /* Blue glow */
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    .form-section button:hover {
+      background: #0f3460; /* No background change */
+      transform: scale(1.03); /* Matches sidebar hover effect */
+      box-shadow: 0 0 15px #00d4ff; /* Stronger blue glow */
+      color: #b3e0ff; /* Prevent color change */
+    }
+    .form-section button:active {
+      color: #b3e0ff; /* Prevent color change on click */
+      box-shadow: 0 0 15px #00d4ff; /* Blue box-shadow only */
+    }
+    .id-card-container {
+      background: #0f3460; /* Matches sidebar card background */
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00d4ff; /* Blue glow effect */
+      border: 2px solid #00d4ff; /* Matches sidebar border */
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .id-card-photo {
+      width: 150px;
+      height: 150px;
+      border-radius: 10px;
+      border: 2px solid #00d4ff; /* Matches sidebar border */
+      margin-bottom: 15px;
+      object-fit: cover;
+      box-shadow: 0 0 5px #00d4ff; /* Subtle glow */
+    }
+    .id-card-details {
+      width: 100%;
+      color: #b3e0ff; /* Matches sidebar text color */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: left;
+      margin: 0 auto;
+      margin-left: 50px;
+    }
+    .detail-row {
+      display: flex;
+      gap: 4px;
+      margin: 5px 0;
+      font-size: 1rem;
+      width: 250px;
+    }
+    .label {
+      width: 80px;
+      font-weight: bold;
+      color: #00ffcc; /* Matches sidebar h3 color */
+    }
+    .value {
+      flex: 2;
+      color: #b3e0ff; /* Matches sidebar text color */
+    }
+    .download-button {
+      background: #0f3460; /* Matches form button */
+      border: 2px solid #00d4ff; /* Matches sidebar border */
+      padding: 10px 20px;
+      border-radius: 5px;
+      color: #b3e0ff; /* Matches sidebar text color */
+      cursor: pointer;
+      box-shadow: 0 0 10px #00d4ff; /* Blue glow */
+      transition: box-shadow 0.3s, transform 0.3s;
+      margin-top: 15px;
+    }
+    .download-button:hover {
+      background: #0f3460;
+      transform: scale(1.03); /* Matches form button hover */
+      box-shadow: 0 0 15px #00d4ff; /* Stronger blue glow */
+      color: #b3e0ff;
+    }
+    .download-button:active {
+      color: #b3e0ff;
+      box-shadow: 0 0 15px #00d4ff;
+    }
+    @media (min-width: 769px) {
+      .sidebar-toggle {
+        display: block;
+      }
+      .menu-toggle {
+        display: none;
+      }
+      .id-card-details {
+        margin-left: 40px;
+      }
+    }
+    @media (max-width: 768px) {
+      .main-content {
+        margin-left: 0;
+        padding: 15px;
+      }
+      .main-content.collapsed {
+        margin-left: 0;
+      }
+      .id-card-photo {
+        width: 120px;
+        height: 120px;
+      }
+      .detail-row {
+        font-size: 0.9rem;
+        width: 100%;
+        max-width: 250px;
+        gap: 2px;
+      }
+      .label {
+        width: 70px;
+      }
+      .id-card-details {
+        margin-left: 80px;
+      }
+      .download-button {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .topbar {
+        padding: 6px;
+      }
+      .topbar .admin-icon {
+        font-size: 1.5rem;
+      }
+      .id-card-photo {
+        width: 100px;
+        height: 100px;
+      }
+      .detail-row {
+        font-size: 0.8rem;
+      }
+      .download-button {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+      }
+    }
+  </style>
 </head>
 <body>
   <!-- Topbar -->
@@ -190,7 +222,6 @@
       <div class="admin-dropdown" id="admin-dropdown">
         <a href="profile-details.html" class="dropdown-item">My Profile</a>
         <a href="change-password.html" class="dropdown-item">Change Password</a>
-    
       </div>
     </div>
   </nav>
@@ -203,15 +234,17 @@
       <h3></h3>
       <a href="index.html"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
       <div class="sidebar-item">
-        <a href="my-account.html" id="my-account-toggle">
+        <a href="my-account.html" id="my-account-toggle" class="active   ">
           <i class="fas fa-user"></i>
           <span>My Account</span>
-          <i class="fas fa-chevron-down dropdown-icon"></i>
+          <i class="fas fa-chevron-down dropdown-icon active"></i>
         </a>
-        <div class="submenu" id="my-account-submenu">
+        <div class="submenu active" id="my-account-submenu">
           <a href="profile-details.html"><i class="fas fa-user-edit"></i> <span>Profile Details</span></a>
           <a href="kyc-document.html"><i class="fas fa-file-upload"></i> <span>Upload KYC Document</span></a>
           <a href="change-password.html"><i class="fas fa-lock"></i> <span>Change Password</span></a>
+          <a href="id-card.html"><i class="fas fa-lock" aria-colspan="active"></i> <span>ID Card</span></a>
+      
         </div>
       </div>
       <div class="sidebar-item">
@@ -243,16 +276,18 @@
       <div class="sidebar-item">
         <a href="topup-fund.html" id="topup-fund-toggle">
           <i class="fas fa-wallet"></i>
-          <span>Topup & Fund</span>
+          <span>Product & Payment</span>
           <i class="fas fa-chevron-down dropdown-icon"></i>
         </a>
         <div class="submenu" id="topup-fund-submenu">
-          <a href="fund.html"><i class="fas fa-money-bill"></i> <span>Fund</span></a>
+          
           <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
+          <a href="product-details.html"><i class="fas fa-credit-card" class="active"></i> <span>product-details</span></a>
+          
           <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
         </div>
       </div>
-      <a href="id-card.html" class="active"><i class="fas fa-id-card"></i> <span>ID Card</span></a>
+     
       <a href="#" id="sidebar-sign-out"><i class="fas fa-sign-out-alt"></i> <span>Sign Out</span></a>
     </div>
 
@@ -279,7 +314,7 @@
             <div class="detail-row"><span class="label">Mobile:</span><span class="value">9876543210</span></div>
             <div class="detail-row"><span class="label">Join Date:</span><span class="value">30/04/2025</span></div>
           </div>
-          
+          <button class="download-button" onclick="downloadIDCard()">Download ID Card</button>
         </div>
       </div>
       <footer class="main-footer">
@@ -290,48 +325,45 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const sidebarToggle = document.getElementById('sidebar-toggle');
-      const sidebarExpand = document.getElementById('sidebar-expand');
+      // Sidebar toggle elements
       const sidebar = document.querySelector('.sidebar');
       const mainContent = document.querySelector('.main-content');
+      const sidebarToggle = document.getElementById('sidebar-toggle');
       const menuToggle = document.getElementById('menu-toggle');
+      const sidebarExpand = document.getElementById('sidebar-expand');
       const adminIcon = document.getElementById('admin-icon');
       const adminDropdown = document.getElementById('admin-dropdown');
-      const myAccountToggle = document.getElementById('my-account-toggle');
-      const myAccountSubmenu = document.getElementById('my-account-submenu');
-      const myAccountDropdownIcon = myAccountToggle?.querySelector('.dropdown-icon');
-      const myTeamToggle = document.getElementById('my-team-toggle');
-      const myTeamSubmenu = document.getElementById('my-team-submenu');
-      const myTeamDropdownIcon = myTeamToggle?.querySelector('.dropdown-icon');
-      const earningHistoryToggle = document.getElementById('earning-history-toggle');
-      const earningHistorySubmenu = document.getElementById('earning-history-submenu');
-      const earningHistoryDropdownIcon = earningHistoryToggle?.querySelector('.dropdown-icon');
-      const topupFundToggle = document.getElementById('topup-fund-toggle');
-      const topupFundSubmenu = document.getElementById('topup-fund-submenu');
-      const topupFundDropdownIcon = topupFundToggle?.querySelector('.dropdown-icon');
 
-      // Sidebar collapse/expand for desktop
-      if (sidebarToggle && sidebarExpand && sidebar && mainContent) {
+      // Desktop sidebar toggle (collapse/expand)
+      if (sidebarToggle) {
         sidebarToggle.addEventListener('click', () => {
-          const isCollapsed = sidebar.classList.toggle('collapsed');
+          sidebar.classList.toggle('collapsed');
           mainContent.classList.toggle('collapsed');
-          sidebarExpand.style.display = isCollapsed && window.innerWidth >= 769 ? 'block' : 'none';
-          document.querySelectorAll('.submenu').forEach(submenu => submenu.classList.remove('active'));
-          document.querySelectorAll('.dropdown-icon').forEach(icon => icon.classList.remove('active'));
-        });
-        sidebarExpand.addEventListener('click', () => {
-          sidebar.classList.remove('collapsed');
-          mainContent.classList.remove('collapsed');
-          sidebarExpand.style.display = 'none';
         });
       }
 
-      // Sidebar toggle for mobile
-      if (menuToggle && sidebar) {
+      // Mobile sidebar toggle (show/hide)
+      if (menuToggle) {
         menuToggle.addEventListener('click', () => {
           sidebar.classList.toggle('active');
         });
       }
+
+      // Mobile sidebar close button
+      if (sidebarExpand) {
+        sidebarExpand.addEventListener('click', () => {
+          sidebar.classList.remove('active');
+        });
+      }
+
+      // Close sidebar on mobile when clicking outside
+      document.addEventListener('click', (e) => {
+        if (window.innerWidth <= 768 && sidebar.classList.contains('active')) {
+          if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+            sidebar.classList.remove('active');
+          }
+        }
+      });
 
       // Admin dropdown toggle
       if (adminIcon && adminDropdown) {
@@ -346,130 +378,84 @@
         });
       }
 
-      // Submenu toggle for My Account
-      if (myAccountToggle && myAccountSubmenu && myAccountDropdownIcon) {
-        myAccountToggle.addEventListener('click', (e) => {
-          e.preventDefault();
-          myAccountSubmenu.classList.toggle('active');
-          myAccountDropdownIcon.classList.toggle('active');
-          document.querySelectorAll('.submenu').forEach(submenu => {
-            if (submenu !== myAccountSubmenu) submenu.classList.remove('active');
-          });
-          document.querySelectorAll('.dropdown-icon').forEach(icon => {
-            if (icon !== myAccountDropdownIcon) icon.classList.remove('active');
-          });
-        });
+      // Submenu toggle for multiple items
+      const submenuToggles = [
+        {
+          toggle: document.getElementById('my-account-toggle'),
+          submenu: document.getElementById('my-account-submenu'),
+          icon: document.querySelector('#my-account-toggle .dropdown-icon')
+        },
+        {
+          toggle: document.getElementById('my-team-toggle'),
+          submenu: document.getElementById('my-team-submenu'),
+          icon: document.querySelector('#my-team-toggle .dropdown-icon')
+        },
+        {
+          toggle: document.getElementById('earning-history-toggle'),
+          submenu: document.getElementById('earning-history-submenu'),
+          icon: document.querySelector('#earning-history-toggle .dropdown-icon')
+        },
+        {
+          toggle: document.getElementById('topup-fund-toggle'),
+          submenu: document.getElementById('topup-fund-submenu'),
+          icon: document.querySelector('#topup-fund-toggle .dropdown-icon')
+        },
+        {
+          toggle: document.getElementById('payment-toggle'),
+          submenu: document.getElementById('payment-submenu'),
+          icon: document.querySelector('#payment-toggle .dropdown-icon')
+        }
+      ];
 
-        const submenuLinks = myAccountSubmenu.querySelectorAll('a');
-        submenuLinks.forEach(link => {
-          link.addEventListener('click', () => {
-            if (window.innerWidth <= 768) {
-              sidebar.classList.remove('active');
+      submenuToggles.forEach(({ toggle, submenu, icon }) => {
+        if (toggle && submenu && icon) {
+          toggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            submenu.classList.toggle('active');
+            icon.classList.toggle('active');
+            // Close other submenus
+            submenuToggles.forEach(other => {
+              if (other.submenu !== submenu) {
+                other.submenu.classList.remove('active');
+                other.icon.classList.remove('active');
+              }
+            });
+          });
+          // Close submenu when clicking outside
+          document.addEventListener('click', (e) => {
+            if (!toggle.contains(e.target) && !submenu.contains(e.target)) {
+              submenu.classList.remove('active');
+              icon.classList.remove('active');
             }
           });
-        });
-
-        document.addEventListener('click', (e) => {
-          if (!myAccountToggle.contains(e.target) && !myAccountSubmenu.contains(e.target)) {
-            myAccountSubmenu.classList.remove('active');
-            myAccountDropdownIcon.classList.remove('active');
-          }
-        });
-      }
-
-      // Submenu toggle for My Team
-      if (myTeamToggle && myTeamSubmenu && myTeamDropdownIcon) {
-        myTeamToggle.addEventListener('click', (e) => {
-          e.preventDefault();
-          myTeamSubmenu.classList.toggle('active');
-          myTeamDropdownIcon.classList.toggle('active');
-          document.querySelectorAll('.submenu').forEach(submenu => {
-            if (submenu !== myTeamSubmenu) submenu.classList.remove('active');
+          // Close sidebar on mobile after submenu item click
+          submenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+              if (window.innerWidth <= 768) {
+                sidebar.classList.remove('active');
+              }
+            });
           });
-          document.querySelectorAll('.dropdown-icon').forEach(icon => {
-            if (icon !== myTeamDropdownIcon) icon.classList.remove('active');
-          });
-        });
-
-        const submenuLinks = myTeamSubmenu.querySelectorAll('a');
-        submenuLinks.forEach(link => {
-          link.addEventListener('click', () => {
-            if (window.innerWidth <= 768) {
-              sidebar.classList.remove('active');
-            }
-          });
-        });
-
-        document.addEventListener('click', (e) => {
-          if (!myTeamToggle.contains(e.target) && !myTeamSubmenu.contains(e.target)) {
-            myTeamSubmenu.classList.remove('active');
-            myTeamDropdownIcon.classList.remove('active');
-          }
-        });
-      }
-
-      // Submenu toggle for Earning History
-      if (earningHistoryToggle && earningHistorySubmenu && earningHistoryDropdownIcon) {
-        earningHistoryToggle.addEventListener('click', (e) => {
-          e.preventDefault();
-          earningHistorySubmenu.classList.toggle('active');
-          earningHistoryDropdownIcon.classList.toggle('active');
-          document.querySelectorAll('.submenu').forEach(submenu => {
-            if (submenu !== earningHistorySubmenu) submenu.classList.remove('active');
-          });
-          document.querySelectorAll('.dropdown-icon').forEach(icon => {
-            if (icon !== earningHistoryDropdownIcon) icon.classList.remove('active');
-          });
-        });
-
-        const submenuLinks = earningHistorySubmenu.querySelectorAll('a');
-        submenuLinks.forEach(link => {
-          link.addEventListener('click', () => {
-            if (window.innerWidth <= 768) {
-              sidebar.classList.remove('active');
-            }
-          });
-        });
-
-        document.addEventListener('click', (e) => {
-          if (!earningHistoryToggle.contains(e.target) && !earningHistorySubmenu.contains(e.target)) {
-            earningHistorySubmenu.classList.remove('active');
-            earningHistoryDropdownIcon.classList.remove('active');
-          }
-        });
-      }
-
-      // Submenu toggle for Topup & Fund
-      if (topupFundToggle && topupFundSubmenu && topupFundDropdownIcon) {
-        topupFundToggle.addEventListener('click', (e) => {
-          e.preventDefault();
-          topupFundSubmenu.classList.toggle('active');
-          topupFundDropdownIcon.classList.toggle('active');
-          document.querySelectorAll('.submenu').forEach(submenu => {
-            if (submenu !== topupFundSubmenu) submenu.classList.remove('active');
-          });
-          document.querySelectorAll('.dropdown-icon').forEach(icon => {
-            if (icon !== topupFundDropdownIcon) icon.classList.remove('active');
-          });
-        });
-
-        const submenuLinks = topupFundSubmenu.querySelectorAll('a');
-        submenuLinks.forEach(link => {
-          link.addEventListener('click', () => {
-            if (window.innerWidth <= 768) {
-              sidebar.classList.remove('active');
-            }
-          });
-        });
-
-        document.addEventListener('click', (e) => {
-          if (!topupFundToggle.contains(e.target) && !topupFundSubmenu.contains(e.target)) {
-            topupFundSubmenu.classList.remove('active');
-            topupFundDropdownIcon.classList.remove('active');
-          }
-        });
-      }
+        }
+      });
     });
+
+    // Function to download ID card as image
+    function downloadIDCard() {
+      const idCardContainer = document.querySelector('.id-card-container');
+      html2canvas(idCardContainer, {
+        backgroundColor: '#0f3460',
+        scale: 2 // Increase resolution for better quality
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'id-card.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      }).catch(err => {
+        console.error('Error generating ID card image:', err);
+        alert('Failed to download ID card. Please try again.');
+      });
+    }
   </script>
 </body>
 </html>

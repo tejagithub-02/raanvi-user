@@ -8,241 +8,558 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="assets/style.css" rel="stylesheet">
- <style>.main-content {
-  flex: 1;
-  padding: 20px;
-  background: #1a1a2e; /* Matches sidebar background */
-  margin-left: 250px;
-  overflow-y: auto;
-  min-height: calc(100vh - 48px);
-  display: flex;
-  flex-direction: column;
-  transition: margin-left 0.3s ease;
-}
-.main-content.collapsed {
-  margin-left: 60px;
-}
-.section {
-  flex: 1 0 auto;
-}
-.table-section {
-  background: #0f3460; /* Matches sidebar card background */
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px #00d4ff; /* Blue glow effect */
-  border: 2px solid #00d4ff; /* Matches sidebar border */
-  margin-bottom: 20px;
-}
-.table-section h4 {
-  color: #00ffcc; /* Matches sidebar h3 color */
-  margin-bottom: 15px;
-  text-shadow: 0 0 5px #00ffcc; /* Added glow */
-}
-/* Binary Tree Styles */
-.binary-tree-container {
-  position: relative;
-  width: 100%;
-  height: 600px;
-  overflow-x: auto;
-  overflow-y: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.binary-tree-svg {
-  width: 100%;
-  height: 100%;
-  min-width: 0;
-}
-.node {
-  cursor: pointer;
-}
-.node-circle {
-  fill: #0f3460; /* Matches sidebar card background */
-  stroke: #00d4ff; /* Matches sidebar border */
-  stroke-width: 2;
-  transition: box-shadow 0.3s;
-}
-.node:hover .node-circle {
-  box-shadow: 0 0 15px #00d4ff; /* Blue glow on hover */
-}
-.node:active .node-circle {
-  box-shadow: 0 0 15px #00d4ff; /* Blue glow on click */
-}
-.node-icon {
-  font-size: 20px; /* Main icon size (user) */
-  fill: #00ffcc; /* Matches sidebar icon color */
-}
-.node-sub-icon {
-  font-size: 14px; /* Smaller icons for email and mobile */
-  fill: #00ffcc; /* Matches sidebar icon color */
-}
-.node-id {
-  font-size: 12px;
-  fill: #b3e0ff; /* Matches sidebar text color */
-  text-anchor: middle;
-}
-.node-details {
-  font-size: 12px;
-  fill: #b3e0ff; /* Matches sidebar text color */
-  text-anchor: start; /* Align text to start for right-side positioning */
-}
-.link {
-  stroke: #00d4ff; /* Matches sidebar border */
-  stroke-width: 2;
-  fill: none;
-}
-@media (min-width: 769px) {
-  .sidebar-toggle {
-    display: block;
-  }
-  .menu-toggle {
-    display: none;
-  }
-}
-@media (max-width: 768px) {
-  .topbar {
-    padding: 4px;
-  }
-  .topbar h1 {
-    font-size: 1rem;
-  }
-  .topbar .admin-icon {
-    font-size: 1.5rem;
-  }
-  .topbar img {
-    width: 40px;
-    height: 40px;
-  }
-  .dashboard-container {
-    flex-direction: column;
-  }
-  .sidebar {
-    width: 200px;
-    border-right: none;
-    border-bottom: 2px solid #00d4ff; /* Matches sidebar border */
-    position: fixed;
-    top: 48px;
-    left: -200px;
-    padding: 15px;
-  }
-  .sidebar.active {
-    left: 0;
-  }
-  .sidebar.collapsed {
-    width: 200px;
-  }
-  .sidebar.collapsed h3,
-  .sidebar.collapsed a span {
-    display: block;
-  }
-  .sidebar.collapsed a {
-    justify-content: flex-start;
-  }
-  .sidebar-expand {
-    display: none;
-  }
-  .sidebar h3 {
-    font-size: 1.2rem;
-  }
-  .sidebar a {
-    font-size: 0.9rem;
-    padding: 8px;
-  }
-  .sidebar .submenu a {
-    font-size: 0.85rem;
-    padding: 6px 10px;
-  }
-  .main-content {
-    margin-left: 0;
-    padding: 15px;
-  }
-  .main-content.collapsed {
-    margin-left: 0;
-  }
-  .menu-toggle {
-    display: block;
-  }
-  .sidebar-toggle {
-    display: none;
-  }
-  .admin-dropdown {
-    right: 10px;
-  }
-  .sidebar .submenu {
-    margin-left: 20px;
-  }
-  .binary-tree-svg {
-    transform: scale(0.8);
-    transform-origin: center;
-  }
-  .node-circle {
-    border-radius: 18;
-  }
-  .node-icon {
-    font-size: 16px; /* Adjusted for smaller screens */
-  }
-  .node-sub-icon {
-    font-size: 12px;
-  }
-  .node-id {
-    font-size: 10px;
-  }
-  .node-details {
-    font-size: 10px;
-  }
-  .link {
-    stroke-width: 1.5;
-  }
-}
-@media (max-width: 480px) {
-  .topbar {
-    padding: 4px;
-  }
-  .topbar h1 {
-    font-size: 0.9rem;
-  }
-  .topbar .admin-icon {
-    font-size: 1.25rem;
-  }
-  .topbar img {
-    width: 32px;
-    height: 32px;
-  }
-  .sidebar {
-    width: 180px;
-    left: -180px;
-  }
-  .sidebar.active {
-    left: 0;
-  }
-  .sidebar h3 {
-    font-size: 1rem;
-  }
-  .sidebar a {
-    font-size: 0.8rem;
-    padding: 6px;
-  }
-  .binary-tree-svg {
-    transform: scale(0.6);
-    transform-origin: center;
-  }
-  .node-circle {
-    border-radius: 14;
-  }
-  .node-icon {
-    font-size: 14px; /* Adjusted for very small screens */
-  }
-  .node-sub-icon {
-    font-size: 10px;
-  }
-  .node-id {
-    font-size: 8px;
-  }
-  .node-details {
-    font-size: 8px;
-  }
-}</style>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      background-color: #ffffff;
+      color: #f5f5f5;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Header Styles */
+    .topbar {
+      background: linear-gradient(to right, #0f3460, #1a1a2e);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 1100;
+      padding: 8px;
+    }
+
+    .topbar h1 {
+      font-family: 'Georgia', serif;
+      color: #b3e0ff;
+      text-shadow: 0 0 3px #00ffcc;
+      font-size: 1.75rem;
+    }
+
+    .topbar .admin-icon {
+      color: #b3e0ff;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .topbar .admin-icon:hover {
+      color: #00ffcc;
+    }
+
+    .admin-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 20px;
+      background: #0f3460;
+      border: 2px solid #00d4ff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00d4ff;
+      display: none;
+      z-index: 1200;
+    }
+
+    .admin-dropdown.active {
+      display: block;
+    }
+
+    .admin-dropdown a {
+      display: block;
+      padding: 10px 20px;
+      color: #b3e0ff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+
+    .admin-dropdown a:hover {
+      background: linear-gradient(to right, #00d4ff, #00ffcc);
+      color: #ffffff;
+    }
+
+    /* Sidebar Styles */
+    .dashboard-container {
+      display: flex;
+      min-height: calc(100vh - 48px);
+    }
+
+    .sidebar {
+      width: 250px;
+      background: #1a1a2e;
+      padding: 20px;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+      border-right: 2px solid #00d4ff;
+      position: fixed;
+      top: 95px;
+      height: calc(100vh - 48px);
+      overflow-y: auto;
+      z-index: 1000;
+      transition: width 0.3s ease;
+    }
+
+    .sidebar.collapsed {
+      width: 60px;
+    }
+
+    .sidebar h3 {
+      color: #00ffcc;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+      text-shadow: 0 0 5px #00ffcc;
+    }
+
+    .sidebar.collapsed h3 {
+      display: none;
+    }
+
+    .sidebar a {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      color: #b3e0ff;
+      text-decoration: none;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+      border: 1px solid transparent;
+    }
+
+    .sidebar a:hover {
+      background: #0f3460;
+      border: 1px solid #00d4ff;
+      box-shadow: 0 0 10px #00d4ff;
+      color: #b3e0ff;
+      transform: scale(1.03);
+    }
+
+    .sidebar a.active {
+      background: transparent;
+      color: #b3e0ff;
+      font-weight: bold;
+      border: 1px solid #00d4ff;
+      box-shadow: 0 0 15px #00d4ff;
+    }
+
+    .sidebar a:active {
+      color: #b3e0ff;
+      box-shadow: 0 0 15px #00d4ff;
+    }
+
+    .sidebar a i {
+      margin-right: 10px;
+      font-size: 1.2rem;
+      width: 20px;
+      text-align: center;
+      color: #00ffcc;
+    }
+
+    .sidebar.collapsed a {
+      justify-content: center;
+      padding: 10px;
+    }
+
+    .sidebar.collapsed a span {
+      display: none;
+    }
+
+    .sidebar-expand {
+      font-size: 1.5rem;
+      color: #00ffcc;
+      cursor: pointer;
+      margin-bottom: 20px;
+      text-align: center;
+      display: none;
+    }
+
+    .sidebar.collapsed .sidebar-expand {
+      display: block;
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 1.5rem;
+      color: #ffffff;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    .sidebar-toggle {
+      display: none;
+      font-size: 1.5rem;
+      color: #ffffff;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    .sidebar .submenu {
+      display: none;
+      background: #0f3460;
+      border: 2px solid #00d4ff;
+      border-radius: 10px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      padding: 10px;
+      box-shadow: 0 0 10px #00d4ff;
+    }
+
+    .sidebar .submenu.active {
+      display: block;
+    }
+
+    .sidebar .submenu a {
+      padding: 8px 15px;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      color: #b3e0ff;
+    }
+
+    .sidebar .submenu a i {
+      margin-right: 10px;
+      font-size: 1rem;
+      width: 18px;
+      color: #00ffcc;
+    }
+
+    .sidebar.collapsed .submenu {
+      display: none;
+    }
+
+    .dropdown-icon {
+      margin-left: auto;
+      font-size: 1rem;
+      color: #00ffcc;
+      transition: transform 0.3s ease;
+    }
+
+    .dropdown-icon.active {
+      transform: rotate(180deg);
+    }
+
+    .sidebar.collapsed .dropdown-icon {
+      display: none;
+    }
+
+    /* Main Content Styles */
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      background: #1a1a2e;
+      margin-left: 250px;
+      overflow-y: auto;
+      min-height: calc(100vh - 48px);
+      display: flex;
+      flex-direction: column;
+      transition: margin-left 0.3s ease;
+    }
+
+    .main-content.collapsed {
+      margin-left: 60px;
+    }
+
+    .section {
+      flex: 1 0 auto;
+    }
+
+    .table-section {
+      background: #0f3460;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00d4ff;
+      border: 2px solid #00d4ff;
+      margin-bottom: 20px;
+    }
+
+    .table-section h4 {
+      color: #00ffcc;
+      margin-bottom: 15px;
+      text-shadow: 0 0 5px #00ffcc;
+    }
+
+    /* Search Bar Styles */
+    .search-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      justify-content: flex-start; /* Changed to left-align */
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .search-bar input,
+    .search-bar button {
+      padding: 8px;
+      border: 2px solid #00d4ff;
+      border-radius: 5px;
+      background: #0f3460;
+      color: #b3e0ff;
+      box-shadow: 0 0 5px #00d4ff;
+    }
+
+    .search-bar input::placeholder {
+      color: #b3e0ff;
+    }
+
+    .search-bar button {
+      background: #00d4ff;
+      color: #0f3460;
+      cursor: pointer;
+      border: none;
+      transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+    }
+
+    .search-bar button:hover {
+      background: #00ffcc;
+      box-shadow: 0 0 10px #00ffcc;
+      transform: scale(1.03);
+    }
+
+    /* Binary Tree Styles */
+    .binary-tree-container {
+      position: relative;
+      width: 100%;
+      height: 600px;
+      overflow-x: auto;
+      overflow-y: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .binary-tree-svg {
+      width: 100%;
+      height: 100%;
+      min-width: 0;
+    }
+
+    .node {
+      cursor: pointer;
+    }
+
+    .node-circle {
+      fill: #0f3460;
+      stroke: #00d4ff;
+      stroke-width: 2;
+      transition: box-shadow 0.3s;
+    }
+
+    .node:hover .node-circle {
+      box-shadow: 0 0 15px #00d4ff;
+    }
+
+    .node:active .node-circle {
+      box-shadow: 0 0 15px #00d4ff;
+    }
+
+    .node.highlighted .node-circle {
+      stroke: #ffcc00;
+      stroke-width: 4;
+      box-shadow: 0 0 20px #ffcc00;
+    }
+
+    .node-icon {
+      font-size: 20px;
+      fill: #00ffcc;
+    }
+
+    .node-sub-icon {
+      font-size: 14px;
+      fill: #00ffcc;
+    }
+
+    .node-id {
+      font-size: 12px;
+      fill: #b3e0ff;
+      text-anchor: middle;
+    }
+
+    .node-details {
+      font-size: 12px;
+      fill: #b3e0ff;
+      text-anchor: start;
+    }
+
+    .link {
+      stroke: #00d4ff;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    /* Media Queries for Responsive Alignment */
+    @media (min-width: 769px) {
+      .sidebar-toggle {
+        display: block;
+      }
+      .menu-toggle {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .topbar {
+        padding: 4px;
+      }
+      .topbar h1 {
+        font-size: 1rem;
+      }
+      .topbar .admin-icon {
+        font-size: 1.5rem;
+      }
+      .topbar img {
+        width: 40px;
+        height: 40px;
+      }
+      .dashboard-container {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 200px;
+        border-right: none;
+        border-bottom: 2px solid #00d4ff;
+        position: fixed;
+        top: 48px;
+        left: -200px;
+        padding: 15px;
+      }
+      .sidebar.active {
+        left: 0;
+      }
+      .sidebar.collapsed {
+        width: 200px;
+      }
+      .sidebar.collapsed h3,
+      .sidebar.collapsed a span {
+        display: block;
+      }
+      .sidebar.collapsed a {
+        justify-content: flex-start;
+      }
+      .sidebar-expand {
+        display: none;
+      }
+      .sidebar h3 {
+        font-size: 1.2rem;
+      }
+      .sidebar a {
+        font-size: 0.9rem;
+        padding: 8px;
+      }
+      .sidebar .submenu a {
+        font-size: 0.85rem;
+        padding: 6px 10px;
+      }
+      .main-content {
+        margin-left: 0;
+        padding: 15px;
+      }
+      .main-content.collapsed {
+        margin-left: 0;
+      }
+      .menu-toggle {
+        display: block;
+      }
+      .sidebar-toggle {
+        display: none;
+      }
+      .admin-dropdown {
+        right: 10px;
+      }
+      .sidebar .submenu {
+        margin-left: 20px;
+      }
+      .search-bar {
+        flex-direction: column;
+        max-width: 100%;
+      }
+      .search-bar input,
+      .search-bar button {
+        width: 100%;
+        padding: 6px;
+        font-size: 0.9rem;
+      }
+      .binary-tree-svg {
+        transform: scale(0.8);
+        transform-origin: center;
+      }
+      .node-circle {
+        r: 22;
+      }
+      .node-icon {
+        font-size: 16px;
+      }
+      .node-sub-icon {
+        font-size: 12px;
+      }
+      .node-id {
+        font-size: 10px;
+      }
+      .node-details {
+        font-size: 10px;
+      }
+      .link {
+        stroke-width: 1.5;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .topbar {
+        padding: 4px;
+      }
+      .topbar h1 {
+        font-size: 0.9rem;
+      }
+      .topbar .admin-icon {
+        font-size: 1.25rem;
+      }
+      .topbar img {
+        width: 32px;
+        height: 32px;
+      }
+      .sidebar {
+        width: 180px;
+        left: -180px;
+      }
+      .sidebar.active {
+        left: 0;
+      }
+      .sidebar h3 {
+        font-size: 1rem;
+      }
+      .sidebar a {
+        font-size: 0.8rem;
+        padding: 6px;
+      }
+      .search-bar input,
+      .search-bar button {
+        padding: 5px;
+        font-size: 0.85rem;
+      }
+      .binary-tree-svg {
+        transform: scale(0.6);
+        transform-origin: center;
+      }
+      .node-circle {
+        r: 18;
+      }
+      .node-icon {
+        font-size: 14px;
+      }
+      .node-sub-icon {
+        font-size: 10px;
+      }
+      .node-id {
+        font-size: 8px;
+      }
+      .node-details {
+        font-size: 8px;
+      }
+    }
+  </style>
 </head>
 <body>
   <!-- Topbar -->
@@ -257,7 +574,6 @@
       <div class="admin-dropdown" id="admin-dropdown">
         <a href="profile-details.html" class="dropdown-item">My Profile</a>
         <a href="change-password.html" class="dropdown-item">Change Password</a>
-     
       </div>
     </div>
   </nav>
@@ -279,15 +595,16 @@
           <a href="profile-details.html"><i class="fas fa-user-edit"></i> <span>Profile Details</span></a>
           <a href="kyc-document.html"><i class="fas fa-file-upload"></i> <span>Upload KYC Document</span></a>
           <a href="change-password.html"><i class="fas fa-lock"></i> <span>Change Password</span></a>
+          <a href="id-card.html"><i class="fas fa-id-card"></i> <span>ID Card</span></a>
         </div>
       </div>
       <div class="sidebar-item">
-        <a href="my-team.html" id="my-team-toggle" class="active">
+        <a href="my-team.html" id="my-team-toggle">
           <i class="fas fa-users"></i>
           <span>My Team</span>
-          <i class="fas fa-chevron-down dropdown-icon active"></i>
+          <i class="fas fa-chevron-down dropdown-icon"></i>
         </a>
-        <div class="submenu active" id="my-team-submenu">
+        <div class="submenu" id="my-team-submenu">
           <a href="binary-tree.html" class="active"><i class="fas fa-sitemap"></i> <span>Binary Tree</span></a>
           <a href="my-downline.html"><i class="fas fa-user-friends"></i> <span>My Downline</span></a>
           <a href="my-referral.html"><i class="fas fa-user-plus"></i> <span>My Referral</span></a>
@@ -310,16 +627,16 @@
       <div class="sidebar-item">
         <a href="topup-fund.html" id="topup-fund-toggle">
           <i class="fas fa-wallet"></i>
-          <span>Topup & Fund</span>
+          <span>Product & Payment</span>
           <i class="fas fa-chevron-down dropdown-icon"></i>
         </a>
         <div class="submenu" id="topup-fund-submenu">
-          <a href="fund.html"><i class="fas fa-money-bill"></i> <span>Fund</span></a>
           <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
+          <a href="product-details.html"><i class="fas fa-credit-card" class="active"></i> <span>product-details</span></a>
+          
           <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
         </div>
       </div>
-      <a href="id-card.html"><i class="fas fa-id-card"></i> <span>ID Card</span></a>
       <a href="#" id="sidebar-sign-out"><i class="fas fa-sign-out-alt"></i> <span>Sign Out</span></a>
     </div>
 
@@ -329,6 +646,10 @@
         <h2 class="text-2xl font-bold text-[#f4c430] mb-4">Binary Tree</h2>
         <div class="table-section">
           <h4>Binary Tree</h4>
+          <div class="search-bar">
+            <input type="text" id="search-id" placeholder="Enter ID (e.g., RI001)">
+            <button onclick="searchNode()">Search</button>
+          </div>
           <div class="binary-tree-container">
             <svg class="binary-tree-svg"></svg>
           </div>
@@ -430,17 +751,17 @@
       const container = document.querySelector('.binary-tree-container');
       const ns = 'http://www.w3.org/2000/svg';
 
-      // Dummy data for binary tree
+      // Dummy data for binary tree with CFP
       const treeData = [
-        { id: 'RI001', name: 'Name: Varun', email: 'E-Mail: varun@gmail.com', mobile: 'Number: 9876543210', level: 0, x: 0, y: 50, left: 'RI002', right: 'RI003' },
-        { id: 'RI002', name: 'Name: Kiran', email: 'E-Mail: kiran@gmail.com', mobile: 'Number: 9276543232', level: 1, x: -200, y: 150, left: 'RI004', right: 'RI005' },
-        { id: 'RI003', name: 'Name: Johnson', email: 'E-Mail: john.j@gmail.com', mobile: 'Number: 8876543210', level: 1, x: 200, y: 150, left: null, right: null },
-        { id: 'RI004', name: 'Name: Emily ', email: 'E-Mail: emily.b@gmail.com', mobile: 'Number: 8736543210', level: 2, x: -300, y: 250, left: null, right: null },
-        { id: 'RI005', name: 'Name: David', email: 'E-Mail: david.w@gmail.com', mobile: 'Number: 6856543210', level: 2, x: -100, y: 250, left: null, right: null }
+        { id: 'RI001', name: 'Name: Varun', email: 'E-Mail: varun@gmail.com', mobile: 'Number: 9876543210', cfp: '0RV', level: 0, x: 0, y: 50, left: 'RI002', right: 'RI003' },
+        { id: 'RI002', name: 'Name: Kiran', email: 'E-Mail: kiran@gmail.com', mobile: 'Number: 9276543232', cfp: '100RV', level: 1, x: -200, y: 150, left: 'RI004', right: 'RI005' },
+        { id: 'RI003', name: 'Name: Johnson', email: 'E-Mail: john.j@gmail.com', mobile: 'Number: 8876543210', cfp: '0RV', level: 1, x: 200, y: 150, left: null, right: null },
+        { id: 'RI004', name: 'Name: Emily', email: 'E-Mail: emily.b@gmail.com', mobile: 'Number: 8736543210', cfp: '0RV', level: 2, x: -300, y: 250, left: null, right: null },
+        { id: 'RI005', name: 'Name: David', email: 'E-Mail: david.w@gmail.com', mobile: 'Number: 6856543210', cfp: '0RV', level: 2, x: -100, y: 250, left: null, right: null }
       ];
 
       // Draw the tree
-      function drawBinaryTree() {
+      function drawBinaryTree(highlightedId = null) {
         svg.innerHTML = ''; // Clear existing content
 
         // Get container width for centering
@@ -479,7 +800,7 @@
         // Draw nodes
         updatedTreeData.forEach(node => {
           const g = document.createElementNS(ns, 'g');
-          g.setAttribute('class', 'node');
+          g.setAttribute('class', `node ${node.id === highlightedId ? 'highlighted' : ''}`);
           g.setAttribute('data-id', node.id);
 
           // Node circle
@@ -487,45 +808,44 @@
           circle.setAttribute('class', 'node-circle');
           circle.setAttribute('cx', node.x);
           circle.setAttribute('cy', node.y);
-          circle.setAttribute('r', screenWidth <= 480 ? 18 : screenWidth <= 768 ? 22 : 28); // Increased to fit multiple icons
+          circle.setAttribute('r', screenWidth <= 480 ? 18 : screenWidth <= 768 ? 22 : 28);
           g.appendChild(circle);
 
           // Main user icon
           const userIcon = document.createElementNS(ns, 'text');
           userIcon.setAttribute('class', 'node-icon');
           userIcon.setAttribute('x', node.x);
-          userIcon.setAttribute('y', node.y); // Centered vertically
+          userIcon.setAttribute('y', node.y);
           userIcon.setAttribute('text-anchor', 'middle');
           userIcon.textContent = '👤';
           g.appendChild(userIcon);
 
-         
-          
           // Node ID (permanent, below icon)
           const idText = document.createElementNS(ns, 'text');
           idText.setAttribute('class', 'node-id');
           idText.setAttribute('x', node.x);
-          idText.setAttribute('y', node.y + 40); // Positioned below the icons
+          idText.setAttribute('y', node.y + 40);
           idText.textContent = node.id;
           g.appendChild(idText);
 
           // Create a group for hover details
           const detailsGroup = document.createElementNS(ns, 'g');
           detailsGroup.setAttribute('class', 'node-details-group');
-          detailsGroup.style.visibility = 'hidden'; // Hidden by default
+          detailsGroup.style.visibility = 'hidden';
 
-          // Node details (name, email, mobile)
+          // Node details (name, email, mobile, cfp)
           const details = [
-            { label: node.name, offsetY: -10 },
-            { label: node.email, offsetY: 5 },
+            { label: node.name, offsetY: -25 },
+            { label: node.email, offsetY: -10 },
+            { label: `CFP: ${node.cfp}`, offsetY: 5 },
             { label: node.mobile, offsetY: 20 }
           ];
 
           details.forEach(detail => {
             const detailText = document.createElementNS(ns, 'text');
             detailText.setAttribute('class', 'node-details');
-            detailText.setAttribute('x', node.x + 40); // Positioned to the right of the icons
-            detailText.setAttribute('y', node.y + detail.offsetY); // Stacked vertically
+            detailText.setAttribute('x', node.x + 40);
+            detailText.setAttribute('y', node.y + detail.offsetY);
             detailText.textContent = detail.label;
             detailsGroup.appendChild(detailText);
           });
@@ -544,12 +864,53 @@
             detailsGroup.style.visibility = 'hidden';
           });
         });
+
+        // Scroll to highlighted node if any
+        if (highlightedId) {
+          const highlightedNode = document.querySelector(`.node[data-id="${highlightedId}"]`);
+          if (highlightedNode) {
+            const circle = highlightedNode.querySelector('.node-circle');
+            const cx = parseFloat(circle.getAttribute('cx'));
+            const cy = parseFloat(circle.getAttribute('cy'));
+            container.scrollTo({
+              left: cx - container.clientWidth / 2,
+              top: cy - container.clientHeight / 2,
+              behavior: 'smooth'
+            });
+          }
+        }
       }
 
+      // Search functionality
+      window.searchNode = () => {
+        const searchInput = document.getElementById('search-id').value.trim().toUpperCase();
+        if (searchInput) {
+          const node = treeData.find(n => n.id === searchInput);
+          if (node) {
+            drawBinaryTree(searchInput);
+          } else {
+            alert('ID not found in the binary tree.');
+            drawBinaryTree(); // Reset tree if ID not found
+          }
+        } else {
+          drawBinaryTree(); // Reset tree if input is empty
+        }
+      };
+
+      // Allow Enter key to trigger search
+      document.getElementById('search-id').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          searchNode();
+        }
+      });
+
+      // Initialize the page
       drawBinaryTree();
 
       // Redraw tree on window resize
-      window.addEventListener('resize', drawBinaryTree);
+      window.addEventListener('resize', () => {
+        drawBinaryTree();
+      });
     });
   </script>
 </body>

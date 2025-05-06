@@ -119,21 +119,21 @@ body {
   background: #0f3460;
   border: 1px solid #00d4ff;
   box-shadow: 0 0 10px #00d4ff;
-  color: #b3e0ff; /* Maintain same color as non-hover */
+  color: #b3e0ff;
   transform: scale(1.03);
 }
 
 .sidebar a.active {
-  background: transparent; /* Remove gradient background */
-  color: #b3e0ff; /* Keep same color as non-active */
+  background: transparent;
+  color: #b3e0ff;
   font-weight: bold;
   border: 1px solid #00d4ff;
-  box-shadow: 0 0 15px #00d4ff; /* Blue box-shadow only */
+  box-shadow: 0 0 15px #00d4ff;
 }
 
 .sidebar a:active {
-  color: #b3e0ff; /* Prevent color change on click */
-  box-shadow: 0 0 15px #00d4ff; /* Blue box-shadow on click */
+  color: #b3e0ff;
+  box-shadow: 0 0 15px #00d4ff;
 }
 
 .sidebar a i {
@@ -197,12 +197,31 @@ body {
 .sidebar .submenu {
   display: none;
   background: #0f3460;
-  border: 2px solid #00d4ff;
   border-radius: 10px;
   margin-top: 5px;
   margin-bottom: 10px;
   padding: 10px;
-  box-shadow: 0 0 10px #00d4ff;
+}
+
+/* Submenu-specific border and box-shadow colors */
+#my-account-submenu {
+  border: 2px solid #39FF14; /* Neon Green */
+  box-shadow: 0 0 10px #FF00FF; /* Magenta */
+}
+
+#my-team-submenu {
+  border: 2px solid #FF69B4; /* Hot Pink */
+  box-shadow: 0 0 10px #FFFF00; /* Yellow */
+}
+
+#earning-history-submenu {
+  border: 2px solid #FF4500; /* Bright Orange */
+  box-shadow: 0 0 10px #FF6F61; /* Coral */
+}
+
+#topup-fund-submenu {
+  border: 2px solid #32CD32; /* Lime Green */
+  box-shadow: 0 0 10px #00BFFF; /* Electric Blue */
 }
 
 .sidebar .submenu.active {

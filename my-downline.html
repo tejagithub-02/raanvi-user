@@ -8,119 +8,231 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="assets/style.css" rel="stylesheet">
- <style>.main-content {
-  flex: 1;
-  padding: 20px;
-  background: #1a1a2e; /* Matches sidebar background */
-  margin-left: 250px;
-  overflow-y: auto;
-  min-height: calc(100vh - 48px);
-  display: flex;
-  flex-direction: column;
-  transition: margin-left 0.3s ease;
-}
-.main-content.collapsed {
-  margin-left: 60px;
-}
-.section {
-  flex: 1 0 auto;
-}
-.table-section {
-  background: #0f3460; /* Matches sidebar card background */
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px #00d4ff; /* Blue glow effect */
-  border: 2px solid #00d4ff; /* Matches sidebar border */
-  margin-bottom: 20px;
-}
-.table-section h4 {
-  color: #00ffcc; /* Matches sidebar h3 color */
-  margin-bottom: 15px;
-  text-shadow: 0 0 5px #00ffcc; /* Added glow */
-}
-.table-section table {
-  width: 100%;
-  border-collapse: collapse;
-  color: #b3e0ff; /* Matches sidebar text color */
-}
-.table-section th, .table-section td {
-  padding: 10px;
-  border: 2px solid #00d4ff; /* Matches sidebar border */
-  text-align: left;
-}
-.table-section th {
-  background: #0f3460; /* Matches sidebar card background */
-  box-shadow: 0 0 5px #00d4ff; /* Subtle glow */
-}
-.form-section {
-  background: #0f3460; /* Matches sidebar card background */
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px #00d4ff; /* Blue glow effect */
-  border: 2px solid #00d4ff; /* Matches sidebar border */
-  margin-bottom: 20px;
-}
-.form-section label {
-  color: #b3e0ff; /* Matches sidebar text color */
-  margin-bottom: 5px;
-  display: block;
-}
-.form-section input {
-  width: 100%;
-  padding: 8px;
-  border: 2px solid #00d4ff; /* Matches sidebar border */
-  border-radius: 5px;
-  background: #0f3460; /* Matches sidebar card background */
-  color: #b3e0ff; /* Matches sidebar text color */
-  margin-bottom: 10px;
-  box-shadow: 0 0 5px #00d4ff; /* Subtle glow */
-}
-.form-section input:focus {
-  outline: none;
-  box-shadow: 0 0 10px #00d4ff; /* Blue glow on focus */
-}
-.form-section button {
-  background: #0f3460; /* Matches sidebar card background */
-  border: 2px solid #00d4ff; /* Matches sidebar border */
-  padding: 10px 20px;
-  border-radius: 5px;
-  color: #b3e0ff; /* Matches sidebar text color */
-  cursor: pointer;
-  box-shadow: 0 0 10px #00d4ff; /* Blue glow */
-  transition: box-shadow 0.3s, transform 0.3s;
-}
-.form-section button:hover {
-  background: #0f3460; /* No background change */
-  transform: scale(1.03); /* Matches sidebar hover effect */
-  box-shadow: 0 0 15px #00d4ff; /* Stronger blue glow */
-  color: #b3e0ff; /* Prevent color change */
-}
-.form-section button:active {
-  color: #b3e0ff; /* Prevent color change on click */
-  box-shadow: 0 0 15px #00d4ff; /* Blue box-shadow only */
-}
-@media (min-width: 769px) {
-  .sidebar-toggle {
-    display: block;
-  }
-  .menu-toggle {
-    display: none;
-  }
-}
-@media (max-width: 768px) {
-  .main-content {
-    margin-left: 0;
-    padding: 15px;
-  }
-  .main-content.collapsed {
-    margin-left: 0;
-  }
-}
-@media (max-width: 480px) {
-  .topbar { padding: 6px; }
-  .topbar .admin-icon { font-size: 1.5rem; }
-  .table-section th, .table-section td { font-size: 0.9rem; }
-}</style>
+  <style>
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      background: #1a1a2e;
+      margin-left: 250px;
+      overflow-y: auto;
+      min-height: calc(100vh - 48px);
+      display: flex;
+      flex-direction: column;
+      transition: margin-left 0.3s ease;
+    }
+    .main-content.collapsed {
+      margin-left: 60px;
+    }
+    .section {
+      flex: 1 0 auto;
+    }
+    .table-section {
+      background: #0f3460;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00d4ff;
+      border: 2px solid #00d4ff;
+      margin-bottom: 20px;
+    }
+    .table-section h4 {
+      color: #00ffcc;
+      margin-bottom: 15px;
+      text-shadow: 0 0 5px #00ffcc;
+    }
+    .table-section table {
+      width: 100%;
+      border-collapse: collapse;
+      color: #b3e0ff;
+    }
+    .table-section th, .table-section td {
+      padding: 10px;
+      border: 2px solid #00d4ff;
+      text-align: left;
+    }
+    .table-section th {
+      background: #0f3460;
+      box-shadow: 0 0 5px #00d4ff;
+    }
+    .form-section {
+      background: #0f3460;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00d4ff;
+      border: 2px solid #00d4ff;
+      margin-bottom: 20px;
+    }
+    .form-section label {
+      color: #b3e0ff;
+      margin-bottom: 5px;
+      display: block;
+    }
+    .form-section input {
+      width: 100%;
+      padding: 8px;
+      border: 2px solid #00d4ff;
+      border-radius: 5px;
+      background: #0f3460;
+      color: #b3e0ff;
+      margin-bottom: 10px;
+      box-shadow: 0 0 5px #00d4ff;
+    }
+    .form-section input:focus {
+      outline: none;
+      box-shadow: 0 0 10px #00d4ff;
+    }
+    .form-section button {
+      background: #0f3460;
+      border: 2px solid #00d4ff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      color: #b3e0ff;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00d4ff;
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    .form-section button:hover {
+      background: #0f3460;
+      transform: scale(1.03);
+      box-shadow: 0 0 15px #00d4ff;
+      color: #b3e0ff;
+    }
+    .form-section button:active {
+      color: #b3e0ff;
+      box-shadow: 0 0 15px #00d4ff;
+    }
+    /* Downline Section Styles */
+    .downline-section {
+      background: #0f3460;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00d4ff;
+      border: 2px solid #00d4ff;
+      margin-bottom: 20px;
+    }
+    .downline-section h4 {
+      color: #00ffcc;
+      margin-bottom: 15px;
+      text-shadow: 0 0 5px #00ffcc;
+    }
+    .downline-container {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .downline-table {
+      flex: 1;
+      min-width: 0;
+      background: #0f3460;
+      border: 2px solid #00d4ff;
+      border-radius: 5px;
+      box-shadow: 0 0 5px #00d4ff;
+      padding: 10px;
+      overflow-x: auto;
+    }
+    .downline-table h5 {
+      color: #00ffcc;
+      text-shadow: 0 0 5px #00ffcc;
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+    .downline-table table {
+      width: 100%;
+      border-collapse: collapse;
+      color: #b3e0ff;
+      table-layout: auto;
+    }
+    .downline-table th,
+    .downline-table td {
+      padding: 6px;
+      text-align: left;
+      border-bottom: 1px solid #00d4ff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 120px;
+    }
+    .downline-table th {
+      background: #1a1a2e;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+    .downline-table td {
+      font-size: 0.85rem;
+    }
+    .downline-table tr:hover {
+      background: #1a1a2e;
+    }
+    @media (min-width: 769px) {
+      .sidebar-toggle {
+        display: block;
+      }
+      .menu-toggle {
+        display: none;
+      }
+    }
+    @media (max-width: 768px) {
+      .main-content {
+        margin-left: 0;
+        padding: 15px;
+      }
+      .main-content.collapsed {
+        margin-left: 0;
+      }
+      .downline-container {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .downline-table {
+        width: 100%;
+      }
+      .downline-table th,
+      .downline-table td {
+        padding: 5px;
+        font-size: 0.8rem;
+        max-width: 100px;
+      }
+    }
+    @media (max-width: 480px) {
+      .topbar {
+        padding: 6px;
+      }
+      .topbar .admin-icon {
+        font-size: 1.5rem;
+      }
+      .table-section th, .table-section td {
+        font-size: 0.9rem;
+      }
+      .downline-section {
+        padding: 10px;
+      }
+      .downline-table {
+        padding: 8px;
+      }
+      .downline-table th,
+      .downline-table td {
+        padding: 4px;
+        font-size: 0.75rem;
+        max-width: 80px;
+      }
+      .downline-table h5 {
+        font-size: 0.9rem;
+      }
+    }
+    @media (max-width: 360px) {
+      .downline-table th,
+      .downline-table td {
+        padding: 3px;
+        font-size: 0.7rem;
+        max-width: 70px;
+      }
+      .downline-table {
+        padding: 6px;
+      }
+      .downline-section {
+        padding: 8px;
+      }
+    }
+  </style>
 </head>
 <body>
   <!-- Topbar -->
@@ -135,7 +247,6 @@
       <div class="admin-dropdown" id="admin-dropdown">
         <a href="profile-details.html" class="dropdown-item">My Profile</a>
         <a href="change-password.html" class="dropdown-item">Change Password</a>
-       
       </div>
     </div>
   </nav>
@@ -157,15 +268,17 @@
           <a href="profile-details.html"><i class="fas fa-user-edit"></i> <span>Profile Details</span></a>
           <a href="kyc-document.html"><i class="fas fa-file-upload"></i> <span>Upload KYC Document</span></a>
           <a href="change-password.html"><i class="fas fa-lock"></i> <span>Change Password</span></a>
+          <a href="id-card.html"><i class="fas fa-lock"></i> <span>ID Card</span></a>
+      
         </div>
       </div>
       <div class="sidebar-item">
-        <a href="my-team.html" id="my-team-toggle" class="active">
+        <a href="my-team.html" id="my-team-toggle">
           <i class="fas fa-users"></i>
           <span>My Team</span>
-          <i class="fas fa-chevron-down dropdown-icon active"></i>
+          <i class="fas fa-chevron-down dropdown-icon"></i>
         </a>
-        <div class="submenu active" id="my-team-submenu">
+        <div class="submenu" id="my-team-submenu">
           <a href="binary-tree.html"><i class="fas fa-sitemap"></i> <span>Binary Tree</span></a>
           <a href="my-downline.html" class="active"><i class="fas fa-user-friends"></i> <span>My Downline</span></a>
           <a href="my-referral.html"><i class="fas fa-user-plus"></i> <span>My Referral</span></a>
@@ -188,16 +301,18 @@
       <div class="sidebar-item">
         <a href="topup-fund.html" id="topup-fund-toggle">
           <i class="fas fa-wallet"></i>
-          <span>Topup & Fund</span>
+          <span>Product & Payment</span>
           <i class="fas fa-chevron-down dropdown-icon"></i>
         </a>
         <div class="submenu" id="topup-fund-submenu">
-          <a href="fund.html"><i class="fas fa-money-bill"></i> <span>Fund</span></a>
+          
           <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
+          <a href="product-details.html"><i class="fas fa-credit-card" class="active"></i> <span>product-details</span></a>
+          
           <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
         </div>
       </div>
-      <a href="id-card.html"><i class="fas fa-id-card"></i> <span>ID Card</span></a>
+      
       <a href="#" id="sidebar-sign-out"><i class="fas fa-sign-out-alt"></i> <span>Sign Out</span></a>
     </div>
 
@@ -210,30 +325,88 @@
           <table>
             <thead>
               <tr>
+                <th>SI.NO</th>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Side</th>
                 <th>Join Date</th>
+                <th>Side</th>
+                <th>Package</th>
+                <th>RV</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
               <tr>
+                <td>1</td>
                 <td>1001</td>
                 <td>John Doe</td>
-                <td>Left</td>
                 <td>2025-01-10</td>
-                <td>Active</td>
-              </tr>
-              <tr>
-                <td>1002</td>
-                <td>Jane Smith</td>
-                <td>Right</td>
-                <td>2025-02-15</td>
+                <td>Left</td>
+                <td>₹200.00</td>
+                <td>100</td>
                 <td>Active</td>
               </tr>
             </tbody>
           </table>
+        </div>
+        <div class="downline-section">
+          <h4>My Downline</h4>
+          <div class="downline-container">
+            <div class="table-section">
+              <h4>Left Downline (Total Members =2 )</h4>
+              <table>
+                <thead>
+                  <tr>
+                    <th>SI.NO</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                      
+                    <th>RV Points</th>
+                    <th>Mobile</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>  RI001</td>
+                    <td>John Doe</td>
+                    
+                   
+                    <td>100</td>
+                   
+                    <td>9876543210</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="table-section">
+              <h4>Right Downline (Total Members =1 )</h4>
+              <table>
+                <thead>
+                  <tr>
+                    <th>SI.NO</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    
+                    <th>RV Points</th>
+                    <th>Mobile</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>  RI002</td>
+                    <td>John </td>
+                  
+                   
+                    <td>100</td>
+                   
+                    <td>9876543210</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
         <div class="form-section">
           <h4>ID-wise Downline Search</h4>
@@ -250,42 +423,108 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const sidebarToggle = document.getElementById('sidebar-toggle');
-      const sidebarExpand = document.getElementById('sidebar-expand');
+      // Sidebar toggle elements
       const sidebar = document.querySelector('.sidebar');
       const mainContent = document.querySelector('.main-content');
+      const sidebarToggle = document.getElementById('sidebar-toggle');
       const menuToggle = document.getElementById('menu-toggle');
-      const adminIcon = document.getElementById('admin-icon');
-      const adminDropdown = document.getElementById('admin-dropdown');
-      const myTeamToggle = document.getElementById('my-team-toggle');
-      const myTeamSubmenu = document.getElementById('my-team-submenu');
-      const dropdownIcon = myTeamToggle.querySelector('.dropdown-icon');
+      const sidebarExpand = document.getElementById('sidebar-expand');
 
-      // Sidebar collapse/expand for desktop
-      if (sidebarToggle && sidebarExpand && sidebar && mainContent) {
+      // Desktop sidebar toggle (collapse/expand)
+      if (sidebarToggle) {
         sidebarToggle.addEventListener('click', () => {
-          const isCollapsed = sidebar.classList.toggle('collapsed');
+          sidebar.classList.toggle('collapsed');
           mainContent.classList.toggle('collapsed');
-          sidebarExpand.style.display = isCollapsed && window.innerWidth >= 769 ? 'block' : 'none';
-          // Close all submenus when collapsing
-          document.querySelectorAll('.submenu').forEach(submenu => submenu.classList.remove('active'));
-          document.querySelectorAll('.dropdown-icon').forEach(icon => icon.classList.remove('active'));
-        });
-        sidebarExpand.addEventListener('click', () => {
-          sidebar.classList.remove('collapsed');
-          mainContent.classList.remove('collapsed');
-          sidebarExpand.style.display = 'none';
         });
       }
 
-      // Sidebar toggle for mobile
-      if (menuToggle && sidebar) {
+      // Mobile sidebar toggle (show/hide)
+      if (menuToggle) {
         menuToggle.addEventListener('click', () => {
           sidebar.classList.toggle('active');
         });
       }
 
+      // Mobile sidebar close button
+      if (sidebarExpand) {
+        sidebarExpand.addEventListener('click', () => {
+          sidebar.classList.remove('active');
+        });
+      }
+
+      // Close sidebar on mobile when clicking outside
+      document.addEventListener('click', (e) => {
+        if (window.innerWidth <= 768 && sidebar.classList.contains('active')) {
+          if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+            sidebar.classList.remove('active');
+          }
+        }
+      });
+
+      // Submenu toggle for multiple items
+      const submenuToggles = [
+        {
+          toggle: document.getElementById('my-account-toggle'),
+          submenu: document.getElementById('my-account-submenu'),
+          icon: document.querySelector('#my-account-toggle .dropdown-icon')
+        },
+        {
+          toggle: document.getElementById('my-team-toggle'),
+          submenu: document.getElementById('my-team-submenu'),
+          icon: document.querySelector('#my-team-toggle .dropdown-icon')
+        },
+        {
+          toggle: document.getElementById('earning-history-toggle'),
+          submenu: document.getElementById('earning-history-submenu'),
+          icon: document.querySelector('#earning-history-toggle .dropdown-icon')
+        },
+        {
+          toggle: document.getElementById('topup-fund-toggle'),
+          submenu: document.getElementById('topup-fund-submenu'),
+          icon: document.querySelector('#topup-fund-toggle .dropdown-icon')
+        },
+        {
+          toggle: document.getElementById('payment-toggle'),
+          submenu: document.getElementById('payment-submenu'),
+          icon: document.querySelector('#payment-toggle .dropdown-icon')
+        }
+      ];
+
+      submenuToggles.forEach(({ toggle, submenu, icon }) => {
+        if (toggle && submenu && icon) {
+          toggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            submenu.classList.toggle('active');
+            icon.classList.toggle('active');
+            // Close other submenus
+            submenuToggles.forEach(other => {
+              if (other.submenu !== submenu) {
+                other.submenu.classList.remove('active');
+                other.icon.classList.remove('active');
+              }
+            });
+          });
+          // Close submenu when clicking outside
+          document.addEventListener('click', (e) => {
+            if (!toggle.contains(e.target) && !submenu.contains(e.target)) {
+              submenu.classList.remove('active');
+              icon.classList.remove('active');
+            }
+          });
+          // Close sidebar on mobile after submenu item click
+          submenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+              if (window.innerWidth <= 768) {
+                sidebar.classList.remove('active');
+              }
+            });
+          });
+        }
+      });
+
       // Admin dropdown toggle
+      const adminIcon = document.getElementById('admin-icon');
+      const adminDropdown = document.getElementById('admin-dropdown');
       if (adminIcon && adminDropdown) {
         adminIcon.addEventListener('click', (e) => {
           e.stopPropagation();
@@ -298,43 +537,59 @@
         });
       }
 
-      // Submenu toggle for My Team
-      if (myTeamToggle && myTeamSubmenu && dropdownIcon) {
-        myTeamToggle.addEventListener('click', (e) => {
-          e.preventDefault();
-          myTeamSubmenu.classList.toggle('active');
-          dropdownIcon.classList.toggle('active');
-          // Close other submenus
-          document.querySelectorAll('.submenu').forEach(submenu => {
-            if (submenu !== myTeamSubmenu) {
-              submenu.classList.remove('active');
-            }
-          });
-          document.querySelectorAll('.dropdown-icon').forEach(icon => {
-            if (icon !== dropdownIcon) {
-              icon.classList.remove('active');
-            }
-          });
-        });
+      // Dummy data for downline tables
+      const treeData = [
+        { id: 'RI001', name: 'Name: Varun', email: 'E-Mail: varun@gmail.com', mobile: 'Number: 9876543210', cfp: '0RV', left: 'RI002', right: 'RI003' },
+        { id: 'RI002', name: 'Name: Kiran', email: 'E-Mail: kiran@gmail.com', mobile: 'Number: 9276543232', cfp: '100RV', left: 'RI004', right: 'RI005' },
+        { id: 'RI003', name: 'Name: Johnson', email: 'E-Mail: john.j@gmail.com', mobile: 'Number: 8876543210', cfp: '0RV', left: null, right: null },
+        { id: 'RI004', name: 'Name: Emily', email: 'E-Mail: emily.b@gmail.com', mobile: 'Number: 8736543210', cfp: '0RV', left: null, right: null },
+        { id: 'RI005', name: 'Name: David', email: 'E-Mail: david.w@gmail.com', mobile: 'Number: 6856543210', cfp: '0RV', left: null, right: null }
+      ];
 
-        // Close mobile sidebar when clicking submenu items
-        const submenuLinks = myTeamSubmenu.querySelectorAll('a');
-        submenuLinks.forEach(link => {
-          link.addEventListener('click', () => {
-            if (window.innerWidth <= 768) {
-              sidebar.classList.remove('active');
-            }
-          });
-        });
+      // Function to populate downline tables
+      function populateDownlineTables() {
+        const leftTableBody = document.querySelector('#left-downline-table tbody');
+        const rightTableBody = document.querySelector('#right-downline-table tbody');
+        leftTableBody.innerHTML = '';
+        rightTableBody.innerHTML = '';
 
-        // Close submenu when clicking outside
-        document.addEventListener('click', (e) => {
-          if (!myTeamToggle.contains(e.target) && !myTeamSubmenu.contains(e.target)) {
-            myTeamSubmenu.classList.remove('active');
-            dropdownIcon.classList.remove('active');
-          }
-        });
+        // Get the root node (RI001)
+        const rootNode = treeData.find(n => n.id === 'RI001');
+        if (!rootNode) return;
+
+        // Get immediate left and right children
+        const leftChild = treeData.find(n => n.id === rootNode.left); // RI002
+        const rightChild = treeData.find(n => n.id === rootNode.right); // RI003
+
+        // Populate left downline table
+        if (leftChild) {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${leftChild.id}</td>
+            <td>${leftChild.name.replace('Name: ', '')}</td>
+            <td>${leftChild.email.replace('E-Mail: ', '')}</td>
+            <td>${leftChild.cfp}</td>
+            <td>${leftChild.mobile.replace('Number: ', '')}</td>
+          `;
+          leftTableBody.appendChild(row);
+        }
+
+        // Populate right downline table
+        if (rightChild) {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${rightChild.id}</td>
+            <td>${rightChild.name.replace('Name: ', '')}</td>
+            <td>${rightChild.email.replace('E-Mail: ', '')}</td>
+            <td>${rightChild.cfp}</td>
+            <td>${rightChild.mobile.replace('Number: ', '')}</td>
+          `;
+          rightTableBody.appendChild(row);
+        }
       }
+
+      // Initialize the page
+      populateDownlineTables();
     });
   </script>
 </body>

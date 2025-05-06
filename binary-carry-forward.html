@@ -99,7 +99,7 @@
     <div class="sidebar">
       <i class="fas fa-times sidebar-expand" id="sidebar-expand"></i>
       <h3></h3>
-      <a href="index.html"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
+      <a href="index.html" ><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
       <div class="sidebar-item">
         <a href="my-account.html" id="my-account-toggle">
           <i class="fas fa-user"></i>
@@ -110,15 +110,18 @@
           <a href="profile-details.html"><i class="fas fa-user-edit"></i> <span>Profile Details</span></a>
           <a href="kyc-document.html"><i class="fas fa-file-upload"></i> <span>Upload KYC Document</span></a>
           <a href="change-password.html"><i class="fas fa-lock"></i> <span>Change Password</span></a>
+          <a href="id-card.html"><i class="fas fa-lock"></i> <span>ID Card</span></a>
+      
+
         </div>
       </div>
       <div class="sidebar-item">
-        <a href="my-team.html" id="my-team-toggle" class="active">
+        <a href="my-team.html" id="my-team-toggle">
           <i class="fas fa-users"></i>
           <span>My Team</span>
-          <i class="fas fa-chevron-down dropdown-icon active"></i>
+          <i class="fas fa-chevron-down dropdown-icon"></i>
         </a>
-        <div class="submenu active" id="my-team-submenu">
+        <div class="submenu" id="my-team-submenu">
           <a href="binary-tree.html"><i class="fas fa-sitemap"></i> <span>Binary Tree</span></a>
           <a href="my-downline.html"><i class="fas fa-user-friends"></i> <span>My Downline</span></a>
           <a href="my-referral.html"><i class="fas fa-user-plus"></i> <span>My Referral</span></a>
@@ -141,16 +144,19 @@
       <div class="sidebar-item">
         <a href="topup-fund.html" id="topup-fund-toggle">
           <i class="fas fa-wallet"></i>
-          <span>Topup & Fund</span>
+          <span>Product & Payment</span>
           <i class="fas fa-chevron-down dropdown-icon"></i>
         </a>
         <div class="submenu" id="topup-fund-submenu">
-          <a href="fund.html"><i class="fas fa-money-bill"></i> <span>Fund</span></a>
+          
           <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
+          <a href="product-details.html"><i class="fas fa-credit-card" ></i> <span>product-details</span></a>
+          
           <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
         </div>
       </div>
-      <a href="id-card.html"><i class="fas fa-id-card"></i> <span>ID Card</span></a>
+     
+     
       <a href="#" id="sidebar-sign-out"><i class="fas fa-sign-out-alt"></i> <span>Sign Out</span></a>
     </div>
 
@@ -163,22 +169,25 @@
           <table>
             <thead>
               <tr>
-                <th>Side</th>
-                <th>Amount</th>
+                <th>SI.NO</th>
+                <th>Name</th>
                 <th>Date</th>
+                <th>Side</th>
+               
+                <th>Pair</th>
+                
               </tr>
             </thead>
             <tbody>
               <tr>
+                <td>1</td>
+                <td>John</td>
+                <td>2025-04-01</td>
                 <td>Left</td>
-                <td>₹5,000</td>
-                <td>2025-04-01</td>
+                <td>2</td>
+                
               </tr>
-              <tr>
-                <td>Right</td>
-                <td>₹3,000</td>
-                <td>2025-04-01</td>
-              </tr>
+             
             </tbody>
           </table>
         </div>
@@ -218,7 +227,11 @@
           toggle: document.getElementById('topup-fund-toggle'),
           submenu: document.getElementById('topup-fund-submenu'),
           icon: document.querySelector('#topup-fund-toggle .dropdown-icon')
-        }
+        },   {
+    toggle: document.getElementById('payment-toggle'),
+    submenu: document.getElementById('payment-submenu'),
+    icon: document.querySelector('#payment-toggle .dropdown-icon')
+  }
       ];
 
       // Sidebar collapse/expand for desktop
