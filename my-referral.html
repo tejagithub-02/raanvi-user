@@ -8,72 +8,93 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="assets/style.css" rel="stylesheet">
- <style>.main-content {
-  flex: 1;
-  padding: 20px;
-  background: #1a1a2e; /* Matches sidebar background */
-  margin-left: 250px;
-  overflow-y: auto;
-  min-height: calc(100vh - 48px);
-  display: flex;
-  flex-direction: column;
-  transition: margin-left 0.3s ease;
-}
-.main-content.collapsed {
-  margin-left: 60px;
-}
-.section {
-  flex: 1 0 auto;
-}
-.table-section {
-  background: #0f3460; /* Matches sidebar card background */
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px #00d4ff; /* Blue glow effect */
-  border: 2px solid #00d4ff; /* Matches sidebar border */
-  margin-bottom: 20px;
-}
-.table-section h4 {
-  color: #00ffcc; /* Matches sidebar h3 color */
-  margin-bottom: 15px;
-  text-shadow: 0 0 5px #00ffcc; /* Added glow */
-}
-.table-section table {
-  width: 100%;
-  border-collapse: collapse;
-  color: #b3e0ff; /* Matches sidebar text color */
-}
-.table-section th, .table-section td {
-  padding: 10px;
-  border: 2px solid #00d4ff; /* Matches sidebar border */
-  text-align: left;
-}
-.table-section th {
-  background: #0f3460; /* Matches sidebar card background */
-  box-shadow: 0 0 5px #00d4ff; /* Subtle glow */
-}
-@media (min-width: 769px) {
-  .sidebar-toggle {
-    display: block;
-  }
-  .menu-toggle {
-    display: none;
-  }
-}
-@media (max-width: 768px) {
-  .main-content {
-    margin-left: 0;
-    padding: 15px;
-  }
-  .main-content.collapsed {
-    margin-left: 0;
-  }
-}
-@media (max-width: 480px) {
-  .topbar { padding: 6px; }
-  .topbar .admin-icon { font-size: 1.5rem; }
-  .table-section th, .table-section td { font-size: 0.9rem; }
-}</style>
+  <style>
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      background: #1a1a2e; /* Matches sidebar background */
+      margin-left: 250px;
+      overflow-y: auto;
+      min-height: calc(100vh - 48px);
+      display: flex;
+      flex-direction: column;
+      transition: margin-left 0.3s ease;
+    }
+    .main-content.collapsed {
+      margin-left: 60px;
+    }
+    .section {
+      flex: 1 0 auto;
+    }
+    .table-section {
+      background: #0f3460; /* Matches sidebar card background */
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00d4ff; /* Blue glow effect */
+      border: 2px solid #00d4ff; /* Matches sidebar border */
+      margin-bottom: 20px;
+    }
+    .table-section h4 {
+      color: #00ffcc; /* Matches sidebar h3 color */
+      margin-bottom: 15px;
+      text-shadow: 0 0 5px #00ffcc; /* Added glow */
+    }
+    .table-responsive {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
+    }
+    .table-section table {
+      width: 100%;
+      min-width: 600px; /* Ensures table is wide enough to avoid cramping */
+      border-collapse: collapse;
+      color: #b3e0ff; /* Matches sidebar text color */
+    }
+    .table-section th, .table-section td {
+      padding: 10px;
+      border: 2px solid #00d4ff; /* Matches sidebar border */
+      text-align: left;
+      font-size: 1rem; /* Default font size */
+    }
+    .table-section th {
+      background: #0f3460; /* Matches sidebar card background */
+      box-shadow: 0 0 5px #00d4ff; /* Subtle glow */
+    }
+    @media (min-width: 769px) {
+      .sidebar-toggle {
+        display: block;
+      }
+      .menu-toggle {
+        display: none;
+      }
+    }
+    @media (max-width: 768px) {
+      .main-content {
+        margin-left: 0;
+        padding: 15px;
+      }
+      .main-content.collapsed {
+        margin-left: 0;
+      }
+    }
+    @media (max-width: 480px) {
+      .topbar {
+        padding: 6px;
+      }
+      .topbar .admin-icon {
+        font-size: 1.5rem;
+      }
+      .table-section {
+        padding: 15px; /* Slightly reduced padding */
+      }
+      .table-section th, .table-section td {
+        padding: 8px; /* Reduced padding for small screens */
+        font-size: 0.85rem; /* Smaller font size for readability */
+      }
+      .table-section table {
+        min-width: 700px; /* Ensures table remains scrollable */
+      }
+    }
+  </style>
 </head>
 <body>
   <!-- Topbar -->
@@ -88,7 +109,6 @@
       <div class="admin-dropdown" id="admin-dropdown">
         <a href="profile-details.html" class="dropdown-item">My Profile</a>
         <a href="change-password.html" class="dropdown-item">Change Password</a>
-      
       </div>
     </div>
   </nav>
@@ -98,7 +118,7 @@
     <div class="sidebar">
       <i class="fas fa-times sidebar-expand" id="sidebar-expand"></i>
       <h3></h3>
-      <a href="index.html" ><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
+      <a href="index.html"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
       <div class="sidebar-item">
         <a href="my-account.html" id="my-account-toggle">
           <i class="fas fa-user"></i>
@@ -110,7 +130,6 @@
           <a href="kyc-document.html"><i class="fas fa-file-upload"></i> <span>Upload KYC Document</span></a>
           <a href="change-password.html"><i class="fas fa-lock"></i> <span>Change Password</span></a>
           <a href="id-card.html"><i class="fas fa-lock"></i> <span>ID Card</span></a>
-      
         </div>
       </div>
       <div class="sidebar-item">
@@ -146,15 +165,11 @@
           <i class="fas fa-chevron-down dropdown-icon"></i>
         </a>
         <div class="submenu" id="topup-fund-submenu">
-          
           <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
-          <a href="product-details.html"><i class="fas fa-credit-card" class="active"></i> <span>product-details</span></a>
-          
+          <a href="product-details.html"><i class="fas fa-credit-card"></i> <span>product-details</span></a>
           <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
         </div>
       </div>
-    
-      
       <a href="#" id="sidebar-sign-out"><i class="fas fa-sign-out-alt"></i> <span>Sign Out</span></a>
     </div>
 
@@ -164,33 +179,34 @@
         <h2 class="text-2xl font-bold text-[#f4c430] mb-4">My Referral</h2>
         <div class="table-section">
           <h4>My Referrals</h4>
-          <table>
-            <thead>
-              <tr>
-                <th>SI.NO</th>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Join Date</th>
-                <th>Side</th>
-                <th>Package</th>
-                <th>RV Points</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>1001</td>
-                <td>John Doe</td>
-                <td>2025-05-10</td>
-                <td>Left</td>
-                <td>₹300.00</td>
-                <td>150</td>
-                <td>Active</td>
-              </tr>
-             
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>SI.NO</th>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Join Date</th>
+                  <th>Side</th>
+                  <th>Package</th>
+                  <th>RV Points</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>1001</td>
+                  <td>John Doe</td>
+                  <td>2025-05-10</td>
+                  <td>Left</td>
+                  <td>₹300.00</td>
+                  <td>150</td>
+                  <td>Active</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
       <footer class="main-footer">
@@ -297,6 +313,6 @@
         });
       }
     });
-    </script>
+  </script>
 </body>
 </html>

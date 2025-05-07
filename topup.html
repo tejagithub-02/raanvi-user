@@ -99,8 +99,13 @@
       margin-bottom: 15px;
       text-shadow: 0 0 5px #00ffcc;
     }
+    .table-responsive {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
+    }
     .table-section table {
       width: 100%;
+      min-width: 500px; /* Ensures table is scrollable on small screens */
       border-collapse: collapse;
       color: #b3e0ff;
     }
@@ -109,6 +114,10 @@
       padding: 10px;
       border: 2px solid #00d4ff;
       text-align: left;
+      font-size: 0.95rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .table-section th {
       background: #0f3460;
@@ -176,6 +185,15 @@
       .sidebar .submenu {
         margin-left: 20px;
       }
+      .table-section th,
+      .table-section td {
+        padding: 8px;
+        font-size: 0.85rem;
+        max-width: 100px;
+      }
+      .table-section table {
+        min-width: 600px;
+      }
     }
     @media (max-width: 480px) {
       .topbar {
@@ -184,12 +202,70 @@
       .topbar .admin-icon {
         font-size: 1.5rem;
       }
+      .table-section {
+        padding: 15px;
+      }
       .table-section th,
       .table-section td {
-        font-size: 0.9rem;
+        padding: 6px;
+        font-size: 0.8rem;
+        max-width: 80px;
+      }
+      .table-section table {
+        min-width: 700px;
       }
       .form-section img {
         max-width: 150px;
+      }
+      /* Hide less critical columns for Topup History */
+      .table-section:nth-child(2) th:nth-child(4), /* Date */
+      .table-section:nth-child(2) td:nth-child(4) {
+        display: none;
+      }
+      /* Hide less critical columns for Transaction History */
+      .table-section:nth-child(5) th:nth-child(2), /* Date */
+      .table-section:nth-child(5) td:nth-child(2) {
+        display: none;
+      }
+      /* Hide less critical columns for Fund History */
+      .table-section:nth-child(6) th:nth-child(1), /* Date */
+      .table-section:nth-child(6) td:nth-child(1) {
+        display: none;
+      }
+    }
+    @media (max-width: 360px) {
+      .table-section th,
+      .table-section td {
+        padding: 4px;
+        font-size: 0.75rem;
+        max-width: 60px;
+      }
+      .table-section table {
+        min-width: 800px;
+      }
+      .table-section {
+        padding: 12px;
+      }
+      /* Hide additional columns for Topup History */
+      .table-section:nth-child(2) th:nth-child(4), /* Date */
+      .table-section:nth-child(2) td:nth-child(4),
+      .table-section:nth-child(2) th:nth-child(3), /* Member ID */
+      .table-section:nth-child(2) td:nth-child(3) {
+        display: none;
+      }
+      /* Hide additional columns for Transaction History */
+      .table-section:nth-child(5) th:nth-child(2), /* Date */
+      .table-section:nth-child(5) td:nth-child(2),
+      .table-section:nth-child(5) th:nth-child(3), /* Transaction ID */
+      .table-section:nth-child(5) td:nth-child(3) {
+        display: none;
+      }
+      /* Hide additional columns for Fund History */
+      .table-section:nth-child(6) th:nth-child(1), /* Date */
+      .table-section:nth-child(6) td:nth-child(1),
+      .table-section:nth-child(6) th:nth-child(3), /* Fund ID */
+      .table-section:nth-child(6) td:nth-child(3) {
+        display: none;
       }
     }
   </style>
@@ -264,10 +340,8 @@
           <i class="fas fa-chevron-down dropdown-icon"></i>
         </a>
         <div class="submenu" id="topup-fund-submenu active">
-          
           <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
           <a href="product-details.html"><i class="fas fa-credit-card" class="active"></i> <span>product-details</span></a>
-          
           <a href="repurchase.html"><i class="fas fa-shopping-cart" class="active"></i> <span>Repurchase</span></a>
         </div>
       </div>
@@ -298,28 +372,30 @@
         <!-- Topup History -->
         <div class="table-section">
           <h4>Topup History</h4>
-          <table>
-            <thead>
-              <tr>
-                <th>SI.NO</th>
-                <th>Name</th>
-                <th>Member ID</th>
-                <th>Date</th>
-                <th>Amount</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>John Doe</td>
-                <td>1001</td>
-                <td>2025-03-01</td>
-                <td>1000 RV</td>
-                <td>Success</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>SI.NO</th>
+                  <th>Name</th>
+                  <th>Member ID</th>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>John Doe</td>
+                  <td>1001</td>
+                  <td>2025-03-01</td>
+                  <td>1000 RV</td>
+                  <td>Success</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <!-- Transaction Number -->
@@ -341,34 +417,34 @@
         <!-- Transaction History -->
         <div class="table-section">
           <h4>Transaction History</h4>
-          <table>
-            <thead>
-              <tr>
-                <th>SI.NO</th>
-                <th>Date</th>
-                <th>Transaction ID</th>
-                <th>Amount</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>2025-05-01</td>
-                <td>TXN123456</td>
-                <td>₹5,000</td>
-                <td>Completed</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>SI.NO</th>
+                  <th>Date</th>
+                  <th>Transaction ID</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>2025-05-01</td>
+                  <td>TXN123456</td>
+                  <td>₹5,000</td>
+                  <td>Completed</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
-       
-
-
-          <!-- Fund History -->
-          <div class="table-section">
-            <h4>Fund History</h4>
+        <!-- Fund History -->
+        <div class="table-section">
+          <h4>Fund History</h4>
+          <div class="table-responsive">
             <table>
               <thead>
                 <tr>
@@ -376,22 +452,23 @@
                   <th>SI.NO</th>
                   <th>Fund ID</th>
                   <th>Amount</th>
-                 <th>RV Points</th>
+                  <th>RV Points</th>
                   <th>Status</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>1</td>
                   <td>2025-04-20</td>
+                  <td>1</td>
                   <td>FUND001</td>
                   <td>₹7,500</td>
-                 <td>100</td>
+                  <td>100</td>
                   <td>Processed</td>
                 </tr>
               </tbody>
             </table>
           </div>
+        </div>
 
         <!-- QR Code for Payment -->
         <div class="form-section">
@@ -399,8 +476,6 @@
           <img src="https://via.placeholder.com/200?text=UPI+QR+Code" alt="QR Code for UPI Payment">
           <p class="text-[#b3e0ff] mt-2">Scan this QR code for UPI payments</p>
         </div>
-
-     
       </div>
       <footer class="main-footer">
         @2025 Raanvi - Developed By Bloom It Solutions
@@ -412,7 +487,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       // Sidebar toggle elements
       const sidebar = document.querySelector('.sidebar');
-      const mainContent = document.querySelector('.main-content');
+      const maincontent = document.querySelector('.main-content');
       const sidebarToggle = document.getElementById('sidebar-toggle');
       const menuToggle = document.getElementById('menu-toggle');
       const sidebarExpand = document.getElementById('sidebar-expand');

@@ -39,15 +39,24 @@
       margin-bottom: 15px;
       text-shadow: 0 0 5px #00ffcc;
     }
+    .table-responsive {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
+    }
     .table-section table {
       width: 100%;
+      min-width: 500px; /* Optimized for fit */
       border-collapse: collapse;
       color: #b3e0ff;
     }
     .table-section th, .table-section td {
-      padding: 10px;
+      padding: 8px;
       border: 2px solid #00d4ff;
       text-align: left;
+      font-size: 0.95rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .table-section th {
       background: #0f3460;
@@ -127,7 +136,6 @@
       border-radius: 5px;
       box-shadow: 0 0 5px #00d4ff;
       padding: 10px;
-      overflow-x: auto;
     }
     .downline-table h5 {
       color: #00ffcc;
@@ -137,6 +145,7 @@
     }
     .downline-table table {
       width: 100%;
+      min-width: 350px; /* Further reduced for small screens */
       border-collapse: collapse;
       color: #b3e0ff;
       table-layout: auto;
@@ -149,7 +158,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 120px;
+      max-width: 90px;
     }
     .downline-table th {
       background: #1a1a2e;
@@ -185,11 +194,17 @@
       .downline-table {
         width: 100%;
       }
-      .downline-table th,
-      .downline-table td {
+      .table-section th, .table-section td,
+      .downline-table th, .downline-table td {
         padding: 5px;
         font-size: 0.8rem;
-        max-width: 100px;
+        max-width: 80px;
+      }
+      .table-section table {
+        min-width: 550px;
+      }
+      .downline-table table {
+        min-width: 400px;
       }
     }
     @media (max-width: 480px) {
@@ -199,7 +214,22 @@
       .topbar .admin-icon {
         font-size: 1.5rem;
       }
-      .table-section th, .table-section td {
+      .table-section {
+        padding: 12px;
+      }
+      .table-section th, .table-section td,
+      .downline-table th, .downline-table td {
+        padding: 4px;
+        font-size: 0.75rem;
+        max-width: 60px;
+      }
+      .table-section table {
+        min-width: 600px;
+      }
+      .downline-table table {
+        min-width: 450px;
+      }
+      .downline-table h5 {
         font-size: 0.9rem;
       }
       .downline-section {
@@ -208,28 +238,37 @@
       .downline-table {
         padding: 8px;
       }
-      .downline-table th,
-      .downline-table td {
-        padding: 4px;
-        font-size: 0.75rem;
-        max-width: 80px;
-      }
-      .downline-table h5 {
-        font-size: 0.9rem;
+      /* Hide Mobile column on small screens */
+      .downline-table th:nth-child(5),
+      .downline-table td:nth-child(5) {
+        display: none;
       }
     }
     @media (max-width: 360px) {
-      .downline-table th,
-      .downline-table td {
+      .table-section th, .table-section td,
+      .downline-table th, .downline-table td {
         padding: 3px;
         font-size: 0.7rem;
-        max-width: 70px;
+        max-width: 50px;
+      }
+      .table-section table {
+        min-width: 650px;
+      }
+      .downline-table table {
+        min-width: 500px;
       }
       .downline-table {
         padding: 6px;
       }
       .downline-section {
         padding: 8px;
+      }
+      /* Hide Mobile and RV Points columns on very small screens */
+      .downline-table th:nth-child(4),
+      .downline-table td:nth-child(4),
+      .downline-table th:nth-child(5),
+      .downline-table td:nth-child(5) {
+        display: none;
       }
     }
   </style>
@@ -269,7 +308,6 @@
           <a href="kyc-document.html"><i class="fas fa-file-upload"></i> <span>Upload KYC Document</span></a>
           <a href="change-password.html"><i class="fas fa-lock"></i> <span>Change Password</span></a>
           <a href="id-card.html"><i class="fas fa-lock"></i> <span>ID Card</span></a>
-      
         </div>
       </div>
       <div class="sidebar-item">
@@ -305,14 +343,11 @@
           <i class="fas fa-chevron-down dropdown-icon"></i>
         </a>
         <div class="submenu" id="topup-fund-submenu">
-          
           <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
-          <a href="product-details.html"><i class="fas fa-credit-card" class="active"></i> <span>product-details</span></a>
-          
+          <a href="product-details.html"><i class="fas fa-credit-card"></i> <span>product-details</span></a>
           <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
         </div>
       </div>
-      
       <a href="#" id="sidebar-sign-out"><i class="fas fa-sign-out-alt"></i> <span>Sign Out</span></a>
     </div>
 
@@ -322,89 +357,108 @@
         <h2 class="text-2xl font-bold text-[#f4c430] mb-4">My Downline</h2>
         <div class="table-section">
           <h4>My Downline (Left & Right)</h4>
-          <table>
-            <thead>
-              <tr>
-                <th>SI.NO</th>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Join Date</th>
-                <th>Side</th>
-                <th>Package</th>
-                <th>RV</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>1001</td>
-                <td>John Doe</td>
-                <td>2025-01-10</td>
-                <td>Left</td>
-                <td>₹200.00</td>
-                <td>100</td>
-                <td>Active</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>SI.NO</th>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Join Date</th>
+                  <th>Side</th>
+                  <th>Package</th>
+                  <th>RV</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>1001</td>
+                  <td>John Doe</td>
+                  <td>2025-01-10</td>
+                  <td>Left</td>
+                  <td>₹200.00</td>
+                  <td>100</td>
+                  <td>Active</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
         <div class="downline-section">
           <h4>My Downline</h4>
           <div class="downline-container">
-            <div class="table-section">
-              <h4>Left Downline (Total Members =2 )</h4>
-              <table>
-                <thead>
-                  <tr>
-                    <th>SI.NO</th>
-                    <th>ID</th>
-                    <th>Name</th>
-                      
-                    <th>RV Points</th>
-                    <th>Mobile</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>  RI001</td>
-                    <td>John Doe</td>
-                    
-                   
-                    <td>100</td>
-                   
-                    <td>9876543210</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="downline-table">
+              <h5>Left Downline (Total Members = 3)</h5>
+              <div class="table-responsive">
+                <table id="left-downline-table">
+                  <thead>
+                    <tr>
+                      <th>SI.NO</th>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>RV Points</th>
+                      <th>Mobile</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>RI001</td>
+                      <td>Varun Sharma</td>
+                      <td>100</td>
+                      <td>9876543210</td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>RI002</td>
+                      <td>Kiran Patel</td>
+                      <td>150</td>
+                      <td>9276543232</td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>RI004</td>
+                      <td>Emily Brown</td>
+                      <td>50</td>
+                      <td>8736543210</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
-            <div class="table-section">
-              <h4>Right Downline (Total Members =1 )</h4>
-              <table>
-                <thead>
-                  <tr>
-                    <th>SI.NO</th>
-                    <th>ID</th>
-                    <th>Name</th>
-                    
-                    <th>RV Points</th>
-                    <th>Mobile</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>  RI002</td>
-                    <td>John </td>
-                  
-                   
-                    <td>100</td>
-                   
-                    <td>9876543210</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="downline-table">
+              <h5>Right Downline (Total Members = 2)</h5>
+              <div class="table-responsive">
+                <table id="right-downline-table">
+                  <thead>
+                    <tr>
+                      <th>SI.NO</th>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>RV Points</th>
+                      <th>Mobile</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>RI003</td>
+                      <td>Johnson Lee</td>
+                      <td>80</td>
+                      <td>8876543210</td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>RI005</td>
+                      <td>David Wilson</td>
+                      <td>120</td>
+                      <td>6856543210</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
@@ -499,7 +553,7 @@
             // Close other submenus
             submenuToggles.forEach(other => {
               if (other.submenu !== submenu) {
-                other.submenu.classList.remove('active');
+                other.submenu.classList .remove('active');
                 other.icon.classList.remove('active');
               }
             });
@@ -539,11 +593,11 @@
 
       // Dummy data for downline tables
       const treeData = [
-        { id: 'RI001', name: 'Name: Varun', email: 'E-Mail: varun@gmail.com', mobile: 'Number: 9876543210', cfp: '0RV', left: 'RI002', right: 'RI003' },
-        { id: 'RI002', name: 'Name: Kiran', email: 'E-Mail: kiran@gmail.com', mobile: 'Number: 9276543232', cfp: '100RV', left: 'RI004', right: 'RI005' },
-        { id: 'RI003', name: 'Name: Johnson', email: 'E-Mail: john.j@gmail.com', mobile: 'Number: 8876543210', cfp: '0RV', left: null, right: null },
-        { id: 'RI004', name: 'Name: Emily', email: 'E-Mail: emily.b@gmail.com', mobile: 'Number: 8736543210', cfp: '0RV', left: null, right: null },
-        { id: 'RI005', name: 'Name: David', email: 'E-Mail: david.w@gmail.com', mobile: 'Number: 6856543210', cfp: '0RV', left: null, right: null }
+        { id: 'RI001', name: 'Name: Varun Sharma', email: 'E-Mail: varun@gmail.com', mobile: 'Number: 9876543210', cfp: '100RV', left: 'RI002', right: 'RI003' },
+        { id: 'RI002', name: 'Name: Kiran Patel', email: 'E-Mail: kiran@gmail.com', mobile: 'Number: 9276543232', cfp: '150RV', left: 'RI004', right: null },
+        { id: 'RI003', name: 'Name: Johnson Lee', email: 'E-Mail: john.j@gmail.com', mobile: 'Number: 8876543210', cfp: '80RV', left: null, right: 'RI005' },
+        { id: 'RI004', name: 'Name: Emily Brown', email: 'E-Mail: emily.b@gmail.com', mobile: 'Number: 8736543210', cfp: '50RV', left: null, right: null },
+        { id: 'RI005', name: 'Name: David Wilson', email: 'E-Mail: david.w@gmail.com', mobile: 'Number: 6856543210', cfp: '120RV', left: null, right: null }
       ];
 
       // Function to populate downline tables
@@ -557,35 +611,47 @@
         const rootNode = treeData.find(n => n.id === 'RI001');
         if (!rootNode) return;
 
-        // Get immediate left and right children
-        const leftChild = treeData.find(n => n.id === rootNode.left); // RI002
-        const rightChild = treeData.find(n => n.id === rootNode.right); // RI003
+        // Get left and right children
+        const leftMembers = [treeData.find(n => n.id === rootNode.left)]; // RI002
+        const leftChild = treeData.find(n => n.id === rootNode.left);
+        if (leftChild && leftChild.left) {
+          leftMembers.push(treeData.find(n => n.id === leftChild.left)); // RI004
+        }
+        const rightMembers = [treeData.find(n => n.id === rootNode.right)]; // RI003
+        const rightChild = treeData.find(n => n.id === rootNode.right);
+        if (rightChild && rightChild.right) {
+          rightMembers.push(treeData.find(n => n.id === rightChild.right)); // RI005
+        }
 
         // Populate left downline table
-        if (leftChild) {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${leftChild.id}</td>
-            <td>${leftChild.name.replace('Name: ', '')}</td>
-            <td>${leftChild.email.replace('E-Mail: ', '')}</td>
-            <td>${leftChild.cfp}</td>
-            <td>${leftChild.mobile.replace('Number: ', '')}</td>
-          `;
-          leftTableBody.appendChild(row);
-        }
+        leftMembers.forEach((member, index) => {
+          if (member) {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${index + 1}</td>
+              <td>${member.id}</td>
+              <td>${member.name.replace('Name: ', '')}</td>
+              <td>${member.cfp}</td>
+              <td>${member.mobile.replace('Number: ', '')}</td>
+            `;
+            leftTableBody.appendChild(row);
+          }
+        });
 
         // Populate right downline table
-        if (rightChild) {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${rightChild.id}</td>
-            <td>${rightChild.name.replace('Name: ', '')}</td>
-            <td>${rightChild.email.replace('E-Mail: ', '')}</td>
-            <td>${rightChild.cfp}</td>
-            <td>${rightChild.mobile.replace('Number: ', '')}</td>
-          `;
-          rightTableBody.appendChild(row);
-        }
+        rightMembers.forEach((member, index) => {
+          if (member) {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${index + 1}</td>
+              <td>${member.id}</td>
+              <td>${member.name.replace('Name: ', '')}</td>
+              <td>${member.cfp}</td>
+              <td>${member.mobile.replace('Number: ', '')}</td>
+            `;
+            rightTableBody.appendChild(row);
+          }
+        });
       }
 
       // Initialize the page

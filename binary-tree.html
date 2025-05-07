@@ -98,7 +98,7 @@
       height: calc(100vh - 48px);
       overflow-y: auto;
       z-index: 1000;
-      transition: width 0.3s ease;
+      transition: width 0.3s ease, left 0.3s ease;
     }
 
     .sidebar.collapsed {
@@ -286,7 +286,7 @@
       display: flex;
       gap: 10px;
       margin-bottom: 20px;
-      justify-content: flex-start; /* Changed to left-align */
+      justify-content: flex-start;
       width: 100%;
       max-width: 600px;
     }
@@ -323,7 +323,7 @@
     .binary-tree-container {
       position: relative;
       width: 100%;
-      height: 600px;
+      height: 400px; /* Reduced for small screens */
       overflow-x: auto;
       overflow-y: auto;
       display: flex;
@@ -402,10 +402,10 @@
 
     @media (max-width: 768px) {
       .topbar {
-        padding: 4px;
+        padding: 6px;
       }
       .topbar h1 {
-        font-size: 1rem;
+        font-size: 1.2rem;
       }
       .topbar .admin-icon {
         font-size: 1.5rem;
@@ -418,19 +418,20 @@
         flex-direction: column;
       }
       .sidebar {
-        width: 200px;
+        width: 180px; /* Reduced width for mobile */
         border-right: none;
         border-bottom: 2px solid #00d4ff;
         position: fixed;
-        top: 48px;
-        left: -200px;
-        padding: 15px;
+        top: 60px; /* Adjusted for smaller topbar */
+        left: -180px;
+        padding: 10px;
       }
       .sidebar.active {
         left: 0;
       }
       .sidebar.collapsed {
-        width: 200px;
+        width: 180px; /* Keep full width when collapsed on mobile */
+        left: -180px; /* Hide when collapsed */
       }
       .sidebar.collapsed h3,
       .sidebar.collapsed a span {
@@ -443,19 +444,19 @@
         display: none;
       }
       .sidebar h3 {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
       }
       .sidebar a {
-        font-size: 0.9rem;
-        padding: 8px;
+        font-size: 0.85rem;
+        padding: 6px;
       }
       .sidebar .submenu a {
-        font-size: 0.85rem;
-        padding: 6px 10px;
+        font-size: 0.8rem;
+        padding: 5px 10px;
       }
       .main-content {
         margin-left: 0;
-        padding: 15px;
+        padding: 10px;
       }
       .main-content.collapsed {
         margin-left: 0;
@@ -470,30 +471,36 @@
         right: 10px;
       }
       .sidebar .submenu {
-        margin-left: 20px;
+        margin-left: 15px;
       }
       .search-bar {
-        flex-direction: column;
+        flex-direction: row; /* Keep row for better UX */
+        gap: 5px;
         max-width: 100%;
       }
       .search-bar input,
       .search-bar button {
-        width: 100%;
+        width: auto; /* Allow flexible width */
         padding: 6px;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
       }
-      .binary-tree-svg {
-        transform: scale(0.8);
-        transform-origin: center;
+      .search-bar input {
+        flex: 1;
+      }
+      .search-bar button {
+        padding: 6px 12px;
+      }
+      .binary-tree-container {
+        height: 300px; /* Further reduced for mobile */
       }
       .node-circle {
-        r: 22;
+        r: 20;
       }
       .node-icon {
-        font-size: 16px;
+        font-size: 14px;
       }
       .node-sub-icon {
-        font-size: 12px;
+        font-size: 10px;
       }
       .node-id {
         font-size: 10px;
@@ -511,7 +518,7 @@
         padding: 4px;
       }
       .topbar h1 {
-        font-size: 0.9rem;
+        font-size: 1rem;
       }
       .topbar .admin-icon {
         font-size: 1.25rem;
@@ -521,8 +528,8 @@
         height: 32px;
       }
       .sidebar {
-        width: 180px;
-        left: -180px;
+        width: 160px; /* Further reduced */
+        left: -160px;
       }
       .sidebar.active {
         left: 0;
@@ -531,32 +538,38 @@
         font-size: 1rem;
       }
       .sidebar a {
-        font-size: 0.8rem;
-        padding: 6px;
+        font-size: 0.75rem;
+        padding: 5px;
+      }
+      .sidebar .submenu a {
+        font-size: 0.7rem;
+        padding: 4px 8px;
       }
       .search-bar input,
       .search-bar button {
         padding: 5px;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
       }
-      .binary-tree-svg {
-        transform: scale(0.6);
-        transform-origin: center;
+      .binary-tree-container {
+        height: 250px; /* Optimal for small screens */
       }
       .node-circle {
-        r: 18;
+        r: 16;
       }
       .node-icon {
-        font-size: 14px;
+        font-size: 12px;
       }
       .node-sub-icon {
-        font-size: 10px;
+        font-size: 8px;
       }
       .node-id {
         font-size: 8px;
       }
       .node-details {
         font-size: 8px;
+      }
+      .link {
+        stroke-width: 1;
       }
     }
   </style>
@@ -632,8 +645,7 @@
         </a>
         <div class="submenu" id="topup-fund-submenu">
           <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
-          <a href="product-details.html"><i class="fas fa-credit-card" class="active"></i> <span>product-details</span></a>
-          
+          <a href="product-details.html"><i class="fas fa-credit-card"></i> <span>Product Details</span></a>
           <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
         </div>
       </div>
@@ -767,15 +779,20 @@
         // Get container width for centering
         const containerWidth = container.clientWidth;
         const screenWidth = window.innerWidth;
-        const spacingFactor = screenWidth <= 768 ? 0.6 : screenWidth <= 480 ? 0.4 : 1;
+
+        // Dynamic scaling based on screen size
+        const spacingFactor = screenWidth <= 480 ? 0.4 : screenWidth <= 768 ? 0.6 : 1;
+        const nodeRadius = screenWidth <= 480 ? 16 : screenWidth <= 768 ? 20 : 28;
+        const ySpacing = screenWidth <= 480 ? 80 : screenWidth <= 768 ? 100 : 120;
 
         // Center the tree by offsetting x-coordinates
         const offsetX = containerWidth / 2;
 
-        // Update tree data with dynamic x-coordinates
+        // Update tree data with dynamic x and y coordinates
         const updatedTreeData = treeData.map(node => ({
           ...node,
           x: (node.x * spacingFactor) + offsetX,
+          y: node.level * ySpacing + 50, // Dynamic y based on level
         }));
 
         // Draw links
@@ -786,13 +803,13 @@
           if (leftChild) {
             const path = document.createElementNS(ns, 'path');
             path.setAttribute('class', 'link');
-            path.setAttribute('d', `M${node.x},${node.y + 20} L${leftChild.x},${leftChild.y - 20}`);
+            path.setAttribute('d', `M${node.x},${node.y + nodeRadius / 2} L${leftChild.x},${leftChild.y - nodeRadius / 2}`);
             svg.appendChild(path);
           }
           if (rightChild) {
             const path = document.createElementNS(ns, 'path');
             path.setAttribute('class', 'link');
-            path.setAttribute('d', `M${node.x},${node.y + 20} L${rightChild.x},${rightChild.y - 20}`);
+            path.setAttribute('d', `M${node.x},${node.y + nodeRadius / 2} L${rightChild.x},${rightChild.y - nodeRadius / 2}`);
             svg.appendChild(path);
           }
         });
@@ -808,7 +825,7 @@
           circle.setAttribute('class', 'node-circle');
           circle.setAttribute('cx', node.x);
           circle.setAttribute('cy', node.y);
-          circle.setAttribute('r', screenWidth <= 480 ? 18 : screenWidth <= 768 ? 22 : 28);
+          circle.setAttribute('r', nodeRadius);
           g.appendChild(circle);
 
           // Main user icon
@@ -824,7 +841,7 @@
           const idText = document.createElementNS(ns, 'text');
           idText.setAttribute('class', 'node-id');
           idText.setAttribute('x', node.x);
-          idText.setAttribute('y', node.y + 40);
+          idText.setAttribute('y', node.y + nodeRadius + 10);
           idText.textContent = node.id;
           g.appendChild(idText);
 
@@ -844,7 +861,7 @@
           details.forEach(detail => {
             const detailText = document.createElementNS(ns, 'text');
             detailText.setAttribute('class', 'node-details');
-            detailText.setAttribute('x', node.x + 40);
+            detailText.setAttribute('x', node.x + nodeRadius + 10);
             detailText.setAttribute('y', node.y + detail.offsetY);
             detailText.textContent = detail.label;
             detailsGroup.appendChild(detailText);

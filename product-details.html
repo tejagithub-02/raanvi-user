@@ -94,8 +94,13 @@
       margin-bottom: 15px;
       text-shadow: 0 0 5px #00ffcc;
     }
+    .table-responsive {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
+    }
     .table-section table {
       width: 100%;
+      min-width: 500px; /* Ensures table is scrollable on small screens */
       border-collapse: collapse;
       color: #b3e0ff;
     }
@@ -104,6 +109,10 @@
       padding: 10px;
       border: 2px solid #00d4ff;
       text-align: left;
+      font-size: 0.95rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .table-section th {
       background: #0f3460;
@@ -171,6 +180,15 @@
       .sidebar .submenu {
         margin-left: 20px;
       }
+      .table-section th,
+      .table-section td {
+        padding: 8px;
+        font-size: 0.85rem;
+        max-width: 100px;
+      }
+      .table-section table {
+        min-width: 600px;
+      }
     }
     @media (max-width: 480px) {
       .topbar {
@@ -179,9 +197,55 @@
       .topbar .admin-icon {
         font-size: 1.5rem;
       }
+      .table-section {
+        padding: 15px;
+      }
       .table-section th,
       .table-section td {
-        font-size: 0.9rem;
+        padding: 6px;
+        font-size: 0.8rem;
+        max-width: 80px;
+      }
+      .table-section table {
+        min-width: 700px;
+      }
+      /* Hide Address column for Product Details */
+      .table-section:nth-child(2) th:nth-child(5), /* Address */
+      .table-section:nth-child(2) td:nth-child(5) {
+        display: none;
+      }
+      /* Hide Date column for Product History */
+      .table-section:nth-child(3) th:nth-child(2), /* Date */
+      .table-section:nth-child(3) td:nth-child(2) {
+        display: none;
+      }
+    }
+    @media (max-width: 360px) {
+      .table-section th,
+      .table-section td {
+        padding: 4px;
+        font-size: 0.75rem;
+        max-width: 60px;
+      }
+      .table-section table {
+        min-width: 800px;
+      }
+      .table-section {
+        padding: 12px;
+      }
+      /* Hide Address and Product ID for Product Details */
+      .table-section:nth-child(2) th:nth-child(5), /* Address */
+      .table-section:nth-child(2) td:nth-child(5),
+      .table-section:nth-child(2) th:nth-child(3), /* Product ID */
+      .table-section:nth-child(2) td:nth-child(3) {
+        display: none;
+      }
+      /* Hide Date and Product ID for Product History */
+      .table-section:nth-child(3) th:nth-child(2), /* Date */
+      .table-section:nth-child(3) td:nth-child(2),
+      .table-section:nth-child(3) th:nth-child(4), /* Product ID */
+      .table-section:nth-child(3) td:nth-child(4) {
+        display: none;
       }
     }
   </style>
@@ -258,7 +322,6 @@
         <div class="submenu" id="topup-fund-submenu active">
           <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
           <a href="product-details.html"><i class="fas fa-credit-card" class="active"></i> <span>product-details</span></a>
-          
           <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
         </div>
       </div>
@@ -287,53 +350,57 @@
         <!-- Product Details Table -->
         <div class="table-section">
           <h4>Product Details</h4>
-          <table>
-            <thead>
-              <tr>
-                <th>SI.NO</th>
-                <th>Product Name</th>
-                <th>Product ID</th>
-                <th>Quantity</th>
-                <th>Address</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Health Supplement</td>
-                <td>HS12345</td>
-                <td>2</td>
-                <td>123 Main St, City, Country</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>SI.NO</th>
+                  <th>Product Name</th>
+                  <th>Product ID</th>
+                  <th>Quantity</th>
+                  <th>Address</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Health Supplement</td>
+                  <td>HS12345</td>
+                  <td>2</td>
+                  <td>123 Main St, City, Country</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <!-- Product History Table -->
         <div class="table-section">
           <h4>Product History</h4>
-          <table>
-            <thead>
-              <tr>
-                <th>SI.NO</th>
-                <th>Date</th>
-                <th>Product Name</th>
-                <th>Product ID</th>
-                <th>Quantity</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>2025-01-15</td>
-                <td>Health Supplement</td>
-                <td>HS12345</td>
-                <td>2</td>
-                <td>Delivered</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>SI.NO</th>
+                  <th>Date</th>
+                  <th>Product Name</th>
+                  <th>Product ID</th>
+                  <th>Quantity</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>2025-01-15</td>
+                  <td>Health Supplement</td>
+                  <td>HS12345</td>
+                  <td>2</td>
+                  <td>Delivered</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
       <footer class="main-footer">
