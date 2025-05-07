@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Raanvi Client Dashboard - Repurchase</title>
+  <title>Raanvi Client Dashboard - Withdraw</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -95,11 +95,11 @@
     }
     .table-responsive {
       overflow-x: auto;
-      -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
+      -webkit-overflow-scrolling: touch;
     }
     .table-section table {
       width: 100%;
-      min-width: 500px; /* Ensures table is scrollable on small screens */
+      min-width: 500px;
       border-collapse: collapse;
       color: #b3e0ff;
     }
@@ -116,6 +116,18 @@
     .table-section th {
       background: #0f3460;
       box-shadow: 0 0 5px #00d4ff;
+    }
+    .status-pending {
+      color: #ffc107;
+      font-weight: bold;
+    }
+    .status-approved {
+      color: #28a745;
+      font-weight: bold;
+    }
+    .status-rejected {
+      color: #dc3545;
+      font-weight: bold;
     }
     @media (min-width: 769px) {
       .sidebar-toggle {
@@ -208,9 +220,8 @@
       .table-section table {
         min-width: 700px;
       }
-      /* Hide Date column for Repurchase History */
-      .table-section th:nth-child(4), /* Date */
-      .table-section td:nth-child(4) {
+      .table-section th:nth-child(3), /* Date */
+      .table-section td:nth-child(3) {
         display: none;
       }
     }
@@ -227,11 +238,10 @@
       .table-section {
         padding: 12px;
       }
-      /* Hide Date and Member ID for Repurchase History */
-      .table-section th:nth-child(4), /* Date */
-      .table-section td:nth-child(4),
-      .table-section th:nth-child(3), /* Member ID */
-      .table-section td:nth-child(3) {
+      .table-section th:nth-child(3), /* Date */
+      .table-section td:nth-child(3),
+      .table-section th:nth-child(2), /* Transaction ID */
+      .table-section td:nth-child(2) {
         display: none;
       }
     }
@@ -301,62 +311,75 @@
         </div>
       </div>
       <div class="sidebar-item">
-        <a href="topup-fund.html" id="topup-fund-toggle">
+        <a href="fund.html" id="fund-toggle" class="active">
           <i class="fas fa-wallet"></i>
           <span>Product & Payment</span>
-          <i class="fas fa-chevron-down dropdown-icon"></i>
+          <i class="fas fa-chevron-down dropdown-icon active"></i>
         </a>
-        <div class="submenu" id="topup-fund-submenu">
+        <div class="submenu active" id="fund-submenu">
           <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
-          <a href="product-details.html"><i class="fas fa-credit-card" class="active"></i> <span>product-details</span></a>
-          <a href="repurchase.html" class="active"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
-          <a href="withdrawal.html" class="active"><i class="fas fa-money-bill"></i> <span>Withdraw</span></a>
+          <a href="product-details.html"><i class="fas fa-box"></i> <span>Product Details</span></a>
+          <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
+          <a href="#" class="active"><i class="fas fa-money-bill"></i> <span>Withdraw</span></a>
     
         </div>
       </div>
       <a href="#" id="sidebar-sign-out"><i class="fas fa-sign-out-alt"></i> <span>Sign Out</span></a>
     </div>
-    <!-- Repurchase Section -->
+    <!-- Withdraw Section -->
     <div class="main-content">
       <div class="section">
-        <h2 class="text-2xl font-bold text-[#f4c430] mb-4">Repurchase</h2>
+        <h2 class="text-2xl font-bold text-[#f4c430] mb-4">Withdraw</h2>
 
-        <!-- Repurchase -->
+        <!-- Withdraw Form -->
         <div class="form-section">
-          <h4>Repurchase</h4>
-          <label for="repurchase-id">Member ID</label>
-          <input type="text" id="repurchase-id" placeholder="Enter member ID">
-          <label for="repurchase-name">Name (Auto-filled)</label>
-          <input type="text" id="repurchase-name" placeholder="Name will auto-fill" disabled>
-          <label for="repurchase-amount">Repurchase Amount</label>
-          <input type="number" id="repurchase-amount" placeholder="Enter RV points">
-          <button>Repurchase</button>
+          <h4>Initiate Withdrawal</h4>
+          <label for="withdraw-id">Member ID</label>
+          <input type="text" id="withdraw-id" placeholder="Enter member ID">
+          <label for="withdraw-name">Name (Auto-filled)</label>
+          <input type="text" id="withdraw-name" placeholder="Name will auto-fill" disabled>
+          <label for="withdraw-amount">Withdrawal Amount</label>
+          <input type="number" id="withdraw-amount" placeholder="Enter amount (₹)">
+          <button onclick="submitWithdrawal()">Submit Withdrawal</button>
         </div>
 
-        <!-- Repurchase History -->
+        <!-- Pending Withdrawals -->
         <div class="table-section">
-          <h4>Repurchase History</h4>
+          <h4>Pending Withdrawals</h4>
           <div class="table-responsive">
             <table>
               <thead>
                 <tr>
                   <th>SI.NO</th>
-                  <th>Name</th>
-                  <th>Member ID</th>
+                  <th>Transaction ID</th>
                   <th>Date</th>
                   <th>Amount</th>
                   <th>Status</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="pending-withdrawal-table">
+                <!-- Populated by JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Withdrawal History -->
+        <div class="table-section">
+          <h4>Withdrawal History</h4>
+          <div class="table-responsive">
+            <table>
+              <thead>
                 <tr>
-                  <td>1</td>
-                  <td>Alice Brown</td>
-                  <td>1003</td>
-                  <td>2025-03-15</td>
-                  <td>500 RV</td>
-                  <td>Success</td>
+                  <th>SI.NO</th>
+                  <th>Transaction ID</th>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Status</th>
                 </tr>
+              </thead>
+              <tbody id="withdrawal-history-table">
+                <!-- Populated by JavaScript -->
               </tbody>
             </table>
           </div>
@@ -375,7 +398,7 @@
     const sidebarToggle = document.getElementById('sidebar-toggle');
     const menuToggle = document.getElementById('menu-toggle');
     const sidebarExpand = document.getElementById('sidebar-expand');
-    
+
     // Desktop sidebar toggle (collapse/expand)
     if (sidebarToggle) {
       sidebarToggle.addEventListener('click', () => {
@@ -383,21 +406,21 @@
         mainContent.classList.toggle('collapsed');
       });
     }
-    
+
     // Mobile sidebar toggle (show/hide)
     if (menuToggle) {
       menuToggle.addEventListener('click', () => {
         sidebar.classList.toggle('active');
       });
     }
-    
+
     // Mobile sidebar close button
     if (sidebarExpand) {
       sidebarExpand.addEventListener('click', () => {
         sidebar.classList.remove('active');
       });
     }
-    
+
     // Close sidebar on mobile when clicking outside
     document.addEventListener('click', (e) => {
       if (window.innerWidth <= 768 && sidebar.classList.contains('active')) {
@@ -406,7 +429,7 @@
         }
       }
     });
-    
+
     // Submenu toggle for multiple items
     const submenuToggles = [
       {
@@ -425,24 +448,18 @@
         icon: document.querySelector('#earning-history-toggle .dropdown-icon')
       },
       {
-        toggle: document.getElementById('topup-fund-toggle'),
-        submenu: document.getElementById('topup-fund-submenu'),
-        icon: document.querySelector('#topup-fund-toggle .dropdown-icon')
-      },
-      {
-        toggle: document.getElementById('payment-toggle'),
-        submenu: document.getElementById('payment-submenu'),
-        icon: document.querySelector('#payment-toggle .dropdown-icon')
+        toggle: document.getElementById('fund-toggle'),
+        submenu: document.getElementById('fund-submenu'),
+        icon: document.querySelector('#fund-toggle .dropdown-icon')
       }
     ];
-    
+
     submenuToggles.forEach(({ toggle, submenu, icon }) => {
       if (toggle && submenu && icon) {
         toggle.addEventListener('click', (e) => {
           e.preventDefault();
           submenu.classList.toggle('active');
           icon.classList.toggle('active');
-          // Close other submenus
           submenuToggles.forEach(other => {
             if (other.submenu !== submenu) {
               other.submenu.classList.remove('active');
@@ -450,14 +467,12 @@
             }
           });
         });
-        // Close submenu when clicking outside
         document.addEventListener('click', (e) => {
           if (!toggle.contains(e.target) && !submenu.contains(e.target)) {
             submenu.classList.remove('active');
             icon.classList.remove('active');
           }
         });
-        // Close sidebar on mobile after submenu item click
         submenu.querySelectorAll('a').forEach(link => {
           link.addEventListener('click', () => {
             if (window.innerWidth <= 768) {
@@ -466,6 +481,137 @@
           });
         });
       }
+    });
+
+    // Mock data for tables
+    const pendingWithdrawals = [
+      {
+        id: 'WD12345',
+        date: '2025-05-06',
+        amount: '₹5000.00',
+        status: 'Pending'
+      },
+      {
+        id: 'WD12346',
+        date: '2025-05-07',
+        amount: '₹3000.00',
+        status: 'Pending'
+      }
+    ];
+
+    const withdrawalHistory = [
+      {
+        id: 'WD12343',
+        date: '2025-05-01',
+        amount: '₹10000.00',
+        status: 'Approved'
+      },
+      {
+        id: 'WD12344',
+        date: '2025-05-03',
+        amount: '₹2000.00',
+        status: 'Rejected'
+      }
+    ];
+
+    // Format date function
+    function formatDate(dateStr) {
+      try {
+        const date = new Date(dateStr);
+        if (isNaN(date.getTime())) {
+          console.warn(`Invalid date: ${dateStr}`);
+          return 'Invalid Date';
+        }
+        const options = { year: 'numeric', month: 'short', day: '2-digit' };
+        const formatted = date.toLocaleDateString('en-US', options).replace(/(\d+),/, '$1,');
+        return formatted;
+      } catch (error) {
+        console.error('Error formatting date:', error);
+        return 'Error';
+      }
+    }
+
+    // Render pending withdrawals table
+    function renderPendingTable(data = pendingWithdrawals) {
+      const tbody = document.getElementById('pending-withdrawal-table');
+      if (!tbody) {
+        console.error('Pending withdrawal table body not found');
+        return;
+      }
+      tbody.innerHTML = data.length > 0 ? data.map((item, index) => `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${item.id}</td>
+          <td>${formatDate(item.date)}</td>
+          <td>${item.amount}</td>
+          <td class="status-${item.status.toLowerCase()}">${item.status}</td>
+        </tr>
+      `).join('') : `
+        <tr>
+          <td colspan="5" style="text-align: center;">No pending withdrawals found</td>
+        </tr>
+      `;
+    }
+
+    // Render withdrawal history table
+    function renderHistoryTable(data = withdrawalHistory) {
+      const tbody = document.getElementById('withdrawal-history-table');
+      if (!tbody) {
+        console.error('Withdrawal history table body not found');
+        return;
+      }
+      tbody.innerHTML = data.length > 0 ? data.map((item, index) => `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${item.id}</td>
+          <td>${formatDate(item.date)}</td>
+          <td>${item.amount}</td>
+          <td class="status-${item.status.toLowerCase()}">${item.status}</td>
+        </tr>
+      `).join('') : `
+        <tr>
+          <td colspan="5" style="text-align: center;">No withdrawal history found</td>
+        </tr>
+      `;
+    }
+
+    // Form submission handler
+    window.submitWithdrawal = () => {
+      const memberId = document.getElementById('withdraw-id').value.trim();
+      const amount = document.getElementById('withdraw-amount').value;
+
+      if (!memberId) {
+        alert('Please enter a Member ID');
+        return;
+      }
+      if (!amount || amount <= 0) {
+        alert('Please enter a valid withdrawal amount');
+        return;
+      }
+
+      // Mock name auto-fill (replace with API call in production)
+      document.getElementById('withdraw-name').value = `User_${memberId}`;
+
+      // Mock submission (replace with API call)
+      alert(`Withdrawal request submitted for Member ID: ${memberId}, Amount: ₹${amount}`);
+      // Optionally, add to pendingWithdrawals and re-render table
+      pendingWithdrawals.push({
+        id: `WD${Math.floor(10000 + Math.random() * 90000)}`,
+        date: new Date().toISOString().split('T')[0],
+        amount: `₹${parseFloat(amount).toFixed(2)}`,
+        status: 'Pending'
+      });
+      renderPendingTable();
+      // Reset form
+      document.getElementById('withdraw-id').value = '';
+      document.getElementById('withdraw-name').value = '';
+      document.getElementById('withdraw-amount').value = '';
+    };
+
+    // Initialize tables
+    document.addEventListener('DOMContentLoaded', () => {
+      renderPendingTable();
+      renderHistoryTable();
     });
   </script>
 </body>
