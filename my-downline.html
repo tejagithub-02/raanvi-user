@@ -41,11 +41,11 @@
     }
     .table-responsive {
       overflow-x: auto;
-      -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
+      -webkit-overflow-scrolling: touch;
     }
     .table-section table {
       width: 100%;
-      min-width: 500px; /* Optimized for fit */
+      min-width: 500px;
       border-collapse: collapse;
       color: #b3e0ff;
     }
@@ -109,7 +109,6 @@
       color: #b3e0ff;
       box-shadow: 0 0 15px #00d4ff;
     }
-    /* Downline Section Styles */
     .downline-section {
       background: #0f3460;
       padding: 15px;
@@ -145,7 +144,7 @@
     }
     .downline-table table {
       width: 100%;
-      min-width: 350px; /* Further reduced for small screens */
+      min-width: 350px;
       border-collapse: collapse;
       color: #b3e0ff;
       table-layout: auto;
@@ -170,6 +169,33 @@
     }
     .downline-table tr:hover {
       background: #1a1a2e;
+    }
+    .tab-nav {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .tab-button {
+      background: #0f3460;
+      border: 2px solid #00d4ff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      color: #b3e0ff;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00d4ff;
+      transition: box-shadow 0.3s, transform 0.3s;
+      font-size: 1rem;
+    }
+    .tab-button:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 15px #00d4ff;
+    }
+    .tab-button.active {
+      background: #1a4a8a;
+      color: #00ffcc;
+    }
+    .hidden {
+      display: none;
     }
     @media (min-width: 769px) {
       .sidebar-toggle {
@@ -206,6 +232,14 @@
       .downline-table table {
         min-width: 400px;
       }
+      .tab-nav {
+        flex-direction: column;
+        gap: 5px;
+      }
+      .tab-button {
+        width: 100%;
+        text-align: center;
+      }
     }
     @media (max-width: 480px) {
       .topbar {
@@ -238,10 +272,13 @@
       .downline-table {
         padding: 8px;
       }
-      /* Hide Mobile column on small screens */
       .downline-table th:nth-child(5),
       .downline-table td:nth-child(5) {
         display: none;
+      }
+      .tab-button {
+        padding: 8px 15px;
+        font-size: 0.9rem;
       }
     }
     @media (max-width: 360px) {
@@ -263,12 +300,15 @@
       .downline-section {
         padding: 8px;
       }
-      /* Hide Mobile and RV Points columns on very small screens */
       .downline-table th:nth-child(4),
       .downline-table td:nth-child(4),
       .downline-table th:nth-child(5),
       .downline-table td:nth-child(5) {
         display: none;
+      }
+      .tab-button {
+        padding: 6px 12px;
+        font-size: 0.8rem;
       }
     }
   </style>
@@ -307,7 +347,7 @@
           <a href="profile-details.html"><i class="fas fa-user-edit"></i> <span>Profile Details</span></a>
           <a href="kyc-document.html"><i class="fas fa-file-upload"></i> <span>Upload KYC Document</span></a>
           <a href="change-password.html"><i class="fas fa-lock"></i> <span>Change Password</span></a>
-          <a href="id-card.html"><i class="fas fa-lock"></i> <span>ID Card</span></a>
+          <a href="id-card.html"><i class="fas fa-id-card"></i> <span>ID Card</span></a>
         </div>
       </div>
       <div class="sidebar-item">
@@ -344,10 +384,23 @@
         </a>
         <div class="submenu" id="topup-fund-submenu">
           <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
-          <a href="product-details.html"><i class="fas fa-credit-card"></i> <span>product-details</span></a>
-          <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
-          <a href="withdrawal.html" class="active"><i class="fas fa-money-bill"></i> <span>Withdraw</span></a>
+          <a href="fund.html"><i class="fas fa-money-bill"></i> <span>Fund</span></a>
+          <a href="transaction-details.html" ><i class="fas fa-receipt"></i> <span>Transaction Details</span></a>
+          
+          <!-- Nested Product-Details menu -->
+          <div class="sidebar-item">
+            <a href="#" id="product-details-toggle">
+              <i class="fas fa-box"></i>
+              <span>Product-Details</span>
+              <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="submenu" id="product-details-submenu">
+              <a href="product-details.html"><i class="fas fa-shopping-bag"></i> <span>Order Product</span></a>
+              <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
+            </div>
+          </div>
     
+          <a href="withdrawal.html"><i class="fas fa-money-bill"></i> <span>Withdraw</span></a>
         </div>
       </div>
       <a href="#" id="sidebar-sign-out"><i class="fas fa-sign-out-alt"></i> <span>Sign Out</span></a>
@@ -356,8 +409,13 @@
     <!-- My Downline Section -->
     <div class="main-content">
       <div class="section">
-        <h2 class="text-2xl font-bold text-[#f4c430] mb-4">My Downline</h2>
-        <div class="table-section">
+        <h2 class="text-2xl font-bold text-[#f4c430] mb-4">My Downline (Combine, Left, Right)</h2>
+        <div class="tab-nav">
+          <button class="tab-button active" data-tab="combine">Combine</button>
+          <button class="tab-button" data-tab="left">Left</button>
+          <button class="tab-button" data-tab="right">Right</button>
+        </div>
+        <div id="combine-table" class="table-section">
           <h4>My Downline (Left & Right)</h4>
           <div class="table-responsive">
             <table>
@@ -376,11 +434,31 @@
               <tbody>
                 <tr>
                   <td>1</td>
-                  <td>1001</td>
-                  <td>John Doe</td>
+                  <td>RI001</td>
+                  <td>Varun Sharma</td>
                   <td>2025-01-10</td>
                   <td>Left</td>
                   <td>₹200.00</td>
+                  <td>100</td>
+                  <td>Active</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>RI002</td>
+                  <td>Kiran Patel</td>
+                  <td>2025-01-11</td>
+                  <td>Left</td>
+                  <td>₹300.00</td>
+                  <td>150</td>
+                  <td>Active</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>RI003</td>
+                  <td>Johnson Lee</td>
+                  <td>2025-01-12</td>
+                  <td>Right</td>
+                  <td>₹150.00</td>
                   <td>100</td>
                   <td>Active</td>
                 </tr>
@@ -388,8 +466,8 @@
             </table>
           </div>
         </div>
-        <div class="downline-section">
-          <h4>My Downline</h4>
+        <div id="left-table" class="downline-section hidden">
+          <h4>Left Downline ( Total Left RV : 408300 RV & Paid Left RV : 372200RV )</h4>
           <div class="downline-container">
             <div class="downline-table">
               <h5>Left Downline (Total Members = 2)</h5>
@@ -400,36 +478,20 @@
                       <th>SI.NO</th>
                       <th>ID</th>
                       <th>Name</th>
+                      <th>Join Date</th>
                       <th>RV Points</th>
                       <th>Mobile</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>RI001</td>
-                      <td>Varun Sharma</td>
-                      <td>100</td>
-                      <td>9876543210</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>RI002</td>
-                      <td>Kiran Patel</td>
-                      <td>150</td>
-                      <td>9276543232</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>RI004</td>
-                      <td>Emily Brown</td>
-                      <td>50</td>
-                      <td>8736543210</td>
-                    </tr>
-                  </tbody>
+                  <tbody></tbody>
                 </table>
               </div>
             </div>
+          </div>
+        </div>
+        <div id="right-table" class="downline-section hidden">
+          <h4>Right Downline ( Total Right RV : 372200 RV & Paid Right RV : 372200RV )</h4>
+          <div class="downline-container">
             <div class="downline-table">
               <h5>Right Downline (Total Members = 2)</h5>
               <div class="table-responsive">
@@ -439,36 +501,43 @@
                       <th>SI.NO</th>
                       <th>ID</th>
                       <th>Name</th>
+                      <th>Join Date</th>
                       <th>RV Points</th>
                       <th>Mobile</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>RI003</td>
-                      <td>Johnson Lee</td>
-                      <td>80</td>
-                      <td>8876543210</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>RI005</td>
-                      <td>David Wilson</td>
-                      <td>120</td>
-                      <td>6856543210</td>
-                    </tr>
-                  </tbody>
+                  <tbody></tbody>
                 </table>
               </div>
             </div>
+          </div>
+        </div>
+        <div id="search-table" class="table-section hidden">
+          <h4>Search Results</h4>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>SI.NO</th>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Join Date</th>
+                  <th>RV Points</th>
+                  <th>Mobile</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="mt-4 text-center">
+            <button id="clear-search" class="form-section button">Clear Search</button>
           </div>
         </div>
         <div class="form-section">
           <h4>ID-wise Downline Search</h4>
           <label for="downline-id">Enter ID</label>
           <input type="text" id="downline-id" placeholder="Enter member ID">
-          <button>Search</button>
+          <button id="search-button">Search</button>
         </div>
       </div>
       <footer class="main-footer">
@@ -485,9 +554,11 @@
       const sidebarToggle = document.getElementById('sidebar-toggle');
       const menuToggle = document.getElementById('menu-toggle');
       const sidebarExpand = document.getElementById('sidebar-expand');
+      const adminIcon = document.getElementById('admin-icon');
+      const adminDropdown = document.getElementById('admin-dropdown');
 
       // Desktop sidebar toggle (collapse/expand)
-      if (sidebarToggle) {
+      if (sidebarToggle && sidebar && mainContent) {
         sidebarToggle.addEventListener('click', () => {
           sidebar.classList.toggle('collapsed');
           mainContent.classList.toggle('collapsed');
@@ -495,14 +566,14 @@
       }
 
       // Mobile sidebar toggle (show/hide)
-      if (menuToggle) {
+      if (menuToggle && sidebar) {
         menuToggle.addEventListener('click', () => {
           sidebar.classList.toggle('active');
         });
       }
 
       // Mobile sidebar close button
-      if (sidebarExpand) {
+      if (sidebarExpand && sidebar) {
         sidebarExpand.addEventListener('click', () => {
           sidebar.classList.remove('active');
         });
@@ -510,12 +581,25 @@
 
       // Close sidebar on mobile when clicking outside
       document.addEventListener('click', (e) => {
-        if (window.innerWidth <= 768 && sidebar.classList.contains('active')) {
-          if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+        if (window.innerWidth <= 768 && sidebar?.classList.contains('active')) {
+          if (!sidebar.contains(e.target) && !menuToggle?.contains(e.target)) {
             sidebar.classList.remove('active');
           }
         }
       });
+
+      // Admin dropdown toggle
+      if (adminIcon && adminDropdown) {
+        adminIcon.addEventListener('click', (e) => {
+          e.stopPropagation();
+          adminDropdown.classList.toggle('active');
+        });
+        document.addEventListener('click', (e) => {
+          if (!adminIcon.contains(e.target) && !adminDropdown.contains(e.target)) {
+            adminDropdown.classList.remove('active');
+          }
+        });
+      }
 
       // Submenu toggle for multiple items
       const submenuToggles = [
@@ -538,11 +622,6 @@
           toggle: document.getElementById('topup-fund-toggle'),
           submenu: document.getElementById('topup-fund-submenu'),
           icon: document.querySelector('#topup-fund-toggle .dropdown-icon')
-        },
-        {
-          toggle: document.getElementById('payment-toggle'),
-          submenu: document.getElementById('payment-submenu'),
-          icon: document.querySelector('#payment-toggle .dropdown-icon')
         }
       ];
 
@@ -552,25 +631,22 @@
             e.preventDefault();
             submenu.classList.toggle('active');
             icon.classList.toggle('active');
-            // Close other submenus
             submenuToggles.forEach(other => {
-              if (other.submenu !== submenu) {
-                other.submenu.classList .remove('active');
+              if (other.submenu !== submenu && other.submenu && other.icon) {
+                other.submenu.classList.remove('active');
                 other.icon.classList.remove('active');
               }
             });
           });
-          // Close submenu when clicking outside
           document.addEventListener('click', (e) => {
             if (!toggle.contains(e.target) && !submenu.contains(e.target)) {
               submenu.classList.remove('active');
               icon.classList.remove('active');
             }
           });
-          // Close sidebar on mobile after submenu item click
           submenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
-              if (window.innerWidth <= 768) {
+              if (window.innerWidth <= 768 && sidebar) {
                 sidebar.classList.remove('active');
               }
             });
@@ -578,29 +654,41 @@
         }
       });
 
-      // Admin dropdown toggle
-      const adminIcon = document.getElementById('admin-icon');
-      const adminDropdown = document.getElementById('admin-dropdown');
-      if (adminIcon && adminDropdown) {
-        adminIcon.addEventListener('click', (e) => {
-          e.stopPropagation();
-          adminDropdown.classList.toggle('active');
-        });
-        document.addEventListener('click', (e) => {
-          if (!adminIcon.contains(e.target) && !adminDropdown.contains(e.target)) {
-            adminDropdown.classList.remove('active');
-          }
-        });
-      }
-
       // Dummy data for downline tables
       const treeData = [
-        { id: 'RI001', name: 'Name: Varun Sharma', email: 'E-Mail: varun@gmail.com', mobile: 'Number: 9876543210', cfp: '100RV', left: 'RI002', right: 'RI003' },
-        { id: 'RI002', name: 'Name: Kiran Patel', email: 'E-Mail: kiran@gmail.com', mobile: 'Number: 9276543232', cfp: '150RV', left: 'RI004', right: null },
-        { id: 'RI003', name: 'Name: Johnson Lee', email: 'E-Mail: john.j@gmail.com', mobile: 'Number: 8876543210', cfp: '80RV', left: null, right: 'RI005' },
-        { id: 'RI004', name: 'Name: Emily Brown', email: 'E-Mail: emily.b@gmail.com', mobile: 'Number: 8736543210', cfp: '50RV', left: null, right: null },
-        { id: 'RI005', name: 'Name: David Wilson', email: 'E-Mail: david.w@gmail.com', mobile: 'Number: 6856543210', cfp: '120RV', left: null, right: null }
+        { id: 'RI001', name: 'Varun Sharma', email: 'varun@gmail.com', mobile: '9876543210', cfp: '100RV', joinDate: '2025-01-10', side: 'Left', package: '₹200.00', status: 'Active', left: 'RI002', right: 'RI003' },
+        { id: 'RI002', name: 'Kiran Patel', email: 'kiran@gmail.com', mobile: '9276543232', cfp: '150RV', joinDate: '2025-01-11', side: 'Left', package: '₹300.00', status: 'Active', left: 'RI004', right: null },
+        { id: 'RI003', name: 'Johnson Lee', email: 'john.j@gmail.com', mobile: '8876543210', cfp: '100RV', joinDate: '2025-01-12', side: 'Right', package: '₹150.00', status: 'Active', left: null, right: 'RI005' },
+        { id: 'RI004', name: 'Emily Brown', email: 'emily.b@gmail.com', mobile: '8736543210', cfp: '100RV', joinDate: '2025-01-15', side: 'Left', package: '₹100.00', status: 'Active', left: null, right: null },
+        { id: 'RI005', name: 'David Wilson', email: 'david.w@gmail.com', mobile: '6856543210', cfp: '120RV', joinDate: '2025-01-15', side: 'Right', package: '₹250.00', status: 'Active', left: null, right: null }
       ];
+
+      // Tab navigation
+      const tabButtons = document.querySelectorAll('.tab-button');
+      const combineTable = document.getElementById('combine-table');
+      const leftTable = document.getElementById('left-table');
+      const rightTable = document.getElementById('right-table');
+      const searchTable = document.getElementById('search-table');
+
+      function showTab(tab) {
+        combineTable.classList.add('hidden');
+        leftTable.classList.add('hidden');
+        rightTable.classList.add('hidden');
+        searchTable.classList.add('hidden');
+
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        document.querySelector(`[data-tab="${tab}"]`)?.classList.add('active');
+
+        if (tab === 'combine') combineTable.classList.remove('hidden');
+        else if (tab === 'left') leftTable.classList.remove('hidden');
+        else if (tab === 'right') rightTable.classList.remove('hidden');
+      }
+
+      tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          showTab(button.dataset.tab);
+        });
+      });
 
       // Function to populate downline tables
       function populateDownlineTables() {
@@ -609,20 +697,30 @@
         leftTableBody.innerHTML = '';
         rightTableBody.innerHTML = '';
 
-        // Get the root node (RI001)
         const rootNode = treeData.find(n => n.id === 'RI001');
         if (!rootNode) return;
 
-        // Get left and right children
-        const leftMembers = [treeData.find(n => n.id === rootNode.left)]; // RI002
-        const leftChild = treeData.find(n => n.id === rootNode.left);
-        if (leftChild && leftChild.left) {
-          leftMembers.push(treeData.find(n => n.id === leftChild.left)); // RI004
+        const leftMembers = [];
+        const rightMembers = [];
+
+        // Collect left members
+        if (rootNode.left) {
+          const leftChild = treeData.find(n => n.id === rootNode.left);
+          if (leftChild) leftMembers.push(leftChild);
+          if (leftChild?.left) {
+            const leftGrandChild = treeData.find(n => n.id === leftChild.left);
+            if (leftGrandChild) leftMembers.push(leftGrandChild);
+          }
         }
-        const rightMembers = [treeData.find(n => n.id === rootNode.right)]; // RI003
-        const rightChild = treeData.find(n => n.id === rootNode.right);
-        if (rightChild && rightChild.right) {
-          rightMembers.push(treeData.find(n => n.id === rightChild.right)); // RI005
+
+        // Collect right members
+        if (rootNode.right) {
+          const rightChild = treeData.find(n => n.id === rootNode.right);
+          if (rightChild) rightMembers.push(rightChild);
+          if (rightChild?.right) {
+            const rightGrandChild = treeData.find(n => n.id === rightChild.right);
+            if (rightGrandChild) rightMembers.push(rightGrandChild);
+          }
         }
 
         // Populate left downline table
@@ -632,9 +730,10 @@
             row.innerHTML = `
               <td>${index + 1}</td>
               <td>${member.id}</td>
-              <td>${member.name.replace('Name: ', '')}</td>
+              <td>${member.name}</td>
+              <td>${member.joinDate}</td>
               <td>${member.cfp}</td>
-              <td>${member.mobile.replace('Number: ', '')}</td>
+              <td>${member.mobile}</td>
             `;
             leftTableBody.appendChild(row);
           }
@@ -647,17 +746,60 @@
             row.innerHTML = `
               <td>${index + 1}</td>
               <td>${member.id}</td>
-              <td>${member.name.replace('Name: ', '')}</td>
+              <td>${member.name}</td>
+              <td>${member.joinDate}</td>
               <td>${member.cfp}</td>
-              <td>${member.mobile.replace('Number: ', '')}</td>
+              <td>${member.mobile}</td>
             `;
             rightTableBody.appendChild(row);
           }
         });
       }
 
+      // Search functionality
+      const searchButton = document.getElementById('search-button');
+      const clearSearchButton = document.getElementById('clear-search');
+      const downlineIdInput = document.getElementById('downline-id');
+      const searchTableBody = document.querySelector('#search-table tbody');
+
+      if (searchButton && downlineIdInput && searchTableBody) {
+        searchButton.addEventListener('click', () => {
+          const searchId = downlineIdInput.value.trim().toUpperCase();
+          searchTableBody.innerHTML = '';
+
+          const member = treeData.find(m => m.id === searchId);
+          if (member) {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>1</td>
+              <td>${member.id}</td>
+              <td>${member.name}</td>
+              <td>${member.joinDate}</td>
+              <td>${member.cfp}</td>
+              <td>${member.mobile}</td>
+            `;
+            searchTableBody.appendChild(row);
+            combineTable.classList.add('hidden');
+            leftTable.classList.add('hidden');
+            rightTable.classList.add('hidden');
+            searchTable.classList.remove('hidden');
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+          } else {
+            alert('No member found with the provided ID.');
+          }
+        });
+      }
+
+      if (clearSearchButton) {
+        clearSearchButton.addEventListener('click', () => {
+          downlineIdInput.value = '';
+          showTab('combine');
+        });
+      }
+
       // Initialize the page
       populateDownlineTables();
+      showTab('combine');
     });
   </script>
 </body>

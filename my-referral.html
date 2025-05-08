@@ -94,6 +94,27 @@
         min-width: 700px; /* Ensures table remains scrollable */
       }
     }
+    .submenu .submenu {
+  margin-left: 15px;
+  border-left: 2px solid rgba(0, 212, 255, 0.3);
+  padding-left: 10px;
+}
+
+/* Active menu item styling */
+.sidebar-item > a.active {
+  background: rgba(0, 212, 255, 0.1);
+  border-left: 3px solid #00d4ff;
+}
+
+/* Dropdown icon rotation */
+.dropdown-icon {
+  transition: transform 0.3s ease;
+}
+
+.dropdown-icon.active {
+  transform: rotate(180deg);
+}
+
   </style>
 </head>
 <body>
@@ -166,12 +187,26 @@
         </a>
         <div class="submenu" id="topup-fund-submenu">
           <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
-          <a href="product-details.html"><i class="fas fa-credit-card"></i> <span>product-details</span></a>
-          <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
-          <a href="withdrawal.html" class="active"><i class="fas fa-money-bill"></i> <span>Withdraw</span></a>
+          <a href="fund.html"><i class="fas fa-money-bill"></i> <span>Fund</span></a>
+          <a href="transaction-details.html" ><i class="fas fa-receipt"></i> <span>Transaction Details</span></a>
+          
+          <!-- Nested Product-Details menu -->
+          <div class="sidebar-item">
+            <a href="#" id="product-details-toggle">
+              <i class="fas fa-box"></i>
+              <span>Product-Details</span>
+              <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="submenu" id="product-details-submenu">
+              <a href="product-details.html"><i class="fas fa-shopping-bag"></i> <span>Order Product</span></a>
+              <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
+            </div>
+          </div>
     
+          <a href="withdrawal.html"><i class="fas fa-money-bill"></i> <span>Withdraw</span></a>
         </div>
       </div>
+      
       <a href="#" id="sidebar-sign-out"><i class="fas fa-sign-out-alt"></i> <span>Sign Out</span></a>
     </div>
 
@@ -217,96 +252,116 @@
     </div>
   </div>
   <script>
-    // Sidebar toggle elements
-    const sidebar = document.querySelector('.sidebar');
-    const mainContent = document.querySelector('.main-content');
-    const sidebarToggle = document.getElementById('sidebar-toggle');
-    const menuToggle = document.getElementById('menu-toggle');
-    const sidebarExpand = document.getElementById('sidebar-expand');
-    
-    // Desktop sidebar toggle (collapse/expand)
-    if (sidebarToggle) {
-      sidebarToggle.addEventListener('click', () => {
-        sidebar.classList.toggle('collapsed');
-        mainContent.classList.toggle('collapsed');
-      });
-    }
-    
-    // Mobile sidebar toggle (show/hide)
-    if (menuToggle) {
-      menuToggle.addEventListener('click', () => {
-        sidebar.classList.toggle('active');
-      });
-    }
-    
-    // Mobile sidebar close button
-    if (sidebarExpand) {
-      sidebarExpand.addEventListener('click', () => {
-        sidebar.classList.remove('active');
-      });
-    }
-    
-    // Close sidebar on mobile when clicking outside
-    document.addEventListener('click', (e) => {
-      if (window.innerWidth <= 768 && sidebar.classList.contains('active')) {
-        if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
-          sidebar.classList.remove('active');
-        }
-      }
-    });
-    
-    // Submenu toggle for multiple items
-    const submenuToggles = [
-      {
-        toggle: document.getElementById('my-account-toggle'),
-        submenu: document.getElementById('my-account-submenu'),
-        icon: document.querySelector('#my-account-toggle .dropdown-icon')
-      },
-      {
-        toggle: document.getElementById('my-team-toggle'),
-        submenu: document.getElementById('my-team-submenu'),
-        icon: document.querySelector('#my-team-toggle .dropdown-icon')
-      },
-      {
-        toggle: document.getElementById('earning-history-toggle'),
-        submenu: document.getElementById('earning-history-submenu'),
-        icon: document.querySelector('#earning-history-toggle .dropdown-icon')
-      },
-      {
-        toggle: document.getElementById('topup-fund-toggle'),
-        submenu: document.getElementById('topup-fund-submenu'),
-        icon: document.querySelector('#topup-fund-toggle .dropdown-icon')
-      },
-      {
-        toggle: document.getElementById('payment-toggle'),
-        submenu: document.getElementById('payment-submenu'),
-        icon: document.querySelector('#payment-toggle .dropdown-icon')
-      }
-    ];
-    
-    submenuToggles.forEach(({ toggle, submenu, icon }) => {
-      if (toggle && submenu && icon) {
-        toggle.addEventListener('click', (e) => {
-          e.preventDefault();
-          submenu.classList.toggle('active');
-          icon.classList.toggle('active');
-          // Close other submenus
-          submenuToggles.forEach(other => {
-            if (other.submenu !== submenu) {
-              other.submenu.classList.remove('active');
-              other.icon.classList.remove('active');
-            }
-          });
+    document.addEventListener('DOMContentLoaded', () => {
+      const sidebarToggle = document.getElementById('sidebar-toggle');
+      const sidebarExpand = document.getElementById('sidebar-expand');
+      const sidebar = document.querySelector('.sidebar');
+      const mainContent = document.querySelector('.main-content');
+      const menuToggle = document.getElementById('menu-toggle');
+      const adminIcon = document.getElementById('admin-icon');
+      const adminDropdown = document.getElementById('admin-dropdown');
+
+      // Function to close all submenus
+      function closeAllSubmenus() {
+        document.querySelectorAll('.submenu').forEach(submenu => {
+          submenu.classList.remove('active');
         });
-        // Close submenu when clicking outside
+        document.querySelectorAll('.dropdown-icon').forEach(icon => {
+          icon.classList.remove('active');
+        });
+      }
+
+      // Sidebar collapse/expand for desktop
+      if (sidebarToggle && sidebarExpand && sidebar && mainContent) {
+        sidebarToggle.addEventListener('click', () => {
+          const isCollapsed = sidebar.classList.toggle('collapsed');
+          mainContent.classList.toggle('collapsed');
+          sidebarExpand.style.display = isCollapsed && window.innerWidth >= 769 ? 'block' : 'none';
+          closeAllSubmenus();
+        });
+        
+        sidebarExpand.addEventListener('click', () => {
+          sidebar.classList.remove('collapsed');
+          mainContent.classList.remove('collapsed');
+          sidebarExpand.style.display = 'none';
+        });
+      }
+
+      // Sidebar toggle for mobile
+      if (menuToggle && sidebar) {
+        menuToggle.addEventListener('click', () => {
+          sidebar.classList.toggle('active');
+        });
+      }
+
+      // Admin dropdown toggle
+      if (adminIcon && adminDropdown) {
+        adminIcon.addEventListener('click', (e) => {
+          e.stopPropagation();
+          adminDropdown.classList.toggle('active');
+        });
+        
         document.addEventListener('click', (e) => {
-          if (!toggle.contains(e.target) && !submenu.contains(e.target)) {
-            submenu.classList.remove('active');
-            icon.classList.remove('active');
+          if (!adminIcon.contains(e.target) && !adminDropdown.contains(e.target)) {
+            adminDropdown.classList.remove('active');
           }
         });
-        // Close sidebar on mobile after submenu item click
-        submenu.querySelectorAll('a').forEach(link => {
+      }
+
+      // Main menu toggles
+      const mainMenuToggles = [
+        {
+          toggle: document.getElementById('my-account-toggle'),
+          submenu: document.getElementById('my-account-submenu'),
+          icon: document.querySelector('#my-account-toggle .dropdown-icon')
+        },
+        {
+          toggle: document.getElementById('my-team-toggle'),
+          submenu: document.getElementById('my-team-submenu'),
+          icon: document.querySelector('#my-team-toggle .dropdown-icon')
+        },
+        {
+          toggle: document.getElementById('earning-history-toggle'),
+          submenu: document.getElementById('earning-history-submenu'),
+          icon: document.querySelector('#earning-history-toggle .dropdown-icon')
+        },
+        {
+          toggle: document.getElementById('topup-fund-toggle'),
+          submenu: document.getElementById('topup-fund-submenu'),
+          icon: document.querySelector('#topup-fund-toggle .dropdown-icon')
+        }
+      ];
+
+      // Special handling for nested Product-Details menu
+      const productDetailsToggle = document.getElementById('product-details-toggle');
+      const productDetailsSubmenu = document.getElementById('product-details-submenu');
+      const productDetailsIcon = document.querySelector('#product-details-toggle .dropdown-icon');
+
+      if (productDetailsToggle && productDetailsSubmenu && productDetailsIcon) {
+        productDetailsToggle.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation(); // Prevent event from bubbling to parent menus
+          
+          const isActive = productDetailsSubmenu.classList.toggle('active');
+          productDetailsIcon.classList.toggle('active');
+          
+          // Keep parent menu open when clicking nested menu
+          const parentSubmenu = productDetailsToggle.closest('.submenu');
+          if (parentSubmenu) {
+            parentSubmenu.classList.add('active');
+            const parentToggle = parentSubmenu.previousElementSibling;
+            if (parentToggle) {
+              const parentIcon = parentToggle.querySelector('.dropdown-icon');
+              if (parentIcon) {
+                parentIcon.classList.add('active');
+              }
+            }
+          }
+        });
+
+        // Handle clicks on product details submenu links
+        const productDetailsLinks = productDetailsSubmenu.querySelectorAll('a');
+        productDetailsLinks.forEach(link => {
           link.addEventListener('click', () => {
             if (window.innerWidth <= 768) {
               sidebar.classList.remove('active');
@@ -314,7 +369,57 @@
           });
         });
       }
+
+      // Handle main menu toggles
+      mainMenuToggles.forEach(({ toggle, submenu, icon }) => {
+        if (toggle && submenu && icon) {
+          toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const isActive = submenu.classList.toggle('active');
+            icon.classList.toggle('active');
+            
+            // Close other submenus at the same level
+            const parentItem = toggle.closest('.sidebar-item');
+            if (parentItem) {
+              const siblings = parentItem.parentElement.querySelectorAll('.sidebar-item');
+              siblings.forEach(sibling => {
+                if (sibling !== parentItem) {
+                  const siblingSubmenu = sibling.querySelector('.submenu');
+                  const siblingIcon = sibling.querySelector('.dropdown-icon');
+                  if (siblingSubmenu && siblingIcon) {
+                    siblingSubmenu.classList.remove('active');
+                    siblingIcon.classList.remove('active');
+                  }
+                }
+              });
+            }
+          });
+
+          // Handle clicks on submenu links (excluding nested menu toggles)
+          const submenuLinks = submenu.querySelectorAll('a:not(.sidebar-item > a)');
+          submenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+              if (window.innerWidth <= 768) {
+                sidebar.classList.remove('active');
+              }
+            });
+          });
+        }
+      });
+
+      // Close submenus when clicking outside
+      document.addEventListener('click', (e) => {
+        // Check if click is outside any menu
+        const clickedInsideSidebar = sidebar.contains(e.target);
+        const clickedAdminDropdown = adminDropdown.contains(e.target) || adminIcon.contains(e.target);
+        
+        if (!clickedInsideSidebar && !clickedAdminDropdown) {
+          closeAllSubmenus();
+        }
+      });
     });
-  </script>
+</script>
 </body>
 </html>
