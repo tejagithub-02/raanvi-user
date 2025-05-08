@@ -9,14 +9,17 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="assets/style.css" rel="stylesheet">
   <style>
-    
+    .dashboard-container {
+      display: flex;
+      min-height: 100vh;
+    }
     .main-content {
       flex: 1;
       padding: 20px;
       background: #0f172a;
       margin-left: 250px;
       overflow-y: auto;
-      min-height: calc(100vh - 48px);
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       transition: margin-left 0.3s ease;
@@ -27,9 +30,46 @@
     .section {
       flex: 1 0 auto;
     }
-   
-
-  
+    .table-responsive {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .table {
+      background: #0f3460;
+      color: #b3e0ff;
+      box-shadow: 0 0 10px #00d4ff;
+      border: 2px solid #00d4ff;
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 500px;
+    }
+    .table th, .table td {
+      border: 2px solid #00d4ff;
+      padding: 10px;
+      text-align: left;
+      font-size: 0.95rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .table thead th {
+      background: #0f3460;
+      color: #00ffcc;
+      box-shadow: 0 0 5px #00d4ff;
+      text-shadow: 0 0 5px #00ffcc;
+    }
+    .main-footer {
+      background: #0f3460;
+      color: #b3e0ff;
+      text-align: center;
+      padding: 10px 20px;
+      border-top: 2px solid #00d4ff;
+      box-shadow: 0 0 10px #00d4ff;
+      margin-top: auto;
+      font-size: 0.9rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
     @media (min-width: 769px) {
       .sidebar-toggle {
         display: block;
@@ -39,64 +79,143 @@
       }
     }
     @media (max-width: 768px) {
-     
+      .topbar h1 {
+        font-size: 1.2rem;
+      }
+      .topbar .admin-icon {
+        font-size: 1.75rem;
+      }
+      .dashboard-container {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 250px;
+        border-right: none;
+        border-bottom: 2px solid #00d4ff;
+        position: fixed;
+        top: 48px;
+        left: -250px;
+        transition: left 0.3s ease-in-out;
+      }
+      .sidebar.active {
+        left: 0;
+      }
+      .sidebar.collapsed {
+        width: 250px;
+      }
+      .sidebar.collapsed h3,
+      .sidebar.collapsed a span {
+        display: block;
+      }
+      .sidebar.collapsed a {
+        justify-content: flex-start;
+      }
+      .sidebar-expand {
+        display: none;
+      }
       .main-content {
         margin-left: 0;
         padding: 15px;
+        min-height: 100vh;
       }
       .main-content.collapsed {
         margin-left: 0;
       }
-     
+      .menu-toggle {
+        display: block;
+      }
+      .sidebar-toggle {
+        display: none;
+      }
+      .admin-dropdown {
+        right: 10px;
+      }
+      .sidebar .submenu {
+        margin-left: 20px;
+      }
+      .table th,
+      .table td {
+        padding: 8px;
+        font-size: 0.85rem;
+        max-width: 100px;
+      }
+      .table {
+        min-width: 600px;
+      }
+      .main-footer {
+        font-size: 0.85rem;
+        padding: 8px 15px;
+      }
     }
     @media (max-width: 480px) {
-      .topbar { padding: 6px; }
-      .topbar .admin-icon { font-size: 1.5rem; }
+      .topbar {
+        padding: 6px;
+      }
+      .topbar .admin-icon {
+        font-size: 1.5rem;
+      }
+      .table th,
+      .table td {
+        padding: 6px;
+        font-size: 0.8rem;
+        max-width: 80px;
+      }
+      .table {
+        min-width: 700px;
+      }
+      .table th:nth-child(3), /* Date */
+      .table td:nth-child(3),
+      .table th:nth-child(7), /* Tour */
+      .table td:nth-child(7),
+      .table th:nth-child(8), /* Status */
+      .table td:nth-child(8) {
+        display: none;
+      }
+      .main-footer {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+      }
     }
-    .table-responsive {
-      overflow-x: auto;
+    @media (max-width: 360px) {
+      .table th,
+      .table td {
+        padding: 4px;
+        font-size: 0.75rem;
+        max-width: 60px;
+      }
+      .table {
+        min-width: 800px;
+      }
+      .table th:nth-child(3), /* Date */
+      .table td:nth-child(3),
+      .table th:nth-child(5), /* Pair */
+      .table td:nth-child(5),
+      .table th:nth-child(7), /* Tour */
+      .table td:nth-child(7),
+      .table th:nth-child(8), /* Status */
+      .table td:nth-child(8) {
+        display: none;
+      }
+      .main-footer {
+        font-size: 0.75rem;
+        padding: 5px 8px;
+      }
     }
-    .table {
-  background: #0f3460; /* Matches sidebar card background */
-  color: #b3e0ff; /* Matches sidebar text color */
-  box-shadow: 0 0 10px #00d4ff; /* Blue glow effect */
-  border: 2px solid #00d4ff; /* Matches sidebar border */
-  border-collapse: collapse;
-}
-.table th, .table td {
-  border: 2px solid #00d4ff; /* Matches sidebar border */
-  padding: 10px;
-  text-align: left;
-}
-.table thead th {
-  background: #0f3460; /* Matches sidebar card background */
-  color: #00ffcc; /* Matches sidebar h3 color */
-  box-shadow: 0 0 5px #00d4ff; /* Subtle glow */
-  text-shadow: 0 0 5px #00ffcc; /* Added glow */
-}
-
-
-.submenu .submenu {
-  margin-left: 15px;
-  border-left: 2px solid rgba(0, 212, 255, 0.3);
-  padding-left: 10px;
-}
-
-/* Active menu item styling */
-.sidebar-item > a.active {
-  background: rgba(0, 212, 255, 0.1);
-  border-left: 3px solid #00d4ff;
-}
-
-/* Dropdown icon rotation */
-.dropdown-icon {
-  transition: transform 0.3s ease;
-}
-
-.dropdown-icon.active {
-  transform: rotate(180deg);
-}
-
+    .submenu .submenu {
+      margin-left: 15px;
+      border-left: 2px solid rgba(0, 212, 255, 0.3);
+      padding-left: 10px;
+    }
+    .sidebar-item > a.active {
+      background: rgba(0, 212, 255, 0.1);
+      border-left: 3px solid #00d4ff;
+    }
+    .dropdown-icon {
+      transition: transform 0.3s ease;
+    }
+    .dropdown-icon.active {
+      transform: rotate(180deg);
+    }
   </style>
 </head>
 <body>
@@ -112,8 +231,7 @@
       <div class="admin-dropdown" id="admin-dropdown">
         <a href="profile-details.html" class="dropdown-item">My Profile</a>
         <a href="change-password.html" class="dropdown-item">Change Password</a>
-      
-    </div>
+      </div>
     </div>
   </nav>
 
@@ -123,7 +241,7 @@
     <div class="sidebar">
       <i class="fas fa-times sidebar-expand" id="sidebar-expand"></i>
       <h3></h3>
-      <a href="index.html" <i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
+      <a href="index.html"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
       <div class="sidebar-item">
         <a href="my-account.html" id="my-account-toggle">
           <i class="fas fa-user"></i>
@@ -135,7 +253,6 @@
           <a href="kyc-document.html"><i class="fas fa-file-upload"></i> <span>Upload KYC Document</span></a>
           <a href="change-password.html"><i class="fas fa-lock"></i> <span>Change Password</span></a>
           <a href="id-card.html"><i class="fas fa-lock"></i> <span>ID Card</span></a>
-      
         </div>
       </div>
       <div class="sidebar-item">
@@ -173,9 +290,7 @@
         <div class="submenu" id="topup-fund-submenu">
           <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
           <a href="fund.html"><i class="fas fa-money-bill"></i> <span>Fund</span></a>
-          <a href="transaction-details.html" ><i class="fas fa-receipt"></i> <span>Transaction Details</span></a>
-          
-          <!-- Nested Product-Details menu -->
+          <a href="transaction-details.html"><i class="fas fa-receipt"></i> <span>Transaction Details</span></a>
           <div class="sidebar-item">
             <a href="#" id="product-details-toggle">
               <i class="fas fa-box"></i>
@@ -187,12 +302,9 @@
               <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
             </div>
           </div>
-    
           <a href="withdrawal.html"><i class="fas fa-money-bill"></i> <span>Withdraw</span></a>
         </div>
       </div>
-    
-     
       <a href="#" id="sidebar-sign-out"><i class="fas fa-sign-out-alt"></i> <span>Sign Out</span></a>
     </div>
 
@@ -211,7 +323,7 @@
                 <th>Rank</th>
                 <th>Pair</th>
                 <th>Reward</th>
-               
+                <th>Tour</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -223,9 +335,99 @@
                 <td>Silver</td>
                 <td>2</td>
                 <td>₹2000.00</td>
+                <td>Goa Trip</td>
                 <td>Paid</td>
               </tr>
-             
+              <tr>
+                <td>2</td>
+                <td>Amy Smith</td>
+                <td>2025-04-15</td>
+                <td>Gold</td>
+                <td>5</td>
+                <td>₹5000.00</td>
+                <td>Europe Tour</td>
+                <td>Pending</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Ravi Kumar</td>
+                <td>2025-04-20</td>
+                <td>Platinum</td>
+                <td>8</td>
+                <td>₹10000.00</td>
+                <td>Thailand Getaway</td>
+                <td>Paid</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Sarah Jones</td>
+                <td>2025-04-25</td>
+                <td>Diamond</td>
+                <td>12</td>
+                <td>₹20000.00</td>
+                <td>Dubai Adventure</td>
+                <td>Paid</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Michael Brown</td>
+                <td>2025-04-28</td>
+                <td>Silver</td>
+                <td>3</td>
+                <td>₹2500.00</td>
+                <td>Maldives Retreat</td>
+                <td>Pending</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>Priya Sharma</td>
+                <td>2025-05-01</td>
+                <td>Gold</td>
+                <td>6</td>
+                <td>₹6000.00</td>
+                <td>Singapore Tour</td>
+                <td>Paid</td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>David Lee</td>
+                <td>2025-05-03</td>
+                <td>Platinum</td>
+                <td>9</td>
+                <td>₹12000.00</td>
+                <td>Japan Journey</td>
+                <td>Pending</td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td>Neha Gupta</td>
+                <td>2025-05-05</td>
+                <td>Diamond</td>
+                <td>15</td>
+                <td>₹25000.00</td>
+                <td>Australia Outback</td>
+                <td>Paid</td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td>Emily Davis</td>
+                <td>2025-05-07</td>
+                <td>Gold</td>
+                <td>4</td>
+                <td>₹4500.00</td>
+                <td> Bali Escape</td>
+                <td>Pending</td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td>Rahul Singh</td>
+                <td>2025-05-08</td>
+                <td>Platinum</td>
+                <td>10</td>
+                <td>₹15000.00</td>
+                <td>New Zealand Trek</td>
+                <td>Paid</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -246,7 +448,6 @@
       const adminIcon = document.getElementById('admin-icon');
       const adminDropdown = document.getElementById('admin-dropdown');
 
-      // Function to close all submenus
       function closeAllSubmenus() {
         document.querySelectorAll('.submenu').forEach(submenu => {
           submenu.classList.remove('active');
@@ -256,7 +457,6 @@
         });
       }
 
-      // Sidebar collapse/expand for desktop
       if (sidebarToggle && sidebarExpand && sidebar && mainContent) {
         sidebarToggle.addEventListener('click', () => {
           const isCollapsed = sidebar.classList.toggle('collapsed');
@@ -272,14 +472,12 @@
         });
       }
 
-      // Sidebar toggle for mobile
       if (menuToggle && sidebar) {
         menuToggle.addEventListener('click', () => {
           sidebar.classList.toggle('active');
         });
       }
 
-      // Admin dropdown toggle
       if (adminIcon && adminDropdown) {
         adminIcon.addEventListener('click', (e) => {
           e.stopPropagation();
@@ -293,7 +491,6 @@
         });
       }
 
-      // Main menu toggles
       const mainMenuToggles = [
         {
           toggle: document.getElementById('my-account-toggle'),
@@ -317,7 +514,6 @@
         }
       ];
 
-      // Special handling for nested Product-Details menu
       const productDetailsToggle = document.getElementById('product-details-toggle');
       const productDetailsSubmenu = document.getElementById('product-details-submenu');
       const productDetailsIcon = document.querySelector('#product-details-toggle .dropdown-icon');
@@ -325,12 +521,11 @@
       if (productDetailsToggle && productDetailsSubmenu && productDetailsIcon) {
         productDetailsToggle.addEventListener('click', function(e) {
           e.preventDefault();
-          e.stopPropagation(); // Prevent event from bubbling to parent menus
+          e.stopPropagation();
           
           const isActive = productDetailsSubmenu.classList.toggle('active');
           productDetailsIcon.classList.toggle('active');
           
-          // Keep parent menu open when clicking nested menu
           const parentSubmenu = productDetailsToggle.closest('.submenu');
           if (parentSubmenu) {
             parentSubmenu.classList.add('active');
@@ -344,7 +539,6 @@
           }
         });
 
-        // Handle clicks on product details submenu links
         const productDetailsLinks = productDetailsSubmenu.querySelectorAll('a');
         productDetailsLinks.forEach(link => {
           link.addEventListener('click', () => {
@@ -355,7 +549,6 @@
         });
       }
 
-      // Handle main menu toggles
       mainMenuToggles.forEach(({ toggle, submenu, icon }) => {
         if (toggle && submenu && icon) {
           toggle.addEventListener('click', function(e) {
@@ -365,7 +558,6 @@
             const isActive = submenu.classList.toggle('active');
             icon.classList.toggle('active');
             
-            // Close other submenus at the same level
             const parentItem = toggle.closest('.sidebar-item');
             if (parentItem) {
               const siblings = parentItem.parentElement.querySelectorAll('.sidebar-item');
@@ -382,7 +574,6 @@
             }
           });
 
-          // Handle clicks on submenu links (excluding nested menu toggles)
           const submenuLinks = submenu.querySelectorAll('a:not(.sidebar-item > a)');
           submenuLinks.forEach(link => {
             link.addEventListener('click', () => {
@@ -394,9 +585,7 @@
         }
       });
 
-      // Close submenus when clicking outside
       document.addEventListener('click', (e) => {
-        // Check if click is outside any menu
         const clickedInsideSidebar = sidebar.contains(e.target);
         const clickedAdminDropdown = adminDropdown.contains(e.target) || adminIcon.contains(e.target);
         
@@ -405,6 +594,6 @@
         }
       });
     });
-</script>
+  </script>
 </body>
 </html>

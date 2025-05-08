@@ -23,7 +23,6 @@
       overflow-x: hidden;
     }
 
-    /* Header Styles */
     .topbar {
       background: linear-gradient(to right, #0f3460, #1a1a2e);
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -81,7 +80,6 @@
       color: #ffffff;
     }
 
-    /* Sidebar Styles */
     .dashboard-container {
       display: flex;
       min-height: calc(100vh - 48px);
@@ -245,7 +243,6 @@
       display: none;
     }
 
-    /* Main Content Styles */
     .main-content {
       flex: 1;
       padding: 20px;
@@ -281,7 +278,6 @@
       text-shadow: 0 0 5px #00ffcc;
     }
 
-    /* Search Bar Styles */
     .search-bar {
       display: flex;
       gap: 10px;
@@ -319,11 +315,10 @@
       transform: scale(1.03);
     }
 
-    /* Binary Tree Styles */
     .binary-tree-container {
       position: relative;
       width: 100%;
-      height: 400px; /* Reduced for small screens */
+      height: 400px;
       overflow-x: auto;
       overflow-y: auto;
       display: flex;
@@ -384,13 +379,17 @@
       text-anchor: start;
     }
 
+    .child-indicator {
+      font-size: 12px;
+      fill: #00ffcc;
+    }
+
     .link {
       stroke: #00d4ff;
       stroke-width: 2;
       fill: none;
     }
 
-    /* Media Queries for Responsive Alignment */
     @media (min-width: 769px) {
       .sidebar-toggle {
         display: block;
@@ -418,11 +417,11 @@
         flex-direction: column;
       }
       .sidebar {
-        width: 180px; /* Reduced width for mobile */
+        width: 180px;
         border-right: none;
         border-bottom: 2px solid #00d4ff;
         position: fixed;
-        top: 60px; /* Adjusted for smaller topbar */
+        top: 60px;
         left: -180px;
         padding: 10px;
       }
@@ -430,8 +429,8 @@
         left: 0;
       }
       .sidebar.collapsed {
-        width: 180px; /* Keep full width when collapsed on mobile */
-        left: -180px; /* Hide when collapsed */
+        width: 180px;
+        left: -180px;
       }
       .sidebar.collapsed h3,
       .sidebar.collapsed a span {
@@ -474,13 +473,13 @@
         margin-left: 15px;
       }
       .search-bar {
-        flex-direction: row; /* Keep row for better UX */
+        flex-direction: row;
         gap: 5px;
         max-width: 100%;
       }
       .search-bar input,
       .search-bar button {
-        width: auto; /* Allow flexible width */
+        width: auto;
         padding: 6px;
         font-size: 0.85rem;
       }
@@ -491,21 +490,24 @@
         padding: 6px 12px;
       }
       .binary-tree-container {
-        height: 300px; /* Further reduced for mobile */
+        height: 300px;
       }
       .node-circle {
         r: 20;
       }
       .node-icon {
-        font-size: 18px; /* Increased from 14px */
+        font-size: 18px;
       }
       .node-sub-icon {
-        font-size: 14px; /* Increased from 10px */
+        font-size: 14px;
       }
       .node-id {
         font-size: 10px;
       }
       .node-details {
+        font-size: 10px;
+      }
+      .child-indicator {
         font-size: 10px;
       }
       .link {
@@ -528,7 +530,7 @@
         height: 32px;
       }
       .sidebar {
-        width: 160px; /* Further reduced */
+        width: 160px;
         left: -160px;
       }
       .sidebar.active {
@@ -551,21 +553,24 @@
         font-size: 0.8rem;
       }
       .binary-tree-container {
-        height: 250px; /* Optimal for small screens */
+        height: 250px;
       }
       .node-circle {
         r: 16;
       }
       .node-icon {
-        font-size: 16px; /* Increased from 12px */
+        font-size: 16px;
       }
       .node-sub-icon {
-        font-size: 12px; /* Increased from 8px */
+        font-size: 12px;
       }
       .node-id {
         font-size: 8px;
       }
       .node-details {
+        font-size: 8px;
+      }
+      .child-indicator {
         font-size: 8px;
       }
       .link {
@@ -625,12 +630,12 @@
         </div>
       </div>
       <div class="sidebar-item">
-        <a href="earning-history.html" id="earning-history-toggle">
+        <a href="earning-history.html" id="my-team-toggle">
           <i class="fas fa-money-check-alt"></i>
           <span>Earning History</span>
           <i class="fas fa-chevron-down dropdown-icon"></i>
         </a>
-        <div class="submenu" id="earning-history-submenu">
+        <div class="submenu" id="my-team-submenu">
           <a href="referral-bonus.html"><i class="fas fa-gift"></i> <span>Referral Bonus</span></a>
           <a href="leadership-bonus.html"><i class="fas fa-trophy"></i> <span>Leadership Bonus</span></a>
           <a href="rank-reward.html"><i class="fas fa-medal"></i> <span>Rank and Reward</span></a>
@@ -646,9 +651,7 @@
         <div class="submenu" id="topup-fund-submenu">
           <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
           <a href="fund.html"><i class="fas fa-money-bill"></i> <span>Fund</span></a>
-            <a href="transaction-details.html" ><i class="fas fa-receipt"></i> <span>Transaction Details</span></a>
-              
-          <!-- Nested Product-Details menu -->
+          <a href="transaction-details.html"><i class="fas fa-receipt"></i> <span>Transaction Details</span></a>
           <div class="sidebar-item">
             <a href="#" id="product-details-toggle">
               <i class="fas fa-box"></i>
@@ -660,7 +663,6 @@
               <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
             </div>
           </div>
-    
           <a href="withdrawal.html"><i class="fas fa-money-bill"></i> <span>Withdraw</span></a>
         </div>
       </div>
@@ -690,7 +692,6 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Sidebar and dropdown logic
       const sidebarToggle = document.getElementById('sidebar-toggle');
       const sidebarExpand = document.getElementById('sidebar-expand');
       const sidebar = document.querySelector('.sidebar');
@@ -702,7 +703,6 @@
       const myTeamSubmenu = document.getElementById('my-team-submenu');
       const dropdownIcon = myTeamToggle.querySelector('.dropdown-icon');
 
-      // Sidebar collapse/expand for desktop
       if (sidebarToggle && sidebarExpand && sidebar && mainContent) {
         sidebarToggle.addEventListener('click', () => {
           const isCollapsed = sidebar.classList.toggle('collapsed');
@@ -718,14 +718,12 @@
         });
       }
 
-      // Sidebar toggle for mobile
       if (menuToggle && sidebar) {
         menuToggle.addEventListener('click', () => {
           sidebar.classList.toggle('active');
         });
       }
 
-      // Admin dropdown toggle
       if (adminIcon && adminDropdown) {
         adminIcon.addEventListener('click', (e) => {
           e.stopPropagation();
@@ -738,7 +736,6 @@
         });
       }
 
-      // Submenu toggle for My Team
       if (myTeamToggle && myTeamSubmenu && dropdownIcon) {
         myTeamToggle.addEventListener('click', (e) => {
           e.preventDefault();
@@ -773,44 +770,38 @@
         });
       }
 
-      // Binary Tree Visualization
       const svg = document.querySelector('.binary-tree-svg');
       const container = document.querySelector('.binary-tree-container');
       const ns = 'http://www.w3.org/2000/svg';
 
-      // Dummy data for binary tree with CFP
       const treeData = [
         { id: 'RI001', name: 'Name: Varun', email: 'E-Mail: varun@gmail.com', mobile: 'Number: 9876543210', cfp: '0RV', level: 0, x: 0, y: 50, left: 'RI002', right: 'RI003' },
         { id: 'RI002', name: 'Name: Kiran', email: 'E-Mail: kiran@gmail.com', mobile: 'Number: 9276543232', cfp: '100RV', level: 1, x: -200, y: 150, left: 'RI004', right: 'RI005' },
-        { id: 'RI003', name: 'Name: Johnson', email: 'E-Mail: john.j@gmail.com', mobile: 'Number: 8876543210', cfp: '0RV', level: 1, x: 200, y: 150, left: null, right: null },
+        { id: 'RI003', name: 'Name: Johnson', email: 'E-Mail: john.j@gmail.com', mobile: 'Number: 8876543210', cfp: '0RV', level: 1, x: 200, y: 150, left: 'RI006', right: 'RI007' },
         { id: 'RI004', name: 'Name: Emily', email: 'E-Mail: emily.b@gmail.com', mobile: 'Number: 8736543210', cfp: '0RV', level: 2, x: -300, y: 250, left: null, right: null },
-        { id: 'RI005', name: 'Name: David', email: 'E-Mail: david.w@gmail.com', mobile: 'Number: 6856543210', cfp: '0RV', level: 2, x: -100, y: 250, left: null, right: null }
+        { id: 'RI005', name: 'Name: David', email: 'E-Mail: david.w@gmail.com', mobile: 'Number: 6856543210', cfp: '0RV', level: 2, x: -100, y: 250, left: null, right: null },
+        { id: 'RI006', name: 'Name: Sarah', email: 'E-Mail: sarah.k@gmail.com', mobile: 'Number: 9123456789', cfp: '0RV', level: 2, x: 100, y: 250, left: null, right: null },
+        { id: 'RI007', name: 'Name: Michael', email: 'E-Mail: michael.l@gmail.com', mobile: 'Number: 9988776655', cfp: '0RV', level: 2, x: 300, y: 250, left: null, right: null }
       ];
 
-      // Draw the tree
       function drawBinaryTree(highlightedId = null) {
-        svg.innerHTML = ''; // Clear existing content
+        svg.innerHTML = '';
 
-        // Get container width for centering
         const containerWidth = container.clientWidth;
         const screenWidth = window.innerWidth;
 
-        // Dynamic scaling based on screen size
         const spacingFactor = screenWidth <= 480 ? 0.4 : screenWidth <= 768 ? 0.6 : 1;
         const nodeRadius = screenWidth <= 480 ? 16 : screenWidth <= 768 ? 20 : 28;
         const ySpacing = screenWidth <= 480 ? 80 : screenWidth <= 768 ? 100 : 120;
 
-        // Center the tree by offsetting x-coordinates
         const offsetX = containerWidth / 2;
 
-        // Update tree data with dynamic x and y coordinates
         const updatedTreeData = treeData.map(node => ({
           ...node,
           x: (node.x * spacingFactor) + offsetX,
-          y: node.level * ySpacing + 50, // Dynamic y based on level
+          y: node.level * ySpacing + 50,
         }));
 
-        // Draw links
         updatedTreeData.forEach(node => {
           const leftChild = updatedTreeData.find(n => n.id === node.left);
           const rightChild = updatedTreeData.find(n => n.id === node.right);
@@ -829,13 +820,11 @@
           }
         });
 
-        // Draw nodes
         updatedTreeData.forEach(node => {
           const g = document.createElementNS(ns, 'g');
           g.setAttribute('class', `node ${node.id === highlightedId ? 'highlighted' : ''}`);
           g.setAttribute('data-id', node.id);
 
-          // Node circle
           const circle = document.createElementNS(ns, 'circle');
           circle.setAttribute('class', 'node-circle');
           circle.setAttribute('cx', node.x);
@@ -843,7 +832,6 @@
           circle.setAttribute('r', nodeRadius);
           g.appendChild(circle);
 
-          // Main user icon
           const userIcon = document.createElementNS(ns, 'text');
           userIcon.setAttribute('class', 'node-icon');
           userIcon.setAttribute('x', node.x);
@@ -852,7 +840,32 @@
           userIcon.textContent = '👤';
           g.appendChild(userIcon);
 
-          // Node ID and Name (permanent, below icon)
+          // Create a group for child indicators (visible on hover)
+          const childIndicatorsGroup = document.createElementNS(ns, 'g');
+          childIndicatorsGroup.setAttribute('class', 'child-indicators-group');
+          childIndicatorsGroup.style.visibility = 'hidden';
+
+          if (node.left) {
+            const leftIndicator = document.createElementNS(ns, 'text');
+            leftIndicator.setAttribute('class', 'child-indicator');
+            leftIndicator.setAttribute('x', node.x - nodeRadius - 10);
+            leftIndicator.setAttribute('y', node.y + 5);
+            leftIndicator.setAttribute('text-anchor', 'middle');
+            leftIndicator.textContent = '◄';
+            childIndicatorsGroup.appendChild(leftIndicator);
+          }
+          if (node.right) {
+            const rightIndicator = document.createElementNS(ns, 'text');
+            rightIndicator.setAttribute('class', 'child-indicator');
+            rightIndicator.setAttribute('x', node.x + nodeRadius + 10);
+            rightIndicator.setAttribute('y', node.y + 5);
+            rightIndicator.setAttribute('text-anchor', 'middle');
+            rightIndicator.textContent = '►';
+            childIndicatorsGroup.appendChild(rightIndicator);
+          }
+
+          g.appendChild(childIndicatorsGroup);
+
           const idText = document.createElementNS(ns, 'text');
           idText.setAttribute('class', 'node-id');
           idText.setAttribute('x', node.x);
@@ -860,12 +873,10 @@
           idText.textContent = `${node.id} (${node.name.split(': ')[1]})`;
           g.appendChild(idText);
 
-          // Create a group for hover details
           const detailsGroup = document.createElementNS(ns, 'g');
           detailsGroup.setAttribute('class', 'node-details-group');
           detailsGroup.style.visibility = 'hidden';
 
-          // Node details (name, email, mobile, cfp)
           const details = [
             { label: node.name, offsetY: -25 },
             { label: node.email, offsetY: -10 },
@@ -886,18 +897,19 @@
           svg.appendChild(g);
         });
 
-        // Add hover events
         document.querySelectorAll('.node').forEach(node => {
           const detailsGroup = node.querySelector('.node-details-group');
+          const childIndicatorsGroup = node.querySelector('.child-indicators-group');
           node.addEventListener('mouseover', () => {
             detailsGroup.style.visibility = 'visible';
+            childIndicatorsGroup.style.visibility = 'visible';
           });
           node.addEventListener('mouseout', () => {
             detailsGroup.style.visibility = 'hidden';
+            childIndicatorsGroup.style.visibility = 'hidden';
           });
         });
 
-        // Scroll to highlighted node if any
         if (highlightedId) {
           const highlightedNode = document.querySelector(`.node[data-id="${highlightedId}"]`);
           if (highlightedNode) {
@@ -913,7 +925,6 @@
         }
       }
 
-      // Search functionality
       window.searchNode = () => {
         const searchInput = document.getElementById('search-id').value.trim().toUpperCase();
         if (searchInput) {
@@ -922,24 +933,21 @@
             drawBinaryTree(searchInput);
           } else {
             alert('ID not found in the binary tree.');
-            drawBinaryTree(); // Reset tree if ID not found
+            drawBinaryTree();
           }
         } else {
-          drawBinaryTree(); // Reset tree if input is empty
+          drawBinaryTree();
         }
       };
 
-      // Allow Enter key to trigger search
       document.getElementById('search-id').addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
           searchNode();
         }
       });
 
-      // Initialize the page
       drawBinaryTree();
 
-      // Redraw tree on window resize
       window.addEventListener('resize', () => {
         drawBinaryTree();
       });

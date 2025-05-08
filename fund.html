@@ -110,6 +110,22 @@
     background: #0f3460; /* Matches sidebar card background */
     box-shadow: 0 0 5px #00d4ff; /* Subtle glow */
   }
+  .balance-box {
+    background: #0f3460;
+    padding: 15px;
+    border-radius: 8px;
+    border: 2px solid #00d4ff;
+    box-shadow: 0 0 10px #00d4ff;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  .balance-box p {
+    color: #00ffcc;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-shadow: 0 0 5px #00ffcc;
+    margin: 0;
+  }
   @media (min-width: 769px) {
     .sidebar-toggle {
       display: block;
@@ -184,30 +200,26 @@
     .table-section td {
       font-size: 0.9rem;
     }
+    .balance-box p {
+      font-size: 1.2rem;
+    }
   }
-
   .submenu .submenu {
-  margin-left: 15px;
-  border-left: 2px solid rgba(0, 212, 255, 0.3);
-  padding-left: 10px;
-}
-
-/* Active menu item styling */
-.sidebar-item > a.active {
-  background: rgba(0, 212, 255, 0.1);
-  border-left: 3px solid #00d4ff;
-}
-
-/* Dropdown icon rotation */
-.dropdown-icon {
-  transition: transform 0.3s ease;
-}
-
-.dropdown-icon.active {
-  transform: rotate(180deg);
-}
-
-  </style>
+    margin-left: 15px;
+    border-left: 2px solid rgba(0, 212, 255, 0.3);
+    padding-left: 10px;
+  }
+  .sidebar-item > a.active {
+    background: rgba(0, 212, 255, 0.1);
+    border-left: 3px solid #00d4ff;
+  }
+  .dropdown-icon {
+    transition: transform 0.3s ease;
+  }
+  .dropdown-icon.active {
+    transform: rotate(180deg);
+  }
+</style>
 </head>
 <body>
   <!-- Topbar -->
@@ -232,7 +244,7 @@
     <div class="sidebar">
       <i class="fas fa-times sidebar-expand" id="sidebar-expand"></i>
       <h3></h3>
-      <a href="index.html" ><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
+      <a href="index.html"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
       <div class="sidebar-item">
         <a href="my-account.html" id="my-account-toggle">
           <i class="fas fa-user"></i>
@@ -243,7 +255,6 @@
           <a href="profile-details.html"><i class="fas fa-user-edit"></i> <span>Profile Details</span></a>
           <a href="kyc-document.html"><i class="fas fa-file-upload"></i> <span>Upload KYC Document</span></a>
           <a href="change-password.html"><i class="fas fa-lock"></i> <span>Change Password</span></a>
-       
           <a href="id-card.html"><i class="fas fa-lock"></i> <span>ID Card</span></a>
         </div>
       </div>
@@ -282,9 +293,7 @@
         <div class="submenu" id="topup-fund-submenu">
           <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
           <a href="fund.html"><i class="fas fa-money-bill"></i> <span>Fund</span></a>
-          <a href="transaction-details.html" ><i class="fas fa-receipt"></i> <span>Transaction Details</span></a>
-          
-          <!-- Nested Product-Details menu -->
+          <a href="transaction-details.html"><i class="fas fa-receipt"></i> <span>Transaction Details</span></a>
           <div class="sidebar-item">
             <a href="#" id="product-details-toggle">
               <i class="fas fa-box"></i>
@@ -296,11 +305,9 @@
               <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
             </div>
           </div>
-    
           <a href="withdrawal.html"><i class="fas fa-money-bill"></i> <span>Withdraw</span></a>
         </div>
       </div>
-      
       <a href="#" id="sidebar-sign-out"><i class="fas fa-sign-out-alt"></i> <span>Sign Out</span></a>
     </div>
 
@@ -309,21 +316,12 @@
       <div class="section">
         <h2 class="text-2xl font-bold text-[#f4c430] mb-4">Fund</h2>
 
-        <!-- Add Fund -->
+        <!-- Fund Balance -->
         <div class="form-section">
-          <h4>Add Fund   ( Balance 100 RV Points )</h4>
-          <label for="fund-amount">Amount</label>
-          <input type="number" id="fund-amount" placeholder="Enter amount">
-          <label for="payment-method">Payment Method</label>
-          <select id="payment-method">
-            <option value="">Select Payment Method</option>
-            <option value="bank">Bank Transfer</option>
-            <option value="upi">UPI</option>
-            <option value="card">Credit/Debit Card</option>
-          </select>
-          <button>Add Fund</button>
-          <label for="screenshot-upload">Upload Screenshot</label>
-          <input type="file" id="screenshot-upload" accept="image/*">
+          <h4>Fund Balance</h4>
+          <div class="balance-box">
+            <p>100 RV POINTS</p>
+          </div>
         </div>
 
         <!-- Fund History -->
@@ -347,23 +345,12 @@
                 <td>UPI</td>
                 <td>Success</td>
               </tr>
-              
             </tbody>
           </table>
         </div>
       </div>
 
-
-
-      <h2 class="text-2xl font-bold text-[#f4c430] mb-4">QR Code for Payment</h2>
-  
-      <!-- QR Code -->
-      <div class="form-section qr-code-container">
-        <h4>Scan to Make Payment</h4>
-        <img src="https://via.placeholder.com/200x200.png?text=QR+Code" alt="QR Code">
-      </div>
-
-
+      
 
       <footer class="main-footer">
         @2025 Raanvi - Developed By Bloom It Solutions
@@ -381,7 +368,6 @@
       const adminIcon = document.getElementById('admin-icon');
       const adminDropdown = document.getElementById('admin-dropdown');
 
-      // Function to close all submenus
       function closeAllSubmenus() {
         document.querySelectorAll('.submenu').forEach(submenu => {
           submenu.classList.remove('active');
@@ -391,7 +377,6 @@
         });
       }
 
-      // Sidebar collapse/expand for desktop
       if (sidebarToggle && sidebarExpand && sidebar && mainContent) {
         sidebarToggle.addEventListener('click', () => {
           const isCollapsed = sidebar.classList.toggle('collapsed');
@@ -407,14 +392,12 @@
         });
       }
 
-      // Sidebar toggle for mobile
       if (menuToggle && sidebar) {
         menuToggle.addEventListener('click', () => {
           sidebar.classList.toggle('active');
         });
       }
 
-      // Admin dropdown toggle
       if (adminIcon && adminDropdown) {
         adminIcon.addEventListener('click', (e) => {
           e.stopPropagation();
@@ -428,7 +411,6 @@
         });
       }
 
-      // Main menu toggles
       const mainMenuToggles = [
         {
           toggle: document.getElementById('my-account-toggle'),
@@ -452,7 +434,6 @@
         }
       ];
 
-      // Special handling for nested Product-Details menu
       const productDetailsToggle = document.getElementById('product-details-toggle');
       const productDetailsSubmenu = document.getElementById('product-details-submenu');
       const productDetailsIcon = document.querySelector('#product-details-toggle .dropdown-icon');
@@ -460,12 +441,11 @@
       if (productDetailsToggle && productDetailsSubmenu && productDetailsIcon) {
         productDetailsToggle.addEventListener('click', function(e) {
           e.preventDefault();
-          e.stopPropagation(); // Prevent event from bubbling to parent menus
+          e.stopPropagation();
           
           const isActive = productDetailsSubmenu.classList.toggle('active');
           productDetailsIcon.classList.toggle('active');
           
-          // Keep parent menu open when clicking nested menu
           const parentSubmenu = productDetailsToggle.closest('.submenu');
           if (parentSubmenu) {
             parentSubmenu.classList.add('active');
@@ -479,7 +459,6 @@
           }
         });
 
-        // Handle clicks on product details submenu links
         const productDetailsLinks = productDetailsSubmenu.querySelectorAll('a');
         productDetailsLinks.forEach(link => {
           link.addEventListener('click', () => {
@@ -490,7 +469,6 @@
         });
       }
 
-      // Handle main menu toggles
       mainMenuToggles.forEach(({ toggle, submenu, icon }) => {
         if (toggle && submenu && icon) {
           toggle.addEventListener('click', function(e) {
@@ -500,7 +478,6 @@
             const isActive = submenu.classList.toggle('active');
             icon.classList.toggle('active');
             
-            // Close other submenus at the same level
             const parentItem = toggle.closest('.sidebar-item');
             if (parentItem) {
               const siblings = parentItem.parentElement.querySelectorAll('.sidebar-item');
@@ -517,7 +494,6 @@
             }
           });
 
-          // Handle clicks on submenu links (excluding nested menu toggles)
           const submenuLinks = submenu.querySelectorAll('a:not(.sidebar-item > a)');
           submenuLinks.forEach(link => {
             link.addEventListener('click', () => {
@@ -529,9 +505,7 @@
         }
       });
 
-      // Close submenus when clicking outside
       document.addEventListener('click', (e) => {
-        // Check if click is outside any menu
         const clickedInsideSidebar = sidebar.contains(e.target);
         const clickedAdminDropdown = adminDropdown.contains(e.target) || adminIcon.contains(e.target);
         
@@ -540,6 +514,6 @@
         }
       });
     });
-</script>
+  </script>
 </body>
 </html>

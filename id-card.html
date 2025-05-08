@@ -13,7 +13,7 @@
     .main-content {
       flex: 1;
       padding: 20px;
-      background: #1a1a2e; /* Matches sidebar background */
+      background: #1a1a2e;
       margin-left: 250px;
       overflow-y: auto;
       min-height: calc(100vh - 48px);
@@ -28,20 +28,20 @@
       flex: 1 0 auto;
     }
     .form-section {
-      background: #0f3460; /* Matches sidebar card background */
+      background: #0f3460;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 0 10px #00d4ff; /* Blue glow effect */
-      border: 2px solid #00d4ff; /* Matches sidebar border */
+      box-shadow: 0 0 10px #00d4ff;
+      border: 2px solid #00d4ff;
       margin-bottom: 20px;
     }
     .form-section h4 {
-      color: #00ffcc; /* Matches sidebar h3 color */
+      color: #00ffcc;
       margin-bottom: 15px;
-      text-shadow: 0 0 5px #00ffcc; /* Added glow */
+      text-shadow: 0 0 5px #00ffcc;
     }
     .form-section label {
-      color: #b3e0ff; /* Matches sidebar text color */
+      color: #b3e0ff;
       margin-bottom: 5px;
       display: block;
     }
@@ -49,61 +49,67 @@
     .form-section select {
       width: 100%;
       padding: 8px;
-      border: 2px solid #00d4ff; /* Matches sidebar border */
+      border: 2px solid #00d4ff;
       border-radius: 5px;
-      background: #0f3460; /* Matches sidebar card background */
-      color: #b3e0ff; /* Matches sidebar text color */
+      background: #0f3460;
+      color: #b3e0ff;
       margin-bottom: 10px;
-      box-shadow: 0 0 5px #00d4ff; /* Subtle glow */
+      box-shadow: 0 0 5px #00d4ff;
     }
     .form-section input:focus,
     .form-section select:focus {
       outline: none;
-      box-shadow: 0 0 10px #00d4ff; /* Blue glow on focus */
+      box-shadow: 0 0 10px #00d4ff;
     }
     .form-section button {
-      background: #0f3460; /* Matches sidebar card background */
-      border: 2px solid #00d4ff; /* Matches sidebar border */
+      background: #0f3460;
+      border: 2px solid #00d4ff;
       padding: 10px 20px;
       border-radius: 5px;
-      color: #b3e0ff; /* Matches sidebar text color */
+      color: #b3e0ff;
       cursor: pointer;
-      box-shadow: 0 0 10px #00d4ff; /* Blue glow */
+      box-shadow: 0 0 10px #00d4ff;
       transition: box-shadow 0.3s, transform 0.3s;
     }
     .form-section button:hover {
-      background: #0f3460; /* No background change */
-      transform: scale(1.03); /* Matches sidebar hover effect */
-      box-shadow: 0 0 15px #00d4ff; /* Stronger blue glow */
-      color: #b3e0ff; /* Prevent color change */
+      background: #0f3460;
+      transform: scale(1.03);
+      box-shadow: 0 0 15px #00d4ff;
+      color: #b3e0ff;
     }
     .form-section button:active {
-      color: #b3e0ff; /* Prevent color change on click */
-      box-shadow: 0 0 15px #00d4ff; /* Blue box-shadow only */
+      color: #b3e0ff;
+      box-shadow: 0 0 15px #00d4ff;
     }
     .id-card-container {
-      background: #0f3460; /* Matches sidebar card background */
+      background: #0f3460;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 0 10px #00d4ff; /* Blue glow effect */
-      border: 2px solid #00d4ff; /* Matches sidebar border */
+      box-shadow: 0 0 10px #00d4ff;
+      border: 2px solid #00d4ff;
       margin-bottom: 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
+    .id-card-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
     .id-card-photo {
       width: 150px;
       height: 150px;
       border-radius: 10px;
-      border: 2px solid #00d4ff; /* Matches sidebar border */
+      border: 2px solid #00d4ff;
       margin-bottom: 15px;
       object-fit: cover;
-      box-shadow: 0 0 5px #00d4ff; /* Subtle glow */
+      box-shadow: 0 0 5px #00d4ff;
     }
     .id-card-details {
       width: 100%;
-      color: #b3e0ff; /* Matches sidebar text color */
+      color: #b3e0ff;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -121,27 +127,27 @@
     .label {
       width: 80px;
       font-weight: bold;
-      color: #00ffcc; /* Matches sidebar h3 color */
+      color: #00ffcc;
     }
     .value {
       flex: 2;
-      color: #b3e0ff; /* Matches sidebar text color */
+      color: #b3e0ff;
     }
     .download-button {
-      background: #0f3460; /* Matches form button */
-      border: 2px solid #00d4ff; /* Matches sidebar border */
+      background: #0f3460;
+      border: 2px solid #00d4ff;
       padding: 10px 20px;
       border-radius: 5px;
-      color: #b3e0ff; /* Matches sidebar text color */
+      color: #b3e0ff;
       cursor: pointer;
-      box-shadow: 0 0 10px #00d4ff; /* Blue glow */
+      box-shadow: 0 0 10px #00d4ff;
       transition: box-shadow 0.3s, transform 0.3s;
       margin-top: 15px;
     }
     .download-button:hover {
       background: #0f3460;
-      transform: scale(1.03); /* Matches form button hover */
-      box-shadow: 0 0 15px #00d4ff; /* Stronger blue glow */
+      transform: scale(1.03);
+      box-shadow: 0 0 15px #00d4ff;
       color: #b3e0ff;
     }
     .download-button:active {
@@ -208,26 +214,20 @@
       }
     }
     .submenu .submenu {
-  margin-left: 15px;
-  border-left: 2px solid rgba(0, 212, 255, 0.3);
-  padding-left: 10px;
-}
-
-/* Active menu item styling */
-.sidebar-item > a.active {
-  background: rgba(0, 212, 255, 0.1);
-  border-left: 3px solid #00d4ff;
-}
-
-/* Dropdown icon rotation */
-.dropdown-icon {
-  transition: transform 0.3s ease;
-}
-
-.dropdown-icon.active {
-  transform: rotate(180deg);
-}
-
+      margin-left: 15px;
+      border-left: 2px solid rgba(0, 212, 255, 0.3);
+      padding-left: 10px;
+    }
+    .sidebar-item > a.active {
+      background: rgba(0, 212, 255, 0.1);
+      border-left: 3px solid #00d4ff;
+    }
+    .dropdown-icon {
+      transition: transform 0.3s ease;
+    }
+    .dropdown-icon.active {
+      transform: rotate(180deg);
+    }
   </style>
 </head>
 <body>
@@ -255,7 +255,7 @@
       <h3></h3>
       <a href="index.html"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
       <div class="sidebar-item">
-        <a href="my-account.html" id="my-account-toggle" class="active   ">
+        <a href="my-account.html" id="my-account-toggle" class="active">
           <i class="fas fa-user"></i>
           <span>My Account</span>
           <i class="fas fa-chevron-down dropdown-icon active"></i>
@@ -265,7 +265,6 @@
           <a href="kyc-document.html"><i class="fas fa-file-upload"></i> <span>Upload KYC Document</span></a>
           <a href="change-password.html"><i class="fas fa-lock"></i> <span>Change Password</span></a>
           <a href="id-card.html"><i class="fas fa-lock" aria-colspan="active"></i> <span>ID Card</span></a>
-      
         </div>
       </div>
       <div class="sidebar-item">
@@ -303,9 +302,7 @@
         <div class="submenu" id="topup-fund-submenu">
           <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
           <a href="fund.html"><i class="fas fa-money-bill"></i> <span>Fund</span></a>
-          <a href="transaction-details.html" ><i class="fas fa-receipt"></i> <span>Transaction Details</span></a>
-          
-          <!-- Nested Product-Details menu -->
+          <a href="transaction-details.html"><i class="fas fa-receipt"></i> <span>Transaction Details</span></a>
           <div class="sidebar-item">
             <a href="#" id="product-details-toggle">
               <i class="fas fa-box"></i>
@@ -317,11 +314,9 @@
               <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
             </div>
           </div>
-      
           <a href="withdrawal.html"><i class="fas fa-money-bill"></i> <span>Withdraw</span></a>
         </div>
       </div>
-     
       <a href="#" id="sidebar-sign-out"><i class="fas fa-sign-out-alt"></i> <span>Sign Out</span></a>
     </div>
 
@@ -329,24 +324,22 @@
     <div class="main-content">
       <div class="section">
         <h2 class="text-2xl font-bold text-[#f4c430] mb-4">ID Card</h2>
-        
-        <!-- Upload Photo for ID Card -->
         <div class="form-section">
           <h4>Upload Photo for ID Card</h4>
           <label for="id-card-photo">Upload Photo</label>
           <input type="file" id="id-card-photo" accept="image/*">
           <button>Upload Photo</button>
         </div>
-
-        <!-- ID Card Preview -->
         <div class="id-card-container">
-          <img src="https://via.placeholder.com/150" alt="ID Card Photo" class="id-card-photo">
-          <div class="id-card-details">
-            <div class="detail-row"><span class="label">Name:</span><span class="value">Varun</span></div>
-            <div class="detail-row"><span class="label">ID:</span><span class="value">RI001</span></div>
-            <div class="detail-row"><span class="label">Email:</span><span class="value">varun@gmail.com</span></div>
-            <div class="detail-row"><span class="label">Mobile:</span><span class="value">9876543210</span></div>
-            <div class="detail-row"><span class="label">Join Date:</span><span class="value">30/04/2025</span></div>
+          <div class="id-card-content">
+            <img src="https://via.placeholder.com/150" alt="ID Card Photo" class="id-card-photo">
+            <div class="id-card-details">
+              <div class="detail-row"><span class="label">Name:</span><span class="value">Varun</span></div>
+              <div class="detail-row"><span class="label">ID:</span><span class="value">RI001</span></div>
+              <div class="detail-row"><span class="label">Email:</span><span class="value">varun@gmail.com</span></div>
+              <div class="detail-row"><span class="label">Mobile:</span><span class="value">9876543210</span></div>
+              <div class="detail-row"><span class="label">Join Date:</span><span class="value">30/04/2025</span></div>
+            </div>
           </div>
           <button class="download-button" onclick="downloadIDCard()">Download ID Card</button>
         </div>
@@ -359,7 +352,6 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Sidebar elements
       const sidebar = document.querySelector('.sidebar');
       const mainContent = document.querySelector('.main-content');
       const sidebarToggle = document.getElementById('sidebar-toggle');
@@ -368,7 +360,6 @@
       const adminIcon = document.getElementById('admin-icon');
       const adminDropdown = document.getElementById('admin-dropdown');
 
-      // Function to close all submenus
       function closeAllSubmenus() {
         document.querySelectorAll('.submenu').forEach(submenu => {
           submenu.classList.remove('active');
@@ -378,7 +369,6 @@
         });
       }
 
-      // Desktop sidebar toggle (collapse/expand)
       if (sidebarToggle && sidebarExpand && sidebar && mainContent) {
         sidebarToggle.addEventListener('click', () => {
           const isCollapsed = sidebar.classList.toggle('collapsed');
@@ -394,14 +384,12 @@
         });
       }
 
-      // Mobile sidebar toggle (show/hide)
       if (menuToggle && sidebar) {
         menuToggle.addEventListener('click', () => {
           sidebar.classList.toggle('active');
         });
       }
 
-      // Close sidebar on mobile when clicking outside
       document.addEventListener('click', (e) => {
         if (window.innerWidth <= 768 && sidebar.classList.contains('active')) {
           if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
@@ -410,7 +398,6 @@
         }
       });
 
-      // Admin dropdown toggle
       if (adminIcon && adminDropdown) {
         adminIcon.addEventListener('click', (e) => {
           e.stopPropagation();
@@ -423,7 +410,6 @@
         });
       }
 
-      // Menu toggle configuration
       const menuToggles = [
         {
           toggle: document.getElementById('my-account-toggle'),
@@ -446,12 +432,6 @@
           icon: document.querySelector('#topup-fund-toggle .dropdown-icon')
         },
         {
-          toggle: document.getElementById('payment-toggle'),
-          submenu: document.getElementById('payment-submenu'),
-          icon: document.querySelector('#payment-toggle .dropdown-icon')
-        },
-        // Special handling for nested Product-Details menu
-        {
           toggle: document.getElementById('product-details-toggle'),
           submenu: document.getElementById('product-details-submenu'),
           icon: document.querySelector('#product-details-toggle .dropdown-icon'),
@@ -459,15 +439,12 @@
         }
       ];
 
-      // Handle menu toggles
       menuToggles.forEach(({ toggle, submenu, icon, isNested }) => {
         if (toggle && submenu && icon) {
           toggle.addEventListener('click', function(e) {
             e.preventDefault();
             if (isNested) {
-              e.stopPropagation(); // Prevent event from bubbling to parent menus
-              
-              // Keep parent menu open when clicking nested menu
+              e.stopPropagation();
               const parentSubmenu = toggle.closest('.submenu');
               if (parentSubmenu) {
                 parentSubmenu.classList.add('active');
@@ -484,7 +461,6 @@
             const isActive = submenu.classList.toggle('active');
             icon.classList.toggle('active');
             
-            // Close other submenus at the same level
             if (!isNested) {
               const parentItem = toggle.closest('.sidebar-item');
               if (parentItem) {
@@ -503,7 +479,6 @@
             }
           });
 
-          // Close when clicking outside
           document.addEventListener('click', (e) => {
             if (!toggle.contains(e.target) && !submenu.contains(e.target)) {
               submenu.classList.remove('active');
@@ -511,7 +486,6 @@
             }
           });
 
-          // Close sidebar on mobile after menu item click
           submenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
               if (window.innerWidth <= 768) {
@@ -522,7 +496,6 @@
         }
       });
 
-      // Close all submenus when clicking outside
       document.addEventListener('click', (e) => {
         const clickedInsideSidebar = sidebar.contains(e.target);
         const clickedAdminDropdown = adminDropdown.contains(e.target) || adminIcon.contains(e.target);
@@ -533,24 +506,25 @@
       });
     });
 
-    // Preserved ID card download function
     function downloadIDCard() {
-      const idCardContainer = document.querySelector('.id-card-container');
-      if (idCardContainer && typeof html2canvas === 'function') {
-        html2canvas(idCardContainer, {
-          backgroundColor: '#0f3460',
-          scale: 2
+      const idCardPhoto = document.querySelector('.id-card-photo');
+      if (idCardPhoto && typeof html2canvas === 'function') {
+        html2canvas(idCardPhoto, {
+          scale: 2,
+          backgroundColor: null // Preserve transparency if the image has it
         }).then(canvas => {
           const link = document.createElement('a');
-          link.download = 'id-card.png';
+          link.download = 'id-card-photo.png';
           link.href = canvas.toDataURL('image/png');
           link.click();
         }).catch(err => {
-          console.error('Error generating ID card image:', err);
-          alert('Failed to download ID card. Please try again.');
+          console.error('Error generating ID card photo:', err);
+          alert('Failed to download ID card photo. Please try again.');
         });
+      } else {
+        alert('Unable to download the photo. Please ensure the image is loaded and html2canvas is available.');
       }
     }
-</script>
+  </script>
 </body>
 </html>
