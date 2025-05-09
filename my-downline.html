@@ -338,7 +338,7 @@
       <h3></h3>
       <a href="index.html"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
       <div class="sidebar-item">
-        <a href="my-account.html" id="my-account-toggle">
+        <a href="#" id="my-account-toggle">
           <i class="fas fa-user"></i>
           <span>My Account</span>
           <i class="fas fa-chevron-down dropdown-icon"></i>
@@ -351,7 +351,7 @@
         </div>
       </div>
       <div class="sidebar-item">
-        <a href="my-team.html" id="my-team-toggle">
+        <a href="#" id="my-team-toggle">
           <i class="fas fa-users"></i>
           <span>My Team</span>
           <i class="fas fa-chevron-down dropdown-icon"></i>
@@ -364,7 +364,7 @@
         </div>
       </div>
       <div class="sidebar-item">
-        <a href="earning-history.html" id="earning-history-toggle">
+        <a href="#" id="earning-history-toggle">
           <i class="fas fa-money-check-alt"></i>
           <span>Earning History</span>
           <i class="fas fa-chevron-down dropdown-icon"></i>
@@ -377,7 +377,7 @@
         </div>
       </div>
       <div class="sidebar-item">
-        <a href="topup-fund.html" id="topup-fund-toggle">
+        <a href="#" id="topup-fund-toggle">
           <i class="fas fa-wallet"></i>
           <span>Product & Payment</span>
           <i class="fas fa-chevron-down dropdown-icon"></i>
@@ -385,7 +385,7 @@
         <div class="submenu" id="topup-fund-submenu">
           <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
           <a href="fund.html"><i class="fas fa-money-bill"></i> <span>Fund</span></a>
-          <a href="transaction-details.html" ><i class="fas fa-receipt"></i> <span>Transaction Details</span></a>
+          <a href="transaction-details.html"><i class="fas fa-receipt"></i> <span>Transaction Details</span></a>
           
           <!-- Nested Product-Details menu -->
           <div class="sidebar-item">
@@ -638,17 +638,29 @@
               }
             });
           });
+          
+          // Close submenu when clicking outside
           document.addEventListener('click', (e) => {
             if (!toggle.contains(e.target) && !submenu.contains(e.target)) {
               submenu.classList.remove('active');
               icon.classList.remove('active');
             }
           });
+          
+          // Make sure links in submenu work properly
           submenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
+            link.addEventListener('click', (e) => {
+              // Allow default link behavior
               if (window.innerWidth <= 768 && sidebar) {
                 sidebar.classList.remove('active');
               }
+              // Close all submenus
+              submenuToggles.forEach(({ submenu, icon }) => {
+                if (submenu && icon) {
+                  submenu.classList.remove('active');
+                  icon.classList.remove('active');
+                }
+              });
             });
           });
         }
