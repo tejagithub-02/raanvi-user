@@ -156,6 +156,16 @@
     .dropdown-icon.active {
       transform: rotate(180deg);
     }
+    .main-footer {
+      background: #0f3460;
+      color: #b3e0ff;
+      text-align: center;
+      padding: 10px;
+      border-top: 2px solid #00d4ff;
+      box-shadow: 0 -2px 5px #00d4ff;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
     @media (min-width: 769px) {
       .sidebar-toggle {
         display: block;
@@ -561,12 +571,11 @@
       if (productDetailsToggle && productDetailsSubmenu && productDetailsIcon) {
         productDetailsToggle.addEventListener('click', function(e) {
           e.preventDefault();
-          e.stopPropagation(); // Prevent event from bubbling to parent menus
+          e.stopPropagation();
           
           const isActive = productDetailsSubmenu.classList.toggle('active');
           productDetailsIcon.classList.toggle('active');
           
-          // Keep parent menu open when clicking nested menu
           const parentSubmenu = productDetailsToggle.closest('.submenu');
           if (parentSubmenu) {
             parentSubmenu.classList.add('active');
@@ -580,7 +589,6 @@
           }
         });
 
-        // Handle clicks on product details submenu links
         const productDetailsLinks = productDetailsSubmenu.querySelectorAll('a');
         productDetailsLinks.forEach(link => {
           link.addEventListener('click', () => {
@@ -591,7 +599,6 @@
         });
       }
 
-      // Handle main menu toggles
       mainMenuToggles.forEach(({ toggle, submenu, icon }) => {
         if (toggle && submenu && icon) {
           toggle.addEventListener('click', function(e) {
@@ -601,7 +608,6 @@
             const isActive = submenu.classList.toggle('active');
             icon.classList.toggle('active');
             
-            // Close other submenus at the same level
             const parentItem = toggle.closest('.sidebar-item');
             if (parentItem) {
               const siblings = parentItem.parentElement.querySelectorAll('.sidebar-item');
@@ -618,7 +624,6 @@
             }
           });
 
-          // Handle clicks on submenu links (excluding nested menu toggles)
           const submenuLinks = submenu.querySelectorAll('a:not(.sidebar-item > a)');
           submenuLinks.forEach(link => {
             link.addEventListener('click', () => {
@@ -630,9 +635,7 @@
         }
       });
 
-      // Close submenus when clicking outside
       document.addEventListener('click', (e) => {
-        // Check if click is outside any menu
         const clickedInsideSidebar = sidebar.contains(e.target);
         const clickedAdminDropdown = adminDropdown.contains(e.target) || adminIcon.contains(e.target);
         
@@ -641,15 +644,14 @@
         }
       });
 
-      // Toggle Product History table when clicking its header
       const historySection = document.querySelector('.collapsible-table-section');
       if (historySection) {
         const header = historySection.querySelector('h4');
         const table = historySection.querySelector('table');
         const icon = historySection.querySelector('.dropdown-icon');
         
-        // Show table by default on page load
         table.classList.add('active');
+        icon.classList.add('active');
         
         if (header && table && icon) {
           header.addEventListener('click', () => {
@@ -659,16 +661,13 @@
         }
       }
 
-      // Function to generate and download invoice PDF
       window.downloadInvoice = function(link) {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
 
-        // Get the table row containing the link
         const row = link.closest('tr');
         const cells = row.querySelectorAll('td');
         
-        // Extract product details
         const details = {
           'SI.NO': cells[0].textContent,
           'Date': cells[1].textContent,
@@ -680,23 +679,109 @@
           'RV Points': cells[7].textContent
         };
 
-        // PDF styling
-        doc.setFont('Arial', 'bold');
-        doc.setFontSize(16);
-        doc.setTextColor(0, 0, 0); // #00ffcc
-        doc.text('Invoice', 20, 20);
+        const primaryColor = [0, 255, 204]; // #00ffcc
+        const textColor = [179, 224, 255]; // #b3e0ff
+        const borderColor = [0, 212, 255]; // #00d4ff
 
-        // Add product details
-        doc.setFont('Arial', 'normal');
+        // Header
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(20);
+        doc.setTextColor(...primaryColor);
+        doc.text('Raanvi Invoice', 20, 20);
         doc.setFontSize(12);
-        doc.setTextColor(0, 0, 0); // #b3e0ff
-        let y = 30;
-        for (const [key, value] of Object.entries(details)) {
-          doc.text(`${key}: ${value}`, 20, y);
-          y += 10;
-        }
+        doc.setTextColor(...textColor);
+        doc.text(`Invoice No: INV-${details['Product ID']}`, 20, 30);
+        doc.text(`Date: ${details['Date']}`, 150, 30, { align: 'right' });
 
-        // Save the PDF
+        // Company Details
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(12);
+        doc.setTextColor(...primaryColor);
+        doc.text('From:', 20, 40);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(...textColor);
+        doc.text('Raanvi Enterprises', 20, 48);
+        doc.text('456 Business Park, City, Country', 20, 56);
+        doc.text('Email: contact@raanvi.com', 20, 64);
+        doc.text('Phone: +123-456-7890', 20, 72);
+
+        // Customer Details
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(...primaryColor);
+        doc.text('Bill To:', 105, 40);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(...textColor);
+        const addressLines = doc.splitTextToSize(details['Address'], 80);
+        let y = 48;
+        addressLines.forEach(line => {
+          doc.text(line, 105, y);
+          y += 8;
+        });
+
+        // Product Details Table
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(12);
+        doc.setTextColor(...primaryColor);
+        doc.text('Order Details:', 20, y + 10);
+        y += 20;
+
+        const headers = ['SI.NO', 'Date', 'Product Name', 'Product ID', 'Qty', 'Amount', 'RV Points'];
+        const data = [[
+          details['SI.NO'],
+          details['Date'],
+          details['Product Name'],
+          details['Product ID'],
+          details['Quantity'],
+          details['Amount'],
+          details['RV Points']
+        ]];
+
+        const colWidths = [15, 25, 55, 30, 15, 25, 25];
+        const rowHeight = 8;
+        const tableX = 20;
+        let tableY = y;
+
+        // Draw header
+        doc.setFillColor(...borderColor);
+        doc.setDrawColor(...borderColor);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(255, 255, 255);
+        headers.forEach((header, i) => {
+          const xPos = tableX + colWidths.slice(0, i).reduce((a, b) => a + b, 0);
+          doc.rect(xPos, tableY, colWidths[i], rowHeight, 'FD');
+          doc.text(header, xPos + 2, tableY + 6);
+        });
+
+        // Draw data row
+        tableY += rowHeight;
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(...textColor);
+        data[0].forEach((cell, i) => {
+          const xPos = tableX + colWidths.slice(0, i).reduce((a, b) => a + b, 0);
+          doc.rect(xPos, tableY, colWidths[i], rowHeight, 'S');
+          doc.text(cell, xPos + 2, tableY + 6);
+        });
+
+        // Summary
+        tableY += rowHeight + 10;
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(...primaryColor);
+        doc.text('Summary:', 150, tableY, { align: 'right' });
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(...textColor);
+        doc.text(`Total Amount: ${details['Amount']}`, 150, tableY + 8, { align: 'right' });
+        doc.text(`Total RV Points: ${details['RV Points']}`, 150, tableY + 16, { align: 'right' });
+
+        // Footer
+        tableY += 30;
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(10);
+        doc.setTextColor(...textColor);
+        doc.text('Terms: Payment due within 30 days.', 20, tableY);
+        doc.text('Thank you for your business!', 20, tableY + 8);
+        doc.text('Developed By Bloom It Solutions', 20, tableY + 16);
+        doc.text('Contact: support@bloomitsolutions.com', 20, tableY + 24);
+
         doc.save(`invoice-${details['Product ID']}.pdf`);
       };
     });
