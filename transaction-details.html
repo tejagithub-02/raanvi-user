@@ -58,6 +58,9 @@
       outline: none;
       box-shadow: 0 0 10px #00d4ff;
     }
+    .form-section input[type="file"] {
+      padding: 3px;
+    }
     .form-section button {
       background: #0f3460;
       border: 2px solid #00d4ff;
@@ -78,7 +81,7 @@
       color: #b3e0ff;
       box-shadow: 0 0 15px #00d4ff;
     }
-    .table-container {
+    .table-section {
       background: #0f3460;
       padding: 20px;
       border-radius: 10px;
@@ -86,28 +89,81 @@
       border: 2px solid #00d4ff;
       margin-bottom: 20px;
     }
-    .table-container h4 {
+    .table-section h4 {
       color: #00ffcc;
       margin-bottom: 15px;
       text-shadow: 0 0 5px #00ffcc;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-right: 30px; /* Space for sticky arrow */
     }
-    .table-container table {
+    .table-responsive {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .table-section table {
       width: 100%;
-      color: #b3e0ff;
       border-collapse: collapse;
+      color: #b3e0ff;
+      display: none; /* Initially hide the table */
     }
-    .table-container th,
-    .table-container td {
+    .table-section table.active {
+      display: table; /* Show table when active */
+    }
+    .table-section th,
+    .table-section td {
       padding: 10px;
+      border: 2px solid #00d4ff;
       text-align: left;
-      border-bottom: 1px solid #00d4ff;
+      font-size: 0.95rem;
     }
-    .table-container th {
+    .table-section th {
       background: #0f3460;
+      box-shadow: 0 0 5px #00d4ff;
+    }
+    .table-section .dropdown-icon {
+      position: sticky;
+      right: 10px;
+      display: inline-flex;
+      align-items: center;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    .table-section .dropdown-icon.active {
+      transform: rotate(180deg);
+    }
+    /* New transaction details table styles */
+    .transaction-details-table {
+      width: 100%;
+      border-collapse: collapse;
+      color: #b3e0ff;
+      margin-top: 15px;
+    }
+    .transaction-details-table th,
+    .transaction-details-table td {
+      padding: 10px;
+      border: 2px solid #00d4ff;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+    .transaction-details-table th {
+      background: #0f3460;
+      box-shadow: 0 0 5px #00d4ff;
+    }
+    .transaction-details-container {
+      background: #0f3460;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00d4ff;
+      border: 2px solid #00d4ff;
+      margin-bottom: 20px;
+    }
+    .transaction-details-container h4 {
       color: #00ffcc;
-    }
-    .table-container td {
-      background: #0f3460;
+      margin-bottom: 15px;
+      text-shadow: 0 0 5px #00ffcc;
     }
     @media (min-width: 769px) {
       .sidebar-toggle {
@@ -118,6 +174,40 @@
       }
     }
     @media (max-width: 768px) {
+      .topbar h1 {
+        font-size: 1.2rem;
+      }
+      .topbar .admin-icon {
+        font-size: 1.75rem;
+      }
+      .dashboard-container {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 250px;
+        border-right: none;
+        border-bottom: 2px solid #00d4ff;
+        position: fixed;
+        top: 48px;
+        left: -250px;
+        transition: left 0.3s ease-in-out;
+      }
+      .sidebar.active {
+        left: 0;
+      }
+      .sidebar.collapsed {
+        width: 250px;
+      }
+      .sidebar.collapsed h3,
+      .sidebar.collapsed a span {
+        display: block;
+      }
+      .sidebar.collapsed a {
+        justify-content: flex-start;
+      }
+      .sidebar-expand {
+        display: none;
+      }
       .main-content {
         margin-left: 0;
         padding: 15px;
@@ -125,36 +215,81 @@
       .main-content.collapsed {
         margin-left: 0;
       }
-      .table-container {
-        overflow-x: auto;
+      .menu-toggle {
+        display: block;
+      }
+      .sidebar-toggle {
+        display: none;
+      }
+      .admin-dropdown {
+        right: 10px;
+      }
+      .sidebar .submenu {
+        margin-left: 20px;
+      }
+      .table-section th,
+      .table-section td {
+        padding: 8px;
+        font-size: 0.85rem;
+      }
+      .transaction-details-table th,
+      .transaction-details-table td {
+        padding: 8px;
+        font-size: 0.85rem;
       }
     }
     @media (max-width: 480px) {
-      .topbar { padding: 6px; }
-      .topbar .admin-icon { font-size: 1.5rem; }
+      .topbar {
+        padding: 6px;
+      }
+      .topbar .admin-icon {
+        font-size: 1.5rem;
+      }
+      .table-section {
+        padding: 15px;
+      }
+      .table-section th,
+      .table-section td {
+        padding: 6px;
+        font-size: 0.8rem;
+      }
+      .transaction-details-table th,
+      .transaction-details-table td {
+        padding: 6px;
+        font-size: 0.8rem;
+      }
     }
-
+    @media (max-width: 360px) {
+      .table-section th,
+      .table-section td {
+        padding: 4px;
+        font-size: 0.75rem;
+      }
+      .transaction-details-table th,
+      .transaction-details-table td {
+        padding: 4px;
+        font-size: 0.75rem;
+      }
+      .transaction-details-table th:nth-child(3),
+      .transaction-details-table td:nth-child(3) {
+        display: none;
+      }
+    }
     .submenu .submenu {
-  margin-left: 15px;
-  border-left: 2px solid rgba(0, 212, 255, 0.3);
-  padding-left: 10px;
-}
-
-/* Active menu item styling */
-.sidebar-item > a.active {
-  background: rgba(0, 212, 255, 0.1);
-  border-left: 3px solid #00d4ff;
-}
-
-/* Dropdown icon rotation */
-.dropdown-icon {
-  transition: transform 0.3s ease;
-}
-
-.dropdown-icon.active {
-  transform: rotate(180deg);
-}
-
+      margin-left: 15px;
+      border-left: 2px solid rgba(0, 212, 255, 0.3);
+      padding-left: 10px;
+    }
+    .sidebar-item > a.active {
+      background: rgba(0, 212, 255, 0.1);
+      border-left: 3px solid #00d4ff;
+    }
+    .dropdown-icon {
+      transition: transform 0.3s ease;
+    }
+    .dropdown-icon.active {
+      transform: rotate(180deg);
+    }
   </style>
 </head>
 <body>
@@ -192,7 +327,6 @@
           <a href="kyc-document.html"><i class="fas fa-file-upload"></i> <span>Upload KYC Document</span></a>
           <a href="change-password.html"><i class="fas fa-lock"></i> <span>Change Password</span></a>
           <a href="id-card.html"><i class="fas fa-lock"></i> <span>ID Card</span></a>
-      
         </div>
       </div>
       <div class="sidebar-item">
@@ -228,11 +362,9 @@
           <i class="fas fa-chevron-down dropdown-icon"></i>
         </a>
         <div class="submenu" id="topup-fund-submenu">
-          <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
           <a href="fund.html"><i class="fas fa-money-bill"></i> <span>Fund</span></a>
-            <a href="transaction-details.html" ><i class="fas fa-receipt"></i> <span>Transaction Details</span></a>
-              
-          <!-- Nested Product-Details menu -->
+          <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
+          <a href="transaction-details.html"><i class="fas fa-receipt"></i> <span>Transaction Details</span></a>
           <div class="sidebar-item">
             <a href="#" id="product-details-toggle">
               <i class="fas fa-box"></i>
@@ -244,13 +376,9 @@
               <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
             </div>
           </div>
-    
           <a href="withdrawal.html"><i class="fas fa-money-bill"></i> <span>Withdraw</span></a>
         </div>
       </div>
-      
-    
-     
       <a href="#" id="sidebar-sign-out"><i class="fas fa-sign-out-alt"></i> <span>Sign Out</span></a>
     </div>
 
@@ -275,57 +403,89 @@
           <button>Upload Screenshot</button>
         </div>
 
+        <!-- Transaction Details Table -->
+        <div class="transaction-details-container">
+          <h4>Transaction Details</h4>
+          <div class="table-responsive">
+            <table class="transaction-details-table">
+              <thead>
+                <tr>
+                  <th>SI.NO</th>
+                  <th>Date</th>
+                  <th>Transaction ID</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>2025-05-01</td>
+                  <td>TXN123456</td>
+                  <td>₹5,000</td>
+                  <td>Completed</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>2025-04-28</td>
+                  <td>TXN123457</td>
+                  <td>₹3,000</td>
+                  <td>Pending</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>2025-04-25</td>
+                  <td>TXN123458</td>
+                  <td>₹2,000</td>
+                  <td>Completed</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
         <!-- Transaction History -->
-        <div class="table-container">
-          <h4>Transaction History</h4>
-          <table>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Transaction ID</th>
-                <th>Amount</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>2025-05-01</td>
-                <td>TXN123456</td>
-                <td>₹5,000</td>
-                <td>Completed</td>
-              </tr>
-              <tr>
-                <td>2025-04-28</td>
-                <td>TXN123457</td>
-                <td>₹3,000</td>
-                <td>Pending</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="table-section">
+          <h4>
+            Transaction History
+            <span class="dropdown-icon"><i class="fas fa-chevron-down"></i></span>
+          </h4>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>SI.NO</th>
+                  <th>Date</th>
+                  <th>Transaction ID</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>2025-05-01</td>
+                  <td>TXN123456</td>
+                  <td>₹5,000</td>
+                  <td>Completed</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>2025-04-28</td>
+                  <td>TXN123457</td>
+                  <td>₹3,000</td>
+                  <td>Pending</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-
-
-
-      
-          <h2 class="text-2xl font-bold text-[#f4c430] mb-4">QR Code for Payment</h2>
-  
-          <!-- QR Code -->
-          <div class="form-section qr-code-container">
-            <h4>Scan to Make Payment</h4>
-            <img src="https://via.placeholder.com/200x200.png?text=QR+Code" alt="QR Code">
-          </div>
-        
-
-
 
       <footer class="main-footer">
         @2025 Raanvi - Developed By Bloom It Solutions
       </footer>
     </div>
-
-    
-
   </div>
 
   <script>
@@ -417,12 +577,11 @@
       if (productDetailsToggle && productDetailsSubmenu && productDetailsIcon) {
         productDetailsToggle.addEventListener('click', function(e) {
           e.preventDefault();
-          e.stopPropagation(); // Prevent event from bubbling to parent menus
+          e.stopPropagation();
           
           const isActive = productDetailsSubmenu.classList.toggle('active');
           productDetailsIcon.classList.toggle('active');
           
-          // Keep parent menu open when clicking nested menu
           const parentSubmenu = productDetailsToggle.closest('.submenu');
           if (parentSubmenu) {
             parentSubmenu.classList.add('active');
@@ -436,7 +595,6 @@
           }
         });
 
-        // Handle clicks on product details submenu links
         const productDetailsLinks = productDetailsSubmenu.querySelectorAll('a');
         productDetailsLinks.forEach(link => {
           link.addEventListener('click', () => {
@@ -457,7 +615,6 @@
             const isActive = submenu.classList.toggle('active');
             icon.classList.toggle('active');
             
-            // Close other submenus at the same level
             const parentItem = toggle.closest('.sidebar-item');
             if (parentItem) {
               const siblings = parentItem.parentElement.querySelectorAll('.sidebar-item');
@@ -474,7 +631,6 @@
             }
           });
 
-          // Handle clicks on submenu links (excluding nested menu toggles)
           const submenuLinks = submenu.querySelectorAll('a:not(.sidebar-item > a)');
           submenuLinks.forEach(link => {
             link.addEventListener('click', () => {
@@ -488,7 +644,6 @@
 
       // Close submenus when clicking outside
       document.addEventListener('click', (e) => {
-        // Check if click is outside any menu
         const clickedInsideSidebar = sidebar.contains(e.target);
         const clickedAdminDropdown = adminDropdown.contains(e.target) || adminIcon.contains(e.target);
         
@@ -496,7 +651,19 @@
           closeAllSubmenus();
         }
       });
+
+      // JavaScript for toggling Transaction History table visibility
+      const transactionHistoryHeading = document.querySelector('.table-section h4');
+      const transactionHistoryTable = document.querySelector('.table-section table');
+      const transactionHistoryIcon = document.querySelector('.table-section .dropdown-icon');
+
+      if (transactionHistoryHeading && transactionHistoryTable && transactionHistoryIcon) {
+        transactionHistoryHeading.addEventListener('click', () => {
+          transactionHistoryTable.classList.toggle('active');
+          transactionHistoryIcon.classList.toggle('active');
+        });
+      }
     });
-</script>
+  </script>
 </body>
 </html>

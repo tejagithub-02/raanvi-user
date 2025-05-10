@@ -383,8 +383,10 @@
           <i class="fas fa-chevron-down dropdown-icon"></i>
         </a>
         <div class="submenu" id="topup-fund-submenu">
-          <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
           <a href="fund.html"><i class="fas fa-money-bill"></i> <span>Fund</span></a>
+         
+          <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
+          
           <a href="transaction-details.html"><i class="fas fa-receipt"></i> <span>Transaction Details</span></a>
           
           <!-- Nested Product-Details menu -->
@@ -410,6 +412,14 @@
     <div class="main-content">
       <div class="section">
         <h2 class="text-2xl font-bold text-[#f4c430] mb-4">My Downline (Combine, Left, Right)</h2>
+       
+        <div class="form-section">
+          <h4>ID-wise Downline Search</h4>
+          <label for="downline-id">Enter ID</label>
+          <input type="text" id="downline-id" placeholder="Enter member ID">
+          <button id="search-button">Search</button>
+        </div>
+       
         <div class="tab-nav">
           <button class="tab-button active" data-tab="combine">Combine</button>
           <button class="tab-button" data-tab="left">Left</button>
@@ -417,6 +427,11 @@
         </div>
         <div id="combine-table" class="table-section">
           <h4>My Downline (Left & Right)</h4>
+
+          
+
+
+
           <div class="table-responsive">
             <table>
               <thead>
@@ -533,12 +548,7 @@
             <button id="clear-search" class="form-section button">Clear Search</button>
           </div>
         </div>
-        <div class="form-section">
-          <h4>ID-wise Downline Search</h4>
-          <label for="downline-id">Enter ID</label>
-          <input type="text" id="downline-id" placeholder="Enter member ID">
-          <button id="search-button">Search</button>
-        </div>
+       
       </div>
       <footer class="main-footer">
         @2025 Raanvi - Developed By Bloom It Solutions

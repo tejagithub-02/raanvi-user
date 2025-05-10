@@ -119,6 +119,18 @@
       border: 2px solid #FF6347;
       box-shadow: 0 0 20px #FFD700;
     }
+    .stats-cards .card:nth-child(15) { /* Rank & Reward */
+      border: 2px solid #32CD32;
+      box-shadow: 0 0 20px #FF6F61;
+    }
+    .stats-cards .card:nth-child(16) { /* Tour Eligibility */
+      border: 2px solid #FF00FF;
+      box-shadow: 0 0 20px #FF4500;
+    }
+    .stats-cards .card:nth-child(17) { /* Binary Carry Forward */
+      border: 2px solid #FFFF00;
+      box-shadow: 0 0 20px #39FF14;
+    }
     .stats-cards .card:hover {
       transform: scale(1.03);
     }
@@ -335,9 +347,11 @@
       <i class="fas fa-chevron-down dropdown-icon"></i>
     </a>
     <div class="submenu" id="topup-fund-submenu">
-      <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
       <a href="fund.html"><i class="fas fa-money-bill"></i> <span>Fund</span></a>
-        <a href="transaction-details.html" ><i class="fas fa-receipt"></i> <span>Transaction Details</span></a>
+         
+      <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
+      
+      <a href="transaction-details.html" ><i class="fas fa-receipt"></i> <span>Transaction Details</span></a>
           
       <!-- Nested Product-Details menu -->
       <div class="sidebar-item">
@@ -371,6 +385,31 @@
        
         <!-- Welcome Card -->
         <div class="stats-cards">
+
+          <div class="card">
+            <h4>Account Status</h4>
+            <p>Active</p>
+            <div class="progress-bar">
+              <div class="progress" style="width: 100%;"></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h4>My Package</h4>
+            <p>2000</p>
+            <div class="progress-bar">
+              <div class="progress" style="width: 85%;"></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h4>Total Team</h4>
+            <p>250</p>
+            <div class="progress-bar">
+              <div class="progress" style="width: 60%;"></div>
+            </div>
+          </div>
+
           <div class="card">
             <h4>Total Income</h4>
             <p>₹1,50,000</p>
@@ -386,7 +425,32 @@
               <div class="progress" style="width: 40%;"></div>
             </div>
           </div>
+
           
+          <div class="card">
+            <h4>My Downline(Left)</h4>
+            <p>100</p>
+            <div class="progress-bar">
+              <div class="progress" style="width: 50%;"></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h4>My Downline(Right)</h4>
+            <p>100</p>
+            <div class="progress-bar">
+              <div class="progress" style="width: 50%;"></div>
+            </div>
+          </div>
+          
+          <div class="card">
+            <h4>My Referal</h4>
+            <p>50</p>
+            <div class="progress-bar">
+              <div class="progress" style="width: 30%;"></div>
+            </div>
+          </div>
+
           <div class="card">
             <h4>Referral Bonus</h4>
             <p>₹20,000</p>
@@ -409,40 +473,37 @@
             </div>
           </div>
           <div class="card">
-            <h4>Tour Eligibility</h4>
-            <p>Eligible</p>
+            <h4>Tour</h4>
+            <p>Completed</p>
             <div class="progress-bar">
               <div class="progress" style="width: 80%;"></div>
             </div>
           </div>
           <div class="card">
-            <h4>Binary Carry Forward</h4>
-            <p>₹8,000</p>
+            <h4>Binary Carry Forward(Left)</h4>
+            <p>₹5,000</p>
             <div class="progress-bar">
               <div class="progress" style="width: 20%;"></div>
             </div>
           </div>
+
           <div class="card">
-            <h4>Total Team</h4>
-            <p>250</p>
+            <h4>Binary Carry Forward(Right)</h4>
+            <p>₹3,000</p>
             <div class="progress-bar">
-              <div class="progress" style="width: 60%;"></div>
+              <div class="progress" style="width: 20%;"></div>
             </div>
           </div>
+
+
           <div class="card">
-            <h4>My Downline</h4>
-            <p>200</p>
+            <h4>Fund</h4>
+            <p>100 RV Points</p>
             <div class="progress-bar">
-              <div class="progress" style="width: 50%;"></div>
+              <div class="progress" style="width: 90%;"></div>
             </div>
           </div>
-          <div class="card">
-            <h4>Total Direct</h4>
-            <p>50</p>
-            <div class="progress-bar">
-              <div class="progress" style="width: 30%;"></div>
-            </div>
-          </div>
+
           <div class="card">
             <h4>KYC Status</h4>
             <p>Verified</p>
@@ -450,21 +511,9 @@
               <div class="progress" style="width: 90%;"></div>
             </div>
           </div>
-          <div class="card">
-            <h4>Account Status</h4>
-            <p>Active</p>
-            <div class="progress-bar">
-              <div class="progress" style="width: 100%;"></div>
-            </div>
-          </div>
          
-          <div class="card">
-            <h4>My Package</h4>
-            <p>2000</p>
-            <div class="progress-bar">
-              <div class="progress" style="width: 85%;"></div>
-            </div>
-          </div>
+         
+         
           <div class="card">
             <h4>Withdrawal</h4>
             <p>₹50,000</p>

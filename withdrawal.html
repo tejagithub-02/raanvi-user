@@ -93,6 +93,12 @@
       margin-bottom: 15px;
       text-shadow: 0 0 5px #00ffcc;
     }
+    .collapsible-table-section h4 {
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
     .table-responsive {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
@@ -102,6 +108,12 @@
       min-width: 500px;
       border-collapse: collapse;
       color: #b3e0ff;
+    }
+    .collapsible-table-section table {
+      display: none;
+    }
+    .collapsible-table-section table.active {
+      display: table;
     }
     .table-section th,
     .table-section td {
@@ -128,6 +140,12 @@
     .status-rejected {
       color: #dc3545;
       font-weight: bold;
+    }
+    .dropdown-icon {
+      transition: transform 0.3s ease;
+    }
+    .dropdown-icon.active {
+      transform: rotate(180deg);
     }
     @media (min-width: 769px) {
       .sidebar-toggle {
@@ -220,7 +238,7 @@
       .table-section table {
         min-width: 700px;
       }
-      .table-section th:nth-child(3), /* Date */
+      .table-section th:nth-child(3),
       .table-section td:nth-child(3) {
         display: none;
       }
@@ -238,36 +256,44 @@
       .table-section {
         padding: 12px;
       }
-      .table-section th:nth-child(3), /* Date */
+      .table-section th:nth-child(3),
       .table-section td:nth-child(3),
-      .table-section th:nth-child(2), /* Transaction ID */
+      .table-section th:nth-child(2),
       .table-section td:nth-child(2) {
         display: none;
       }
     }
-
     .submenu .submenu {
-  margin-left: 15px;
-  border-left: 2px solid rgba(0, 212, 255, 0.3);
-  padding-left: 10px;
-}
-
-/* Active menu item styling */
-.sidebar-item > a.active {
-  background: rgba(0, 212, 255, 0.1);
-  border-left: 3px solid #00d4ff;
-}
-
-/* Dropdown icon rotation */
-.dropdown-icon {
-  transition: transform 0.3s ease;
-}
-
-.dropdown-icon.active {
-  transform: rotate(180deg);
-}
-
-
+      margin-left: 15px;
+      border-left: 2px solid rgba(0, 212, 255, 0.3);
+      padding-left: 10px;
+    }
+    .sidebar-item > a.active {
+      background: rgba(0, 212, 255, 0.1);
+      border-left: 3px solid #00d4ff;
+    }
+    .dropdown-icon {
+      transition: transform 0.3s ease;
+    }
+    .dropdown-icon.active {
+      transform: rotate(180deg);
+    }
+    .form-section .balance-text {
+      color: #00ffcc;
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+      display: block;
+      background: linear-gradient(90deg, #00d4ff, #00ffcc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+      padding: 5px 0;
+      transition: text-shadow 0.3s ease;
+    }
+    .form-section .balance-text:hover {
+      text-shadow: 0 0 12px rgba(0, 212, 255, 0.8);
+    }
   </style>
 </head>
 <body>
@@ -333,34 +359,30 @@
           <a href="tour.html"><i class="fas fa-plane"></i> <span>Tour</span></a>
         </div>
       </div>
-      
-  <div class="sidebar-item">
-    <a href="topup-fund.html" id="topup-fund-toggle">
-      <i class="fas fa-wallet"></i>
-      <span>Product & Payment</span>
-      <i class="fas fa-chevron-down dropdown-icon"></i>
-    </a>
-    <div class="submenu" id="topup-fund-submenu">
-      <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
-      <a href="fund.html"><i class="fas fa-money-bill"></i> <span>Fund</span></a>
-      <a href="transaction-details.html" ><i class="fas fa-receipt"></i> <span>Transaction Details</span></a>
-            
-      <!-- Nested Product-Details menu -->
       <div class="sidebar-item">
-        <a href="#" id="product-details-toggle">
-          <i class="fas fa-box"></i>
-          <span>Product - Details</span>
+        <a href="topup-fund.html" id="topup-fund-toggle">
+          <i class="fas fa-wallet"></i>
+          <span>Product & Payment</span>
           <i class="fas fa-chevron-down dropdown-icon"></i>
         </a>
-        <div class="submenu" id="product-details-submenu">
-          <a href="product-details.html"><i class="fas fa-shopping-bag"></i> <span>Order Product</span></a>
-          <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
+        <div class="submenu" id="topup-fund-submenu">
+          <a href="fund.html"><i class="fas fa-money-bill"></i> <span>Fund</span></a>
+          <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
+          <a href="transaction-details.html"><i class="fas fa-receipt"></i> <span>Transaction Details</span></a>
+          <div class="sidebar-item">
+            <a href="#" id="product-details-toggle">
+              <i class="fas fa-box"></i>
+              <span>Product - Details</span>
+              <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="submenu" id="product-details-submenu">
+              <a href="product-details.html"><i class="fas fa-shopping-bag"></i> <span>Order Product</span></a>
+              <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
+            </div>
+          </div>
+          <a href="withdrawal.html"><i class="fas fa-money-bill"></i> <span>Withdraw</span></a>
         </div>
       </div>
-
-      <a href="withdrawal.html"><i class="fas fa-money-bill"></i> <span>Withdraw</span></a>
-    </div>
-  </div>
       <a href="#" id="sidebar-sign-out"><i class="fas fa-sign-out-alt"></i> <span>Sign Out</span></a>
     </div>
     <!-- Withdraw Section -->
@@ -371,16 +393,13 @@
         <!-- Withdraw Form -->
         <div class="form-section">
           <h4>Initiate Withdrawal</h4>
-          <label for="withdraw-id">Member ID</label>
-          <input type="text" id="withdraw-id" placeholder="Enter member ID">
-          <label for="withdraw-name">Name (Auto-filled)</label>
-          <input type="text" id="withdraw-name" placeholder="Name will auto-fill" disabled>
-          <label for="withdraw-amount">Withdrawal Amount</label>
-          <input type="number" id="withdraw-amount" placeholder="Enter amount (₹)">
-          <button onclick="submitWithdrawal()">Submit Withdrawal</button>
+          <p class="balance-text">Available Balance (50,000)</p>
+          <label for="withdraw-amount">Withdraw Amount</label>
+          <input type="number" id="withdraw-amount" placeholder="">
+          <button onclick="submitWithdrawal()">Submit</button>
         </div>
 
-        <!-- Pending Withdrawals -->
+        <!-- Pending Withdrawals (Always Visible) -->
         <div class="table-section">
           <h4>Pending Withdrawals</h4>
           <div class="table-responsive">
@@ -395,17 +414,33 @@
                 </tr>
               </thead>
               <tbody id="pending-withdrawal-table">
-                <!-- Populated by JavaScript -->
+                <tr>
+                  <td>1</td>
+                  <td>TXN789012</td>
+                  <td>2025-05-08</td>
+                  <td>₹5,000</td>
+                  <td class="status-pending">Pending</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>TXN789013</td>
+                  <td>2025-05-09</td>
+                  <td>₹3,000</td>
+                  <td class="status-pending">Pending</td>
+                </tr>
               </tbody>
             </table>
           </div>
         </div>
 
-        <!-- Withdrawal History -->
-        <div class="table-section">
-          <h4>Withdrawal History</h4>
+        <!-- Withdrawal History (Collapsible) -->
+        <div class="table-section collapsible-table-section">
+          <h4 id="withdrawal-history-toggle">
+            Withdrawal History
+            <span class="dropdown-icon"><i class="fas fa-chevron-down"></i></span>
+          </h4>
           <div class="table-responsive">
-            <table>
+            <table id="withdrawal-history-table">
               <thead>
                 <tr>
                   <th>SI.NO</th>
@@ -415,8 +450,28 @@
                   <th>Status</th>
                 </tr>
               </thead>
-              <tbody id="withdrawal-history-table">
-                <!-- Populated by JavaScript -->
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>TXN789010</td>
+                  <td>2025-05-01</td>
+                  <td>₹10,000</td>
+                  <td class="status-approved">Approved</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>TXN789011</td>
+                  <td>2025-05-03</td>
+                  <td>₹7,500</td>
+                  <td class="status-approved">Approved</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>TXN789012</td>
+                  <td>2025-05-05</td>
+                  <td>₹2,000</td>
+                  <td class="status-rejected">Rejected</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -438,7 +493,6 @@
       const adminIcon = document.getElementById('admin-icon');
       const adminDropdown = document.getElementById('admin-dropdown');
 
-      // Function to close all submenus
       function closeAllSubmenus() {
         document.querySelectorAll('.submenu').forEach(submenu => {
           submenu.classList.remove('active');
@@ -448,7 +502,6 @@
         });
       }
 
-      // Sidebar collapse/expand for desktop
       if (sidebarToggle && sidebarExpand && sidebar && mainContent) {
         sidebarToggle.addEventListener('click', () => {
           const isCollapsed = sidebar.classList.toggle('collapsed');
@@ -464,14 +517,12 @@
         });
       }
 
-      // Sidebar toggle for mobile
       if (menuToggle && sidebar) {
         menuToggle.addEventListener('click', () => {
           sidebar.classList.toggle('active');
         });
       }
 
-      // Admin dropdown toggle
       if (adminIcon && adminDropdown) {
         adminIcon.addEventListener('click', (e) => {
           e.stopPropagation();
@@ -485,7 +536,6 @@
         });
       }
 
-      // Main menu toggles
       const mainMenuToggles = [
         {
           toggle: document.getElementById('my-account-toggle'),
@@ -509,7 +559,6 @@
         }
       ];
 
-      // Special handling for nested Product-Details menu
       const productDetailsToggle = document.getElementById('product-details-toggle');
       const productDetailsSubmenu = document.getElementById('product-details-submenu');
       const productDetailsIcon = document.querySelector('#product-details-toggle .dropdown-icon');
@@ -517,12 +566,11 @@
       if (productDetailsToggle && productDetailsSubmenu && productDetailsIcon) {
         productDetailsToggle.addEventListener('click', function(e) {
           e.preventDefault();
-          e.stopPropagation(); // Prevent event from bubbling to parent menus
+          e.stopPropagation();
           
           const isActive = productDetailsSubmenu.classList.toggle('active');
           productDetailsIcon.classList.toggle('active');
           
-          // Keep parent menu open when clicking nested menu
           const parentSubmenu = productDetailsToggle.closest('.submenu');
           if (parentSubmenu) {
             parentSubmenu.classList.add('active');
@@ -536,7 +584,6 @@
           }
         });
 
-        // Handle clicks on product details submenu links
         const productDetailsLinks = productDetailsSubmenu.querySelectorAll('a');
         productDetailsLinks.forEach(link => {
           link.addEventListener('click', () => {
@@ -547,7 +594,6 @@
         });
       }
 
-      // Handle main menu toggles
       mainMenuToggles.forEach(({ toggle, submenu, icon }) => {
         if (toggle && submenu && icon) {
           toggle.addEventListener('click', function(e) {
@@ -557,7 +603,6 @@
             const isActive = submenu.classList.toggle('active');
             icon.classList.toggle('active');
             
-            // Close other submenus at the same level
             const parentItem = toggle.closest('.sidebar-item');
             if (parentItem) {
               const siblings = parentItem.parentElement.querySelectorAll('.sidebar-item');
@@ -574,7 +619,6 @@
             }
           });
 
-          // Handle clicks on submenu links (excluding nested menu toggles)
           const submenuLinks = submenu.querySelectorAll('a:not(.sidebar-item > a)');
           submenuLinks.forEach(link => {
             link.addEventListener('click', () => {
@@ -586,9 +630,7 @@
         }
       });
 
-      // Close submenus when clicking outside
       document.addEventListener('click', (e) => {
-        // Check if click is outside any menu
         const clickedInsideSidebar = sidebar.contains(e.target);
         const clickedAdminDropdown = adminDropdown.contains(e.target) || adminIcon.contains(e.target);
         
@@ -596,7 +638,25 @@
           closeAllSubmenus();
         }
       });
+
+      // Toggle Withdrawal History table
+      const withdrawalHistoryToggle = document.getElementById('withdrawal-history-toggle');
+      const withdrawalHistoryTable = document.getElementById('withdrawal-history-table');
+      const withdrawalHistoryIcon = withdrawalHistoryToggle ? withdrawalHistoryToggle.querySelector('.dropdown-icon') : null;
+
+      if (withdrawalHistoryToggle && withdrawalHistoryTable && withdrawalHistoryIcon) {
+        withdrawalHistoryToggle.addEventListener('click', () => {
+          withdrawalHistoryTable.classList.toggle('active');
+          withdrawalHistoryIcon.classList.toggle('active');
+        });
+      } else {
+        console.error('Withdrawal History toggle elements not found:', {
+          toggle: withdrawalHistoryToggle,
+          table: withdrawalHistoryTable,
+          icon: withdrawalHistoryIcon
+        });
+      }
     });
-</script>
+  </script>
 </body>
 </html>
