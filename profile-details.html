@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,7 +73,7 @@
       padding: 10px 20px;
       color: #b3e0ff;
       text-decoration: none;
-      font-size: 0.9rem;
+      font-size: 0. orginrem;
       transition: background 0.2s;
     }
 
@@ -431,26 +432,25 @@
       }
     }
     .submenu .submenu {
-  margin-left: 15px;
-  border-left: 2px solid rgba(0, 212, 255, 0.3);
-  padding-left: 10px;
-}
+      margin-left: 15px;
+      border-left: 2px solid rgba(0, 212, 255, 0.3);
+      padding-left: 10px;
+    }
 
-/* Active menu item styling */
-.sidebar-item > a.active {
-  background: rgba(0, 212, 255, 0.1);
-  border-left: 3px solid #00d4ff;
-}
+    /* Active menu item styling */
+    .sidebar-item > a.active {
+      background: rgba(0, 212, 255, 0.1);
+      border-left: 3px solid #00d4ff;
+    }
 
-/* Dropdown icon rotation */
-.dropdown-icon {
-  transition: transform 0.3s ease;
-}
+    /* Dropdown icon rotation */
+    .dropdown-icon {
+      transition: transform 0.3s ease;
+    }
 
-.dropdown-icon.active {
-  transform: rotate(180deg);
-}
-
+    .dropdown-icon.active {
+      transform: rotate(180deg);
+    }
   </style>
 </head>
 <body>
@@ -464,7 +464,7 @@
     <div class="flex items-center relative">
       <i class="fas fa-user-circle admin-icon" id="admin-icon"></i>
       <div class="admin-dropdown" id="admin-dropdown">
-        <a href="profile-details.html" class="dropdown-item">My Profile</a>
+        <a href="profile.html" class="dropdown-item">My Profile</a>
         <a href="change-password.html" class="dropdown-item">Change Password</a>
       </div>
     </div>
@@ -487,7 +487,6 @@
           <a href="kyc-document.html"><i class="fas fa-file-upload"></i> <span>Upload KYC Document</span></a>
           <a href="change-password.html"><i class="fas fa-lock"></i> <span>Change Password</span></a>
           <a href="id-card.html"><i class="fas fa-lock"></i> <span>ID Card</span></a>
-      
         </div>
       </div>
       <div class="sidebar-item">
@@ -525,9 +524,7 @@
         <div class="submenu" id="topup-fund-submenu">
           <a href="fund.html"><i class="fas fa-money-bill"></i> <span>Fund</span></a>
           <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
-          
           <a href="transaction-details.html" ><i class="fas fa-receipt"></i> <span>Transaction Details</span></a>
-          
           <!-- Nested Product-Details menu -->
           <div class="sidebar-item">
             <a href="#" id="product-details-toggle">
@@ -540,12 +537,9 @@
               <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
             </div>
           </div>
-    
           <a href="withdrawal.html"><i class="fas fa-money-bill"></i> <span>Withdraw</span></a>
         </div>
       </div>
-    
-      
       <a href="#" id="sidebar-sign-out"><i class="fas fa-sign-out-alt"></i> <span>Sign Out</span></a>
     </div>
 
@@ -554,6 +548,14 @@
       <div class="section">
         <h2 class="text-2xl font-bold text-[#f4c430] mb-4">Profile Details</h2>
         
+        <!-- Member Photo Upload -->
+        <div class="form-section">
+          <h4>Upload Member Photo</h4>
+          <label for="member-photo">Upload Photo</label>
+          <input type="file" id="member-photo" accept="image/*">
+          <button>Upload Photo</button>
+        </div>
+
         <!-- Profile Details -->
         <div class="form-section">
           <h4>Profile Details</h4>
@@ -608,14 +610,6 @@
           <label for="nominee-contact">Nominee Contact Number</label>
           <input type="tel" id="nominee-contact" placeholder="Enter nominee's contact number">
           <button>Update Nominee</button>
-        </div>
-
-        <!-- Member Photo Upload -->
-        <div class="form-section">
-          <h4>Upload Member Photo</h4>
-          <label for="member-photo">Upload Photo</label>
-          <input type="file" id="member-photo" accept="image/*">
-          <button>Upload Photo</button>
         </div>
       </div>
       <footer class="main-footer">
@@ -791,7 +785,40 @@
           closeAllSubmenus();
         }
       });
+
+      // Handle photo upload
+      document.getElementById('member-photo')?.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(event) {
+            const profile = JSON.parse(localStorage.getItem('userProfile')) || {};
+            profile.avatar = event.target.result;
+            localStorage.setItem('userProfile', JSON.stringify(profile));
+            alert('Photo uploaded successfully!');
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+      // Handle profile update
+      document.querySelectorAll('.form-section button').forEach(button => {
+        if (button.textContent.includes('Update Profile')) {
+          button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const profile = {
+              fullName: document.getElementById('full-name').value || 'TEJA',
+              id: '702H7200HB',
+              email: document.getElementById('email').value || 'tmaruthiteja@gmail.com',
+              phone: document.getElementById('phone').value || '+91 968591014',
+              avatar: JSON.parse(localStorage.getItem('userProfile'))?.avatar || 'https://via.placeholder.com/150'
+            };
+            localStorage.setItem('userProfile', JSON.stringify(profile));
+            alert('Profile updated successfully!');
+          });
+        }
+      });
     });
-</script>
+  </script>
 </body>
 </html>

@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #1a1a2e;
+            color: #b3e0ff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        .topbar {
+            background: linear-gradient(to right, #0f3460, #1a1a2e);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1100;
+            padding: 8px;
+        }
+
+        .topbar h1 {
+            font-family: 'Georgia', serif;
+            color: #b3e0ff;
+            text-shadow: 0 0 3px #00ffcc;
+            font-size: 1.75rem;
+        }
+
+        .topbar .admin-icon {
+            color: #b3e0ff;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .topbar .admin-icon:hover {
+            color: #00ffcc;
+        }
+
+        .admin-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 20px;
+            background: #0f3460;
+            border: 2px solid #00d4ff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #00d4ff;
+            display: none;
+            z-index: 1200;
+        }
+
+        .admin-dropdown.active {
+            display: block;
+        }
+
+        .admin-dropdown a {
+            display: block;
+            padding: 10px 20px;
+            color: #b3e0ff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        .admin-dropdown a:hover {
+            background: linear-gradient(to right, #00d4ff, #00ffcc);
+            color: #ffffff;
+        }
+
+        /* Sidebar Styles */
+        .dashboard-container {
+            display: flex;
+            min-height: calc(100vh - 48px);
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #1a1a2e;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+            border-right: 2px solid #00d4ff;
+            position: fixed;
+            top: 95px;
+            height: calc(100vh - 48px);
+            overflow-y: auto;
+            z-index: 1000;
+            transition: width 0.3s ease;
+        }
+
+        .sidebar.collapsed {
+            width: 60px;
+        }
+
+        .sidebar h3 {
+            color: #00ffcc;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            text-shadow: 0 0 5px #00ffcc;
+        }
+
+        .sidebar.collapsed h3 {
+            display: none;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            color: #b3e0ff;
+            text-decoration: none;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .sidebar a:hover {
+            background: #0f3460;
+            border: 1px solid #00d4ff;
+            box-shadow: 0 0 10px #00d4ff;
+            color: #b3e0ff;
+            transform: scale(1.03);
+        }
+
+        .sidebar a.active {
+            background: transparent;
+            color: #b3e0ff;
+            font-weight: bold;
+            border: 1px solid #00d4ff;
+            box-shadow: 0 0 15px #00d4ff;
+        }
+
+        .sidebar a:active {
+            color: #b3e0ff;
+            box-shadow: 0 0 15px #00d4ff;
+        }
+
+        .sidebar a i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+            width: 20px;
+            text-align: center;
+            color: #00ffcc;
+        }
+
+        .sidebar.collapsed a {
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .sidebar.collapsed a span {
+            display: none;
+        }
+
+        .sidebar-expand {
+            font-size: 1.5rem;
+            color: #00ffcc;
+            cursor: pointer;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        .sidebar.collapsed .sidebar-expand {
+            display: block;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .sidebar-toggle {
+            display: none;
+            font-size: 1.5rem;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .sidebar .submenu {
+            display: none;
+            background: #0f3460;
+            border: 2px solid #00d4ff;
+            border-radius: 10px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+            box-shadow: 0 0 10px #00d4ff;
+        }
+
+        .sidebar .submenu.active {
+            display: block;
+        }
+
+        .sidebar .submenu a {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            color: #b3e0ff;
+        }
+
+        .sidebar .submenu a i {
+            margin-right: 10px;
+            font-size: 1rem;
+            width: 18px;
+            color: #00ffcc;
+        }
+
+        .sidebar.collapsed .submenu {
+            display: none;
+        }
+
+        .dropdown-icon {
+            margin-left: auto;
+            font-size: 1rem;
+            color: #00ffcc;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-icon.active {
+            transform: rotate(180deg);
+        }
+
+        .sidebar.collapsed .dropdown-icon {
+            display: none;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            background: #1a1a2e;
+            margin-left: 250px;
+            overflow-y: auto;
+            min-height: calc(100vh - 48px);
+            transition: margin-left 0.3s ease;
+        }
+
+        .main-content.collapsed {
+            margin-left: 60px;
+        }
+
+        /* Existing Main Content Styles from Teja's Dashboard */
+        .main-content h2 {
+            color: #00ffcc;
+            font-size: 24px;
+            border-bottom: 2px solid #00d4ff;
+            padding-bottom: 10px;
+            text-shadow: 0 0 5px #00ffcc;
+        }
+
+        .welcome-card {
+            background: #0f3460;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+            border: 2px solid #00d4ff;
+            box-shadow: 0 0 10px #00d4ff;
+            position: relative;
+        }
+
+        .welcome-card .avatar-container {
+            position: relative;
+            width: fit-content;
+            margin: 0 auto 15px;
+        }
+
+        .welcome-card .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            border: 3px solid #00d4ff;
+            cursor: pointer;
+            box-shadow: 0 0 10px #00d4ff;
+        }
+
+        .welcome-card .avatar-edit {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background-color: #00d4ff;
+            color: #0f3460;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+            box-shadow: 0 0 5px #00ffcc;
+        }
+
+        .welcome-card h3 {
+            margin: 0;
+            color: #00ffcc;
+            font-size: 22px;
+            text-shadow: 0 0 3px #00ffcc;
+        }
+
+        .welcome-card p {
+            margin: 8px 0;
+            color: #b3e0ff;
+            font-size: 15px;
+        }
+
+        .welcome-card .update-date {
+            font-style: italic;
+            color: #b3e0ff;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-icons a {
+            color: #00ffcc;
+            font-size: 20px;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: #00d4ff;
+            transform: scale(1.1);
+        }
+
+        .edit-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #00d4ff;
+            color: #0f3460;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            box-shadow: 0 0 5px #00ffcc;
+        }
+
+        .invitation {
+            margin-top: 30px;
+            background: #0f3460;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #00d4ff;
+            box-shadow: 0 0 10px #00d4ff;
+        }
+
+        .invitation h3 {
+            margin-top: 0;
+            color: #00ffcc;
+            text-shadow: 0 0 3px #00ffcc;
+        }
+
+        .invitation .link-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .invitation .link-box {
+            flex: 1;
+            min-width: 300px;
+            background: #1a1a2e;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #00d4ff;
+            box-shadow: 0 0 5px #00d4ff;
+        }
+
+        .invitation .link-box h4 {
+            margin-top: 0;
+            color: #00ffcc;
+            border-bottom: 1px solid #00d4ff;
+            padding-bottom: 10px;
+            text-shadow: 0 0 3px #00ffcc;
+        }
+
+        .invitation .link-field {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .invitation .link-field .icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0f3460;
+            font-size: 18px;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.3s;
+            box-shadow: 0 0 5px #00ffcc;
+        }
+
+        .invitation .link-field .icon.email {
+            background-color: #00d4ff;
+        }
+
+        .invitation .link-field .icon.whatsapp {
+            background-color: #00ffcc;
+        }
+
+        .invitation .link-field .icon:hover {
+            transform: scale(1.1);
+        }
+
+        .invitation .link-field .copy-btn {
+            flex: 1;
+            padding: 10px 15px;
+            background: #0f3460;
+            color: #b3e0ff;
+            border: 2px solid #00d4ff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
+            text-align: left;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            box-shadow: 0 0 5px #00d4ff;
+        }
+
+        .invitation .link-field .copy-btn:hover {
+            background: #0f3460;
+            box-shadow: 0 0 10px #00ffcc;
+            transform: scale(1.03);
+        }
+
+        /* Media Queries for Responsive Alignment */
+        @media (min-width: 769px) {
+            .sidebar-toggle {
+                display: block;
+            }
+            .menu-toggle {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .topbar h1 {
+                font-size: 1.2rem;
+            }
+            .topbar .admin-icon {
+                font-size: 1.75rem;
+            }
+            .dashboard-container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 250px;
+                border-right: none;
+                border-bottom: 2px solid #00d4ff;
+                position: fixed;
+                top: 65px;
+                left: -250px;
+                transition: left 0.3s ease-in-out;
+                background: #1a1a2e;
+                box-shadow: 0 0 10px #00d4ff;
+            }
+            .sidebar.active {
+                left: 0;
+            }
+            .sidebar.collapsed {
+                width: 250px;
+            }
+            .sidebar.collapsed h3,
+            .sidebar.collapsed a span {
+                display: block;
+            }
+            .sidebar.collapsed a {
+                justify-content: flex-start;
+            }
+            .sidebar-expand {
+                display: none;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .sidebar-toggle {
+                display: none;
+            }
+            .admin-dropdown {
+                right: 10px;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 15px;
+            }
+            .main-content.collapsed {
+                margin-left: 0;
+            }
+            .welcome-card,
+            .invitation {
+                padding: 15px;
+            }
+            .welcome-card .avatar {
+                width: 60px;
+                height: 60px;
+            }
+            .invitation .link-box {
+                min-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .topbar {
+                padding: 6px;
+            }
+            .topbar .admin-icon {
+                font-size: 1.5rem;
+            }
+            .welcome-card,
+            .invitation {
+                padding: 15px;
+            }
+            .welcome-card .avatar {
+                width: 60px;
+                height: 60px;
+            }
+            .invitation .link-box {
+                min-width: 100%;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .welcome-card,
+            .invitation {
+                padding: 10px;
+            }
+        }
+
+        .submenu .submenu {
+            margin-left: 15px;
+            border-left: 2px solid rgba(0, 212, 255, 0.3);
+            padding-left: 10px;
+        }
+
+        .sidebar-item > a.active {
+            background: rgba(0, 212, 255, 0.1);
+            border-left: 3px solid #00d4ff;
+        }
+
+        .dropdown-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-icon.active {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body>
+    <!-- Topbar -->
+    <nav class="topbar text-white flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+            <i class="fas fa-bars sidebar-toggle hidden md:block text-white" id="sidebar-toggle"></i>
+            <img src="images/R-logo.jpg" alt="Raanvi Logo" class="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain">
+            <i class="fas fa-bars menu-toggle block md:hidden text-white" id="menu-toggle"></i>
+        </div>
+        <div class="flex items-center relative">
+            <i class="fas fa-user-circle admin-icon" id="admin-icon"></i>
+            <div class="admin-dropdown" id="admin-dropdown">
+                <a href="profile.html" class="dropdown-item" class="active">My Profile</a>
+                <a href="change-password.html" class="dropdown-item">Change Password</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <i class="fas fa-times sidebar-expand" id="sidebar-expand"></i>
+            <h3></h3>
+            <a href="index.html"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
+            <div class="sidebar-item">
+                <a href="my-account.html" id="my-account-toggle">
+                    <i class="fas fa-user"></i>
+                    <span>My Account</span>
+                    <i class="fas fa-chevron-down dropdown-icon"></i>
+                </a>
+                <div class="submenu" id="my-account-submenu">
+                    <a href="profile-details.html" ><i class="fas fa-user-edit"></i> <span>Profile Details</span></a>
+                    <a href="kyc-document.html"><i class="fas fa-file-upload"></i> <span>Upload KYC Document</span></a>
+                    <a href="change-password.html"><i class="fas fa-lock"></i> <span>Change Password</span></a>
+                    <a href="id-card.html"><i class="fas fa-lock"></i> <span>ID Card</span></a>
+                </div>
+            </div>
+            <div class="sidebar-item">
+                <a href="my-team.html" id="my-team-toggle">
+                    <i class="fas fa-users"></i>
+                    <span>My Team</span>
+                    <i class="fas fa-chevron-down dropdown-icon"></i>
+                </a>
+                <div class="submenu" id="my-team-submenu">
+                    <a href="binary-tree.html"><i class="fas fa-sitemap"></i> <span>Binary Tree</span></a>
+                    <a href="my-downline.html"><i class="fas fa-user-friends"></i> <span>My Downline</span></a>
+                    <a href="my-referral.html"><i class="fas fa-user-plus"></i> <span>My Referral</span></a>
+                    <a href="binary-carry-forward.html"><i class="fas fa-exchange-alt"></i> <span>Binary Carry Forward</span></a>
+                </div>
+            </div>
+            <div class="sidebar-item">
+                <a href="earning-history.html" id="earning-history-toggle">
+                    <i class="fas fa-money-check-alt"></i>
+                    <span>Earning History</span>
+                    <i class="fas fa-chevron-down dropdown-icon"></i>
+                </a>
+                <div class="submenu" id="earning-history-submenu">
+                    <a href="referral-bonus.html"><i class="fas fa-gift"></i> <span>Referral Bonus</span></a>
+                    <a href="leadership-bonus.html"><i class="fas fa-trophy"></i> <span>Leadership Bonus</span></a>
+                    <a href="rank-reward.html"><i class="fas fa-medal"></i> <span>Rank and Reward</span></a>
+                    <a href="tour.html"><i class="fas fa-plane"></i> <span>Tour</span></a>
+                </div>
+            </div>
+            <div class="sidebar-item">
+                <a href="topup-fund.html" id="topup-fund-toggle">
+                    <i class="fas fa-wallet"></i>
+                    <span>Product & Payment</span>
+                    <i class="fas fa-chevron-down dropdown-icon"></i>
+                </a>
+                <div class="submenu" id="topup-fund-submenu">
+                    <a href="fund.html"><i class="fas fa-money-bill"></i> <span>Fund</span></a>
+                    <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
+                    <a href="transaction-details.html"><i class="fas fa-receipt"></i> <span>Transaction Details</span></a>
+                    <div class="sidebar-item">
+                        <a href="#" id="product-details-toggle">
+                            <i class="fas fa-box"></i>
+                            <span>Product - Details</span>
+                            <i class="fas fa-chevron-down dropdown-icon"></i>
+                        </a>
+                        <div class="submenu" id="product-details-submenu">
+                            <a href="product-details.html"><i class="fas fa-shopping-bag"></i> <span>Order Product</span></a>
+                            <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
+                        </div>
+                    </div>
+                    <a href="withdrawal.html"><i class="fas fa-money-bill"></i> <span>Withdraw</span></a>
+                </div>
+            </div>
+            <a href="#" id="sidebar-sign-out"><i class="fas fa-sign-out-alt"></i> <span>Sign Out</span></a>
+        </div>
+
+        <!-- Main Content (Unchanged) -->
+        <div class="main-content">
+           
+            <div class="welcome-card">
+                <div class="edit-badge">EDIT</div>
+                <div class="avatar-container">
+                    <div class="avatar" id="welcomeAvatar"></div>
+                    <div class="avatar-edit" onclick="document.getElementById('welcomeImageInput').click()">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <input type="file" id="welcomeImageInput" accept="image/*" style="display: none;" onchange="updateWelcomeImage(event)">
+                </div>
+                <h3>Welcome</h3>
+                <p><strong id="Name"></strong> Name: Rahul</p>
+                <p> User ID: <span id="userId">702H7200HB</span></p>
+                <p><i class="fas fa-phone"></i> <span id="userPhone">+91 9792734517</span></p>
+                <p><i class="fas fa-envelope"></i> <span id="userEmail">info@raanvi.in</span></p>
+                <div class="social-icons">
+                    <a id="emailLink" href="mailto:info@raanvi.in" target="_blank"><i class="fas fa-envelope"></i></a>
+                    <a id="whatsappLink" href="https://wa.me/+91 9792734517" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                </div>
+                <p class="update-date">Business Last Updated on</p>
+                <p><strong>10/05/2025</strong></p>
+            </div>
+            <div class="invitation">
+                <h3>Invitation URLs</h3>
+                <div class="link-container">
+                    <div class="link-box">
+                        <h4>Left Position</h4>
+                        <div class="link-field">
+                            <div class="icon email" onclick="openEmailInvite('left')">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <button class="copy-btn" onclick="copyText('https://example.com/invite/left/702H7200HB')">Copy Left Position Invite Link</button>
+                        </div>
+                        <div class="link-field">
+                            <div class="icon whatsapp" onclick="openWhatsAppInvite('left')">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <button class="copy-btn" onclick="copyText('https://wa.me/?text=Join%20my%20team%20-%20Left%20Position:%20https://example.com/invite/left/702H7200HB')">Copy WhatsApp Invite (Left)</button>
+                        </div>
+                    </div>
+                    <div class="link-box">
+                        <h4>Right Position</h4>
+                        <div class="link-field">
+                            <div class="icon email" onclick="openEmailInvite('right')">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <button class="copy-btn" onclick="copyText('https://example.com/invite/right/702H7200HB')">Copy Right Position Invite Link</button>
+                        </div>
+                        <div class="link-field">
+                            <div class="icon whatsapp" onclick="openWhatsAppInvite('right')">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <button class="copy-btn" onclick="copyText('https://wa.me/?text=Join%20my%20team%20-%20Right%20Position:%20https://example.com/invite/right/702H7200HB')">Copy WhatsApp Invite (Right)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize profile data from localStorage
+        function loadProfileData() {
+            const profile = JSON.parse(localStorage.getItem('userProfile')) || {
+                fullName: 'User',
+                id: '702H7200HB',
+                email: ' info@raanvi.in',
+                phone: '+91 9792734517',
+                avatar: 'https://via.placeholder.com/150'
+            };
+
+            // Update welcome card
+            document.getElementById('userName').textContent = profile.fullName;
+            document.getElementById('userId').textContent = profile.id;
+            document.getElementById('userEmail').textContent = profile.email;
+            document.getElementById('userPhone').textContent = profile.phone;
+            document.getElementById('emailLink').href = `mailto:${profile.email}`;
+            document.getElementById('whatsappLink').href = `https://wa.me/${profile.phone.replace(/\D/g, '')}`;
+            document.getElementById('welcomeAvatar').style.backgroundImage = `url(${profile.avatar})`;
+        }
+
+        // Update avatar images
+        function updateWelcomeImage(event) {
+            const welcomeAvatar = document.getElementById('welcomeAvatar');
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imageUrl = e.target.result;
+                    welcomeAvatar.style.backgroundImage = `url(${imageUrl})`;
+                    welcomeAvatar.style.backgroundSize = 'cover';
+                    welcomeAvatar.style.backgroundPosition = 'center';
+
+                    // Save to localStorage
+                    const profile = JSON.parse(localStorage.getItem('userProfile')) || {};
+                    profile.avatar = imageUrl;
+                    localStorage.setItem('userProfile', JSON.stringify(profile));
+                    alert('Photo uploaded successfully!');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Copy text to clipboard
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied to clipboard: ' + text);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+
+        // Open email invite
+        function openEmailInvite(position) {
+            const profile = JSON.parse(localStorage.getItem('userProfile')) || {};
+            const subject = `Invitation to Join My Team - ${position} Position`;
+            const body = `Hello,\n\nI would like to invite you to join my team in the ${position} position.\n\nHere's my invitation link: https://example.com/invite/${position}/${profile.id || '702H7200HB'}\n\nLooking forward to having you on board!\n\nBest regards,\n${profile.fullName || 'User'}`;
+            window.open(`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
+        }
+
+        // Open WhatsApp invite
+        function openWhatsAppInvite(position) {
+            const profile = JSON.parse(localStorage.getItem('userProfile')) || {};
+            const message = `Join my team - ${position} position: https://example.com/invite/${position}/${profile.id || '702H7200HB'}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        // Sidebar and Topbar Functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const sidebarExpand = document.getElementById('sidebar-expand');
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+            const menuToggle = document.getElementById('menu-toggle');
+            const adminIcon = document.getElementById('admin-icon');
+            const adminDropdown = document.getElementById('admin-dropdown');
+
+            // Load profile data on page load
+            loadProfileData();
+
+            // Function to close all submenus
+            function closeAllSubmenus() {
+                document.querySelectorAll('.submenu').forEach(submenu => {
+                    submenu.classList.remove('active');
+                });
+                document.querySelectorAll('.dropdown-icon').forEach(icon => {
+                    icon.classList.remove('active');
+                });
+            }
+
+            // Sidebar collapse/expand for desktop
+            if (sidebarToggle && sidebarExpand && sidebar && mainContent) {
+                sidebarToggle.addEventListener('click', () => {
+                    const isCollapsed = sidebar.classList.toggle('collapsed');
+                    mainContent.classList.toggle('collapsed');
+                    sidebarExpand.style.display = isCollapsed && window.innerWidth >= 769 ? 'block' : 'none';
+                    closeAllSubmenus();
+                });
+
+                sidebarExpand.addEventListener('click', () => {
+                    sidebar.classList.remove('collapsed');
+                    mainContent.classList.remove('collapsed');
+                    sidebarExpand.style.display = 'none';
+                });
+            }
+
+            // Sidebar toggle for mobile
+            if (menuToggle && sidebar) {
+                menuToggle.addEventListener('click', () => {
+                    sidebar.classList.toggle('active');
+                });
+            }
+
+            // Admin dropdown toggle
+            if (adminIcon && adminDropdown) {
+                adminIcon.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    adminDropdown.classList.toggle('active');
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!adminIcon.contains(e.target) && !adminDropdown.contains(e.target)) {
+                        adminDropdown.classList.remove('active');
+                    }
+                });
+            }
+
+            // Main menu toggles
+            const mainMenuToggles = [
+                {
+                    toggle: document.getElementById('my-account-toggle'),
+                    submenu: document.getElementById('my-account-submenu'),
+                    icon: document.querySelector('#my-account-toggle .dropdown-icon')
+                },
+                {
+                    toggle: document.getElementById('my-team-toggle'),
+                    submenu: document.getElementById('my-team-submenu'),
+                    icon: document.querySelector('#my-team-toggle .dropdown-icon')
+                },
+                {
+                    toggle: document.getElementById('earning-history-toggle'),
+                    submenu: document.getElementById('earning-history-submenu'),
+                    icon: document.querySelector('#earning-history-toggle .dropdown-icon')
+                },
+                {
+                    toggle: document.getElementById('topup-fund-toggle'),
+                    submenu: document.getElementById('topup-fund-submenu'),
+                    icon: document.querySelector('#topup-fund-toggle .dropdown-icon')
+                }
+            ];
+
+            // Special handling for nested Product-Details menu
+            const productDetailsToggle = document.getElementById('product-details-toggle');
+            const productDetailsSubmenu = document.getElementById('product-details-submenu');
+            const productDetailsIcon = document.querySelector('#product-details-toggle .dropdown-icon');
+
+            if (productDetailsToggle && productDetailsSubmenu && productDetailsIcon) {
+                productDetailsToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const isActive = productDetailsSubmenu.classList.toggle('active');
+                    productDetailsIcon.classList.toggle('active');
+
+                    const parentSubmenu = productDetailsToggle.closest('.submenu');
+                    if (parentSubmenu) {
+                        parentSubmenu.classList.add('active');
+                        const parentToggle = parentSubmenu.previousElementSibling;
+                        if (parentToggle) {
+                            const parentIcon = parentToggle.querySelector('.dropdown-icon');
+                            if (parentIcon) {
+                                parentIcon.classList.add('active');
+                            }
+                        }
+                    }
+                });
+
+                const productDetailsLinks = productDetailsSubmenu.querySelectorAll('a');
+                productDetailsLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (window.innerWidth <= 768) {
+                            sidebar.classList.remove('active');
+                        }
+                    });
+                });
+            }
+
+            // Handle main menu toggles
+            mainMenuToggles.forEach(({ toggle, submenu, icon }) => {
+                if (toggle && submenu && icon) {
+                    toggle.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        const isActive = submenu.classList.toggle('active');
+                        icon.classList.toggle('active');
+
+                        const parentItem = toggle.closest('.sidebar-item');
+                        if (parentItem) {
+                            const siblings = parentItem.parentElement.querySelectorAll('.sidebar-item');
+                            siblings.forEach(sibling => {
+                                if (sibling !== parentItem) {
+                                    const siblingSubmenu = sibling.querySelector('.submenu');
+                                    const siblingIcon = sibling.querySelector('.dropdown-icon');
+                                    if (siblingSubmenu && siblingIcon) {
+                                        siblingSubmenu.classList.remove('active');
+                                        siblingIcon.classList.remove('active');
+                                    }
+                                }
+                            });
+                        }
+                    });
+
+                    const submenuLinks = submenu.querySelectorAll('a:not(.sidebar-item > a)');
+                    submenuLinks.forEach(link => {
+                        link.addEventListener('click', () => {
+                            if (window.innerWidth <= 768) {
+                                sidebar.classList.remove('active');
+                            }
+                        });
+                    });
+                }
+            });
+
+            // Close submenus when clicking outside
+            document.addEventListener('click', (e) => {
+                const clickedInsideSidebar = sidebar.contains(e.target);
+                const clickedAdminDropdown = adminDropdown.contains(e.target) || adminIcon.contains(e.target);
+
+                if (!clickedInsideSidebar && !clickedAdminDropdown) {
+                    closeAllSubmenus();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
