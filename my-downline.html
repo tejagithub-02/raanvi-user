@@ -311,6 +311,23 @@
         font-size: 0.8rem;
       }
     }
+    .downline-table table {
+  width: 100%;
+  min-width: 350px;
+  border-collapse: collapse; /* Ensure borders merge properly */
+  color: #b3e0ff;
+  table-layout: auto;
+}
+.downline-table th,
+.downline-table td {
+  padding: 6px;
+  text-align: left;
+  border: 2px solid #00d4ff; /* Match Combine table border */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90px;
+}
   </style>
 </head>
 <body>
@@ -494,8 +511,9 @@
                       <th>ID</th>
                       <th>Name</th>
                       <th>Join Date</th>
-                      <th>RV Points</th>
-                      <th>Mobile</th>
+                      <th>Package</th>
+                      <th>RV</th>
+                      <th>Status</th>
                     </tr>
                   </thead>
                   <tbody></tbody>
@@ -517,8 +535,9 @@
                       <th>ID</th>
                       <th>Name</th>
                       <th>Join Date</th>
-                      <th>RV Points</th>
-                      <th>Mobile</th>
+                      <th>Package</th>
+                      <th>RV</th>
+                      <th>Status</th>
                     </tr>
                   </thead>
                   <tbody></tbody>
@@ -714,71 +733,74 @@
 
       // Function to populate downline tables
       function populateDownlineTables() {
-        const leftTableBody = document.querySelector('#left-downline-table tbody');
-        const rightTableBody = document.querySelector('#right-downline-table tbody');
-        leftTableBody.innerHTML = '';
-        rightTableBody.innerHTML = '';
+  const leftTableBody = document.querySelector('#left-downline-table tbody');
+  const rightTableBody = document.querySelector('#right-downline-table tbody');
+  leftTableBody.innerHTML = '';
+  rightTableBody.innerHTML = '';
 
-        const rootNode = treeData.find(n => n.id === 'RI001');
-        if (!rootNode) return;
+  const rootNode = treeData.find(n => n.id === 'RI001');
+  if (!rootNode) return;
 
-        const leftMembers = [];
-        const rightMembers = [];
+  const leftMembers = [];
+  const rightMembers = [];
 
-        // Collect left members
-        if (rootNode.left) {
-          const leftChild = treeData.find(n => n.id === rootNode.left);
-          if (leftChild) leftMembers.push(leftChild);
-          if (leftChild?.left) {
-            const leftGrandChild = treeData.find(n => n.id === leftChild.left);
-            if (leftGrandChild) leftMembers.push(leftGrandChild);
-          }
-        }
+  // Collect left members
+  if (rootNode.left) {
+    const leftChild = treeData.find(n => n.id === rootNode.left);
+    if (leftChild) leftMembers.push(leftChild);
+    if (leftChild?.left) {
+      const leftGrandChild = treeData.find(n => n.id === leftChild.left);
+      if (leftGrandChild) leftMembers.push(leftGrandChild);
+    }
+  }
 
-        // Collect right members
-        if (rootNode.right) {
-          const rightChild = treeData.find(n => n.id === rootNode.right);
-          if (rightChild) rightMembers.push(rightChild);
-          if (rightChild?.right) {
-            const rightGrandChild = treeData.find(n => n.id === rightChild.right);
-            if (rightGrandChild) rightMembers.push(rightGrandChild);
-          }
-        }
+  // Collect right members
+  if (rootNode.right) {
+    const rightChild = treeData.find(n => n.id === rootNode.right);
+    if (rightChild) rightMembers.push(rightChild);
+    if (rightChild?.right) {
+      const rightGrandChild = treeData.find(n => n.id === rightChild.right);
+      if (rightGrandChild) rightMembers.push(rightGrandChild);
+    }
+  }
 
-        // Populate left downline table
-        leftMembers.forEach((member, index) => {
-          if (member) {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-              <td>${index + 1}</td>
-              <td>${member.id}</td>
-              <td>${member.name}</td>
-              <td>${member.joinDate}</td>
-              <td>${member.cfp}</td>
-              <td>${member.mobile}</td>
-            `;
-            leftTableBody.appendChild(row);
-          }
-        });
+  // Populate left downline table
+  leftMembers.forEach((member, index) => {
+    if (member) {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${index + 1}</td>
+        <td>${member.id}</td>
+        <td>${member.name}</td>
+        <td>${member.joinDate}</td>
+        <td>${member.package}</td>
+        <td>${member.cfp}</td>
+        <td>${member.status}</td>
+      `;
+      leftTableBody.appendChild(row);
+    }
+  });
 
-        // Populate right downline table
-        rightMembers.forEach((member, index) => {
-          if (member) {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-              <td>${index + 1}</td>
-              <td>${member.id}</td>
-              <td>${member.name}</td>
-              <td>${member.joinDate}</td>
-              <td>${member.cfp}</td>
-              <td>${member.mobile}</td>
-            `;
-            rightTableBody.appendChild(row);
-          }
-        });
-      }
+  // Populate right downline table
+  rightMembers.forEach((member, index) => {
+    if (member) {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${index + 1}</td>
+        <td>${member.id}</td>
+        <td>${member.name}</td>
+        <td>${member.joinDate}</td>
+        <td>${member.package}</td>
+        <td>${member.cfp}</td>
+        <td>${member.status}</td>
+      `;
+      rightTableBody.appendChild(row);
+    }
+  });
+}
+     
 
-      // Search functionality
+// Search functionality
       const searchButton = document.getElementById('search-button');
       const clearSearchButton = document.getElementById('clear-search');
       const downlineIdInput = document.getElementById('downline-id');
