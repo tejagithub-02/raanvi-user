@@ -8,6 +8,8 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="assets/style.css" rel="stylesheet">
+  <!-- Add jsPDF CDN for PDF generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     .main-content {
       flex: 1;
@@ -164,6 +166,15 @@
       color: #00ffcc;
       margin-bottom: 15px;
       text-shadow: 0 0 5px #00ffcc;
+    }
+    /* Style for download links */
+    .download-link {
+      color: #00d4ff;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .download-link:hover {
+      color: #00ffcc;
     }
     @media (min-width: 769px) {
       .sidebar-toggle {
@@ -412,8 +423,8 @@
                 <tr>
                   <th>SI.NO</th>
                   <th>Date</th>
-                  <th>Transaction ID</th>
                   <th>Amount</th>
+                  <th>Invoice</th>
                   <th>Status</th>
                 </tr>
               </thead>
@@ -421,22 +432,15 @@
                 <tr>
                   <td>1</td>
                   <td>2025-05-01</td>
-                  <td>TXN123456</td>
                   <td>₹5,000</td>
+                  <td><a href="#" class="download-link" onclick="downloadTransactionPDF(1, '2025-05-01', '₹5,000', 'Completed', 'TX12345')">Download</a></td>
                   <td>Completed</td>
                 </tr>
                 <tr>
                   <td>2</td>
-                  <td>2025-04-28</td>
-                  <td>TXN123457</td>
-                  <td>₹3,000</td>
-                  <td>Pending</td>
-                </tr>
-                <tr>
-                  <td>3</td>
                   <td>2025-04-25</td>
-                  <td>TXN123458</td>
                   <td>₹2,000</td>
+                  <td><a href="#" class="download-link" onclick="downloadTransactionPDF(2, '2025-04-25', '₹2,000', 'Completed', 'TX12346')">Download</a></td>
                   <td>Completed</td>
                 </tr>
               </tbody>
@@ -456,8 +460,8 @@
                 <tr>
                   <th>SI.NO</th>
                   <th>Date</th>
-                  <th>Transaction ID</th>
                   <th>Amount</th>
+                  <th>Invoice</th>
                   <th>Status</th>
                 </tr>
               </thead>
@@ -465,15 +469,15 @@
                 <tr>
                   <td>1</td>
                   <td>2025-05-01</td>
-                  <td>TXN123456</td>
                   <td>₹5,000</td>
+                  <td><a href="#" class="download-link" onclick="downloadTransactionPDF(1, '2025-05-01', '₹5,000', 'Completed', 'TX12347')">Download</a></td>
                   <td>Completed</td>
                 </tr>
                 <tr>
                   <td>2</td>
                   <td>2025-04-28</td>
-                  <td>TXN123457</td>
                   <td>₹3,000</td>
+                  <td><a href="#" class="download-link" onclick="downloadTransactionPDF(2, '2025-04-28', '₹3,000', 'Pending', 'TX12348')">Download</a></td>
                   <td>Pending</td>
                 </tr>
               </tbody>
@@ -487,7 +491,6 @@
       </footer>
     </div>
   </div>
-
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const sidebarToggle = document.getElementById('sidebar-toggle');
@@ -497,6 +500,109 @@
       const menuToggle = document.getElementById('menu-toggle');
       const adminIcon = document.getElementById('admin-icon');
       const adminDropdown = document.getElementById('admin-dropdown');
+
+      // Mock data for transactions (including screenshot URLs)
+     // Mock data for transactions (including screenshot URLs)
+      const transactionData = [
+  {
+    siNo: 1,
+    date: '2025-05-01',
+    amount: '₹5,000',
+    status: 'Completed',
+    transactionId: 'TX12345',
+    screenshot: 'https://example.com/screenshots/tx12345.jpg' // Replace with actual URL
+  },
+  {
+    siNo: 2,
+    date: '2025-04-25',
+    amount: '₹2,000',
+    status: 'Completed',
+    transactionId: 'TX12346',
+    screenshot: 'https://example.com/screenshots/tx12346.jpg' // Replace with actual URL
+  },
+  {
+    siNo: 1,
+    date: '2025-05-01',
+    amount: '₹5,000',
+    status: 'Completed',
+    transactionId: 'TX12347',
+    screenshot: 'https://example.com/screenshots/tx12347.jpg' // Replace with actual URL
+  },
+  {
+    siNo: 2,
+    date: '2025-04-28',
+    amount: '₹3,000',
+    status: 'Pending',
+    transactionId: 'TX12348',
+    screenshot: 'https://example.com/screenshots/tx12348.jpg' // Replace with actual URL
+  }
+];
+      window.downloadTransactionPDF = (siNo, date, amount, status, transactionId) => {
+  try {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    // Find the transaction data
+    const transaction = transactionData.find(t => t.transactionId === transactionId);
+    const screenshotUrl = transaction ? transaction.screenshot : '';
+
+  
+    doc.setFontSize(18);
+    doc.setTextColor(0, 0, 255); // Blue color for title
+    doc.text('Transaction Invoice', 105, 20, { align: 'center' });
+ 
+    doc.setFontSize(12);
+    doc.setTextColor(0, 0, 0); // Black color for text
+    doc.text(`Transaction ID: ${transactionId}`, 20, 40);
+    doc.text(`Date: ${date}`, 20, 50);
+    doc.text(`SI.NO: ${siNo}`, 20, 60);
+    doc.text(`Amount: ${amount}`, 20, 70);
+    doc.text(`Status: ${status}`, 20, 80);
+    
+   
+    if (screenshotUrl) {
+     
+      doc.text('Transaction Screenshot:', 20, 100);
+      
+      try {
+      
+        doc.addImage(screenshotUrl, 'JPEG', 20, 105, 80, 60);
+      } catch (error) {
+        console.error('Error adding image to PDF:', error);
+        doc.text('Screenshot unavailable', 20, 110);
+      }
+    } else {
+      doc.text('No screenshot available', 20, 100);
+    }
+    
+   
+    doc.setFontSize(10);
+    doc.setTextColor(100, 100, 100); // Gray color for footer
+    doc.text('Thank you for your transaction with Raanvi', 105, 190, { align: 'center' });
+    doc.text('Generated on: ' + new Date().toLocaleDateString(), 105, 195, { align: 'center' });
+
+   
+    doc.save(`transaction_invoice_${transactionId}.pdf`);
+  } catch (error) {
+    console.error('Error generating PDF:', error);
+    alert('Failed to generate PDF. Please try again.');
+  }
+};
+
+      // Function to download screenshot image
+      window.downloadScreenshot = (transactionId, screenshotUrl) => {
+        try {
+          const link = document.createElement('a');
+          link.href = screenshotUrl;
+          link.download = `screenshot_${transactionId}.jpg`;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        } catch (error) {
+          console.error('Error downloading screenshot:', error);
+          alert('Failed to download screenshot. Please try again.');
+        }
+      };
 
       // Function to close all submenus
       function closeAllSubmenus() {
