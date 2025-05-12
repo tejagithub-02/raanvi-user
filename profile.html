@@ -97,11 +97,15 @@
             height: calc(100vh - 48px);
             overflow-y: auto;
             z-index: 1000;
-            transition: width 0.3s ease;
+            transition: width 0.3s ease, left 0.3s ease-in-out;
         }
 
         .sidebar.collapsed {
             width: 60px;
+        }
+
+        .sidebar.active {
+            left: 0 !important;
         }
 
         .sidebar h3 {
@@ -259,7 +263,7 @@
             margin-left: 60px;
         }
 
-        /* Existing Main Content Styles from Teja's Dashboard */
+        /* Existing Main Content Styles */
         .main-content h2 {
             color: #00ffcc;
             font-size: 24px;
@@ -464,6 +468,19 @@
             .menu-toggle {
                 display: none;
             }
+            .sidebar {
+                position: fixed;
+                top: 95px;
+                left: 0;
+                width: 250px;
+                transition: width 0.3s ease;
+            }
+            .main-content {
+                margin-left: 250px;
+            }
+            .main-content.collapsed {
+                margin-left: 60px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -486,12 +503,14 @@
                 transition: left 0.3s ease-in-out;
                 background: #1a1a2e;
                 box-shadow: 0 0 10px #00d4ff;
+                z-index: 1000;
             }
             .sidebar.active {
-                left: 0;
+                left: 0 !important;
             }
             .sidebar.collapsed {
                 width: 250px;
+                left: -250px;
             }
             .sidebar.collapsed h3,
             .sidebar.collapsed a span {
@@ -590,7 +609,7 @@
         <div class="flex items-center relative">
             <i class="fas fa-user-circle admin-icon" id="admin-icon"></i>
             <div class="admin-dropdown" id="admin-dropdown">
-                <a href="profile.html" class="dropdown-item" class="active">My Profile</a>
+                <a href="profile.html" class="dropdown-item active">My Profile</a>
                 <a href="change-password.html" class="dropdown-item">Change Password</a>
             </div>
         </div>
@@ -609,7 +628,7 @@
                     <i class="fas fa-chevron-down dropdown-icon"></i>
                 </a>
                 <div class="submenu" id="my-account-submenu">
-                    <a href="profile-details.html" ><i class="fas fa-user-edit"></i> <span>Profile Details</span></a>
+                    <a href="profile-details.html"><i class="fas fa-user-edit"></i> <span>Profile Details</span></a>
                     <a href="kyc-document.html"><i class="fas fa-file-upload"></i> <span>Upload KYC Document</span></a>
                     <a href="change-password.html"><i class="fas fa-lock"></i> <span>Change Password</span></a>
                     <a href="id-card.html"><i class="fas fa-lock"></i> <span>ID Card</span></a>
@@ -668,9 +687,8 @@
             <a href="#" id="sidebar-sign-out"><i class="fas fa-sign-out-alt"></i> <span>Sign Out</span></a>
         </div>
 
-        <!-- Main Content (Unchanged) -->
+        <!-- Main Content -->
         <div class="main-content">
-           
             <div class="welcome-card">
                 <div class="edit-badge">EDIT</div>
                 <div class="avatar-container">
@@ -682,7 +700,7 @@
                 </div>
                 <h3>Welcome</h3>
                 <p><strong id="Name"></strong> Name: Rahul</p>
-                <p> User ID: <span id="userId">702H7200HB</span></p>
+                <p>User ID: <span id="userId">702H7200HB</span></p>
                 <p><i class="fas fa-phone"></i> <span id="userPhone">+91 9792734517</span></p>
                 <p><i class="fas fa-envelope"></i> <span id="userEmail">info@raanvi.in</span></p>
                 <div class="social-icons">
@@ -736,13 +754,13 @@
             const profile = JSON.parse(localStorage.getItem('userProfile')) || {
                 fullName: 'User',
                 id: '702H7200HB',
-                email: ' info@raanvi.in',
+                email: 'info@raanvi.in',
                 phone: '+91 9792734517',
                 avatar: 'https://via.placeholder.com/150'
             };
 
             // Update welcome card
-            document.getElementById('userName').textContent = profile.fullName;
+            document.getElementById('Name').textContent = profile.fullName;
             document.getElementById('userId').textContent = profile.id;
             document.getElementById('userEmail').textContent = profile.email;
             document.getElementById('userPhone').textContent = profile.phone;
@@ -820,26 +838,70 @@
                 });
             }
 
-            // Sidebar collapse/expand for desktop
-            if (sidebarToggle && sidebarExpand && sidebar && mainContent) {
-                sidebarToggle.addEventListener('click', () => {
+            // Unified toggle function for both mobile and desktop
+            function toggleSidebar() {
+                if (window.innerWidth <= 768) {
+                    // Mobile: Slide in/out
+                    console.log('Mobile toggle clicked, current active:', sidebar.classList.contains('active'));
+                    sidebar.classList.toggle('active');
+                    sidebar.classList.remove('collapsed'); // Ensure not collapsed on mobile
+                    console.log('New active state:', sidebar.classList.contains('active'));
+                } else {
+                    // Desktop: Collapse/expand
+                    console.log('Desktop toggle clicked, current collapsed:', sidebar.classList.contains('collapsed'));
                     const isCollapsed = sidebar.classList.toggle('collapsed');
                     mainContent.classList.toggle('collapsed');
-                    sidebarExpand.style.display = isCollapsed && window.innerWidth >= 769 ? 'block' : 'none';
+                    sidebarExpand.style.display = isCollapsed ? 'block' : 'none';
+                    sidebar.classList.remove('active'); // Remove mobile active state
                     closeAllSubmenus();
-                });
+                    console.log('New collapsed state:', isCollapsed);
+                }
+            }
 
+            // Initialize sidebar state based on screen size
+            function initializeSidebarState() {
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.remove('collapsed');
+                    if (!sidebar.classList.contains('active')) {
+                        sidebar.style.left = '-250px';
+                    }
+                    mainContent.classList.remove('collapsed');
+                    sidebarExpand.style.display = 'none';
+                    console.log('Initialized mobile: left=', sidebar.style.left, 'active=', sidebar.classList.contains('active'));
+                } else {
+                    sidebar.classList.remove('active');
+                    sidebar.style.left = '0';
+                    if (!sidebar.classList.contains('collapsed')) {
+                        mainContent.classList.remove('collapsed');
+                        sidebarExpand.style.display = 'none';
+                    }
+                    console.log('Initialized desktop: collapsed=', sidebar.classList.contains('collapsed'));
+                }
+            }
+
+            // Call initial state setup
+            initializeSidebarState();
+
+            // Sidebar toggle for both mobile and desktop
+            if (sidebarToggle && sidebar && mainContent) {
+                sidebarToggle.addEventListener('click', toggleSidebar);
+            }
+
+            if (menuToggle && sidebar) {
+                menuToggle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleSidebar();
+                });
+            }
+
+            // Sidebar expand (desktop only)
+            if (sidebarExpand) {
                 sidebarExpand.addEventListener('click', () => {
                     sidebar.classList.remove('collapsed');
                     mainContent.classList.remove('collapsed');
                     sidebarExpand.style.display = 'none';
-                });
-            }
-
-            // Sidebar toggle for mobile
-            if (menuToggle && sidebar) {
-                menuToggle.addEventListener('click', () => {
-                    sidebar.classList.toggle('active');
+                    console.log('Sidebar expanded on desktop');
                 });
             }
 
@@ -848,6 +910,7 @@
                 adminIcon.addEventListener('click', (e) => {
                     e.stopPropagation();
                     adminDropdown.classList.toggle('active');
+                    console.log('Admin dropdown toggled:', adminDropdown.classList.contains('active'));
                 });
 
                 document.addEventListener('click', (e) => {
@@ -905,6 +968,7 @@
                             }
                         }
                     }
+                    console.log('Product details submenu toggled:', isActive);
                 });
 
                 const productDetailsLinks = productDetailsSubmenu.querySelectorAll('a');
@@ -912,6 +976,7 @@
                     link.addEventListener('click', () => {
                         if (window.innerWidth <= 768) {
                             sidebar.classList.remove('active');
+                            console.log('Closed sidebar on mobile submenu click');
                         }
                     });
                 });
@@ -941,6 +1006,7 @@
                                 }
                             });
                         }
+                        console.log('Main menu toggled:', submenu.id, 'active:', isActive);
                     });
 
                     const submenuLinks = submenu.querySelectorAll('a:not(.sidebar-item > a)');
@@ -948,21 +1014,29 @@
                         link.addEventListener('click', () => {
                             if (window.innerWidth <= 768) {
                                 sidebar.classList.remove('active');
+                                console.log('Closed sidebar on mobile submenu click');
                             }
                         });
                     });
                 }
             });
 
-            // Close submenus when clicking outside
+            // Close submenus and sidebar when clicking outside
             document.addEventListener('click', (e) => {
                 const clickedInsideSidebar = sidebar.contains(e.target);
                 const clickedAdminDropdown = adminDropdown.contains(e.target) || adminIcon.contains(e.target);
 
                 if (!clickedInsideSidebar && !clickedAdminDropdown) {
                     closeAllSubmenus();
+                    if (window.innerWidth <= 768) {
+                        sidebar.classList.remove('active');
+                        console.log('Closed sidebar on outside click (mobile)');
+                    }
                 }
             });
+
+            // Handle window resize to maintain sidebar state
+            window.addEventListener('resize', initializeSidebarState);
         });
     </script>
 </body>
