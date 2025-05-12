@@ -399,11 +399,14 @@
           <button onclick="submitWithdrawal()">Submit</button>
         </div>
 
-        <!-- Pending Withdrawals (Always Visible) -->
-        <div class="table-section">
-          <h4>Pending Withdrawals</h4>
+        <!-- Pending Withdrawals (Collapsible) -->
+        <div class="table-section collapsible-table-section">
+          <h4 id="pending-withdrawals-toggle">
+            Pending Withdrawals
+            <span class="dropdown-icon"><i class="fas fa-chevron-down"></i></span>
+          </h4>
           <div class="table-responsive">
-            <table>
+            <table id="pending-withdrawals-table">
               <thead>
                 <tr>
                   <th>SI.NO</th>
@@ -411,29 +414,23 @@
                   <th>Amount</th>
                   <th>Service Charge 10%</th>
                   <th>Total Amount</th>
-                  
-                 
                 </tr>
               </thead>
-              <tbody id="pending-withdrawal-table">
+              <tbody>
                 <tr>
                   <td>1</td>
                   <td>2025-05-08</td>
                   <td>₹1,000</td>
-                 <td>₹100</td>
+                  <td>₹100</td>
                   <td>₹10,000</td>
-                 
                 </tr>
-
                 <tr>
-                  <td>1</td>
+                  <td>2</td>
                   <td>2025-05-08</td>
                   <td>₹1,500</td>
-                 <td>₹150</td>
+                  <td>₹150</td>
                   <td>₹15,000</td>
-                
                 </tr>
-               
               </tbody>
             </table>
           </div>
@@ -455,7 +452,6 @@
                   <th>Service Charge 10%</th>
                   <th>Total Amount</th>
                   <th>Status</th>
-                 
                 </tr>
               </thead>
               <tbody>
@@ -463,21 +459,18 @@
                   <td>1</td>
                   <td>2025-05-10</td>
                   <td>₹1,500</td>
-                 <td>₹150</td>
+                  <td>₹150</td>
                   <td>₹15,000</td>
-                
                   <td class="status-approved">Approved</td>
                 </tr>
                 <tr>
-                  <td>1</td>
+                  <td>2</td>
                   <td>2025-06-10</td>
                   <td>₹1,000</td>
-                 <td>₹100</td>
+                  <td>₹100</td>
                   <td>₹10,000</td>
-                
-                  <td class="status-approved">Approved</td>
+                  <td class="status-rejected">Rejected</td>
                 </tr>
-               
               </tbody>
             </table>
           </div>
@@ -644,6 +637,24 @@
           closeAllSubmenus();
         }
       });
+
+      // Toggle Pending Withdrawals table
+      const pendingWithdrawalsToggle = document.getElementById('pending-withdrawals-toggle');
+      const pendingWithdrawalsTable = document.getElementById('pending-withdrawals-table');
+      const pendingWithdrawalsIcon = pendingWithdrawalsToggle ? pendingWithdrawalsToggle.querySelector('.dropdown-icon') : null;
+
+      if (pendingWithdrawalsToggle && pendingWithdrawalsTable && pendingWithdrawalsIcon) {
+        pendingWithdrawalsToggle.addEventListener('click', () => {
+          pendingWithdrawalsTable.classList.toggle('active');
+          pendingWithdrawalsIcon.classList.toggle('active');
+        });
+      } else {
+        console.error('Pending Withdrawals toggle elements not found:', {
+          toggle: pendingWithdrawalsToggle,
+          table: pendingWithdrawalsTable,
+          icon: pendingWithdrawalsIcon
+        });
+      }
 
       // Toggle Withdrawal History table
       const withdrawalHistoryToggle = document.getElementById('withdrawal-history-toggle');

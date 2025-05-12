@@ -136,12 +136,16 @@
     .table-section .dropdown-icon.active {
       transform: rotate(180deg);
     }
-    /* New transaction details table styles */
+    /* Transaction details table styles */
     .transaction-details-table {
       width: 100%;
       border-collapse: collapse;
       color: #b3e0ff;
       margin-top: 15px;
+      display: none; /* Initially hide the table */
+    }
+    .transaction-details-table.active {
+      display: table; /* Show table when active */
     }
     .transaction-details-table th,
     .transaction-details-table td {
@@ -166,6 +170,11 @@
       color: #00ffcc;
       margin-bottom: 15px;
       text-shadow: 0 0 5px #00ffcc;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-right: 30px; /* Space for sticky arrow */
     }
     /* Style for download links */
     .download-link {
@@ -416,7 +425,10 @@
 
         <!-- Transaction Details Table -->
         <div class="transaction-details-container">
-          <h4>Transaction Details</h4>
+          <h4>
+            Transaction Details
+            <span class="dropdown-icon"><i class="fas fa-chevron-down"></i></span>
+          </h4>
           <div class="table-responsive">
             <table class="transaction-details-table">
               <thead>
@@ -445,10 +457,12 @@
                 </tr>
               </tbody>
             </table>
-          </div>
+ 
         </div>
 
-        <!-- Transaction History -->
+        
+      </div>
+      <!-- Transaction History -->
         <div class="table-section">
           <h4>
             Transaction History
@@ -484,7 +498,6 @@
             </table>
           </div>
         </div>
-      </div>
 
       <footer class="main-footer">
         @2025 Raanvi - Developed By Bloom It Solutions
@@ -502,92 +515,85 @@
       const adminDropdown = document.getElementById('admin-dropdown');
 
       // Mock data for transactions (including screenshot URLs)
-     // Mock data for transactions (including screenshot URLs)
       const transactionData = [
-  {
-    siNo: 1,
-    date: '2025-05-01',
-    amount: '₹5,000',
-    status: 'Completed',
-    transactionId: 'TX12345',
-    screenshot: 'https://example.com/screenshots/tx12345.jpg' // Replace with actual URL
-  },
-  {
-    siNo: 2,
-    date: '2025-04-25',
-    amount: '₹2,000',
-    status: 'Completed',
-    transactionId: 'TX12346',
-    screenshot: 'https://example.com/screenshots/tx12346.jpg' // Replace with actual URL
-  },
-  {
-    siNo: 1,
-    date: '2025-05-01',
-    amount: '₹5,000',
-    status: 'Completed',
-    transactionId: 'TX12347',
-    screenshot: 'https://example.com/screenshots/tx12347.jpg' // Replace with actual URL
-  },
-  {
-    siNo: 2,
-    date: '2025-04-28',
-    amount: '₹3,000',
-    status: 'Pending',
-    transactionId: 'TX12348',
-    screenshot: 'https://example.com/screenshots/tx12348.jpg' // Replace with actual URL
-  }
-];
+        {
+          siNo: 1,
+          date: '2025-05-01',
+          amount: '₹5,000',
+          status: 'Completed',
+          transactionId: 'TX12345',
+          screenshot: 'https://example.com/screenshots/tx12345.jpg' // Replace with actual URL
+        },
+        {
+          siNo: 2,
+          date: '2025-04-25',
+          amount: '₹2,000',
+          status: 'Completed',
+          transactionId: 'TX12346',
+          screenshot: 'https://example.com/screenshots/tx12346.jpg' // Replace with actual URL
+        },
+        {
+          siNo: 1,
+          date: '2025-05-01',
+          amount: '₹5,000',
+          status: 'Completed',
+          transactionId: 'TX12347',
+          screenshot: 'https://example.com/screenshots/tx12347.jpg' // Replace with actual URL
+        },
+        {
+          siNo: 2,
+          date: '2025-04-28',
+          amount: '₹3,000',
+          status: 'Pending',
+          transactionId: 'TX12348',
+          screenshot: 'https://example.com/screenshots/tx12348.jpg' // Replace with actual URL
+        }
+      ];
+
       window.downloadTransactionPDF = (siNo, date, amount, status, transactionId) => {
-  try {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    
-    // Find the transaction data
-    const transaction = transactionData.find(t => t.transactionId === transactionId);
-    const screenshotUrl = transaction ? transaction.screenshot : '';
-
-  
-    doc.setFontSize(18);
-    doc.setTextColor(0, 0, 255); // Blue color for title
-    doc.text('Transaction Invoice', 105, 20, { align: 'center' });
- 
-    doc.setFontSize(12);
-    doc.setTextColor(0, 0, 0); // Black color for text
-    doc.text(`Transaction ID: ${transactionId}`, 20, 40);
-    doc.text(`Date: ${date}`, 20, 50);
-    doc.text(`SI.NO: ${siNo}`, 20, 60);
-    doc.text(`Amount: ${amount}`, 20, 70);
-    doc.text(`Status: ${status}`, 20, 80);
-    
-   
-    if (screenshotUrl) {
-     
-      doc.text('Transaction Screenshot:', 20, 100);
+        try {
+          const { jsPDF } = window.jspdf;
+          const doc = new jsPDF();
+          
+          // Find the transaction data
+          const transaction = transactionData.find(t => t.transactionId === transactionId);
+          const screenshotUrl = transaction ? transaction.screenshot : '';
       
-      try {
+          doc.setFontSize(18);
+          doc.setTextColor(0, 0, 255); // Blue color for title
+          doc.text('Transaction Invoice', 105, 20, { align: 'center' });
       
-        doc.addImage(screenshotUrl, 'JPEG', 20, 105, 80, 60);
-      } catch (error) {
-        console.error('Error adding image to PDF:', error);
-        doc.text('Screenshot unavailable', 20, 110);
-      }
-    } else {
-      doc.text('No screenshot available', 20, 100);
-    }
-    
-   
-    doc.setFontSize(10);
-    doc.setTextColor(100, 100, 100); // Gray color for footer
-    doc.text('Thank you for your transaction with Raanvi', 105, 190, { align: 'center' });
-    doc.text('Generated on: ' + new Date().toLocaleDateString(), 105, 195, { align: 'center' });
-
-   
-    doc.save(`transaction_invoice_${transactionId}.pdf`);
-  } catch (error) {
-    console.error('Error generating PDF:', error);
-    alert('Failed to generate PDF. Please try again.');
-  }
-};
+          doc.setFontSize(12);
+          doc.setTextColor(0, 0, 0); // Black color for text
+          doc.text(`Transaction ID: ${transactionId}`, 20, 40);
+          doc.text(`Date: ${date}`, 20, 50);
+          doc.text(`SI.NO: ${siNo}`, 20, 60);
+          doc.text(`Amount: ${amount}`, 20, 70);
+          doc.text(`Status: ${status}`, 20, 80);
+          
+          if (screenshotUrl) {
+            doc.text('Transaction Screenshot:', 20, 100);
+            try {
+              doc.addImage(screenshotUrl, 'JPEG', 20, 105, 80, 60);
+            } catch (error) {
+              console.error('Error adding image to PDF:', error);
+              doc.text('Screenshot unavailable', 20, 110);
+            }
+          } else {
+            doc.text('No screenshot available', 20, 100);
+          }
+          
+          doc.setFontSize(10);
+          doc.setTextColor(100, 100, 100); // Gray color for footer
+          doc.text('Thank you for your transaction with Raanvi', 105, 190, { align: 'center' });
+          doc.text('Generated on: ' + new Date().toLocaleDateString(), 105, 195, { align: 'center' });
+      
+          doc.save(`transaction_invoice_${transactionId}.pdf`);
+        } catch (error) {
+          console.error('Error generating PDF:', error);
+          alert('Failed to generate PDF. Please try again.');
+        }
+      };
 
       // Function to download screenshot image
       window.downloadScreenshot = (transactionId, screenshotUrl) => {
@@ -767,6 +773,18 @@
         transactionHistoryHeading.addEventListener('click', () => {
           transactionHistoryTable.classList.toggle('active');
           transactionHistoryIcon.classList.toggle('active');
+        });
+      }
+
+      // JavaScript for toggling Transaction Details table visibility
+      const transactionDetailsHeading = document.querySelector('.transaction-details-container h4');
+      const transactionDetailsTable = document.querySelector('.transaction-details-table');
+      const transactionDetailsIcon = document.querySelector('.transaction-details-container .dropdown-icon');
+
+      if (transactionDetailsHeading && transactionDetailsTable && transactionDetailsIcon) {
+        transactionDetailsHeading.addEventListener('click', () => {
+          transactionDetailsTable.classList.toggle('active');
+          transactionDetailsIcon.classList.toggle('active');
         });
       }
     });

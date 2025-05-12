@@ -403,9 +403,12 @@
           <button>Add Product</button>
         </div>
 
-        <!-- Product Details Table (Always visible) -->
-        <div class="table-section">
-          <h4>Product Details</h4>
+        <!-- Product Details Table (Collapsible) -->
+        <div class="table-section collapsible-table-section">
+          <h4>
+            Product Details
+            <span class="dropdown-icon"><i class="fas fa-chevron-down"></i></span>
+          </h4>
           <div class="table-responsive">
             <table>
               <thead>
@@ -644,14 +647,29 @@
         }
       });
 
-      const historySection = document.querySelector('.collapsible-table-section');
+      // JavaScript for toggling Product Details table visibility
+      const productDetailsSection = document.querySelectorAll('.collapsible-table-section')[0];
+      if (productDetailsSection) {
+        const header = productDetailsSection.querySelector('h4');
+        const table = productDetailsSection.querySelector('table');
+        const icon = productDetailsSection.querySelector('.dropdown-icon');
+        
+        if (header && table && icon) {
+          header.addEventListener('click', () => {
+            table.classList.toggle('active');
+            icon.classList.toggle('active');
+          });
+        }
+      }
+
+      // JavaScript for toggling Product History table visibility
+      const historySection = document.querySelectorAll('.collapsible-table-section')[1];
       if (historySection) {
         const header = historySection.querySelector('h4');
         const table = historySection.querySelector('table');
         const icon = historySection.querySelector('.dropdown-icon');
         
-        table.classList.add('active');
-        icon.classList.add('active');
+        
         
         if (header && table && icon) {
           header.addEventListener('click', () => {
@@ -701,7 +719,7 @@
         doc.setFont('helvetica', 'normal');
         doc.setTextColor(...textColor);
         doc.text('Raanvi Enterprises', 20, 48);
-        doc.text('456 Business Park, City, Country', 20, 56);
+        doc.text('456 Business Park, City, Country Corselets', 20, 56);
         doc.text('Email: contact@raanvi.com', 20, 64);
         doc.text('Phone: +123-456-7890', 20, 72);
 
