@@ -27,7 +27,22 @@
     .section {
       flex: 1 0 auto;
     }
-   
+    .table {
+      background: #0f3460 !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 10px #00d4ff !important;
+      border: 2px solid #00d4ff !important;
+      border-collapse: collapse !important;
+    }
+
+      .table th,
+      .table td {
+        background: #0f3460 !important;
+        color: #ffffff !important;
+        border: 2px solid #00d4ff !important;
+        text-shadow: 0 0 5px #00ffcc;
+      }
+
    
    
     @media (min-width: 769px) {
@@ -56,24 +71,8 @@
     .table-responsive {
       overflow-x: auto;
     }
-    .table {
-  background: #0f3460; /* Matches sidebar card background */
-  color: #b3e0ff; /* Matches sidebar text color */
-  box-shadow: 0 0 10px #00d4ff; /* Blue glow effect */
-  border: 2px solid #00d4ff; /* Matches sidebar border */
-  border-collapse: collapse;
-}
-.table th, .table td {
-  border: 2px solid #00d4ff; /* Matches sidebar border */
-  padding: 10px;
-  text-align: left;
-}
-.table thead th {
-  background: #0f3460; /* Matches sidebar card background */
-  color: #00ffcc; /* Matches sidebar h3 color */
-  box-shadow: 0 0 5px #00d4ff; /* Subtle glow */
-  text-shadow: 0 0 5px #00ffcc; /* Added glow */
-}
+    
+
 
 
 .submenu .submenu {
@@ -172,33 +171,26 @@
         </a>
         <div class="submenu" id="topup-fund-submenu">
           <a href="fund.html"><i class="fas fa-money-bill"></i> <span>Fund</span></a>
-         
+             
           <a href="topup.html"><i class="fas fa-credit-card"></i> <span>Topup</span></a>
           
           <a href="transaction-details.html" ><i class="fas fa-receipt"></i> <span>Transaction Details</span></a>
+            
           
-          <!-- Nested Product-Details menu -->
-          <div class="sidebar-item">
-            <a href="#" id="product-details-toggle">
-              <i class="fas fa-box"></i>
-              <span>Product - Details</span>
-              <i class="fas fa-chevron-down dropdown-icon"></i>
-            </a>
-            <div class="submenu" id="product-details-submenu">
-              <a href="product-details.html"><i class="fas fa-shopping-bag"></i> <span>Order Product</span></a>
-              <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
-            </div>
-          </div>
-    
-          <a href="withdrawal.html"><i class="fas fa-money-bill"></i> <span>Withdraw</span></a>
+          <a href="product-details.html"><i class="fas fa-shopping-bag"></i> <span>Order Product</span></a>
+          <a href="repurchase.html"><i class="fas fa-shopping-cart"></i> <span>Repurchase</span></a>
+       
         </div>
       </div>
+      
+      <a href="withdrawal.html"><i class="fas fa-money-bill"></i> <span>Withdraw</span></a>
+      
     
       <a href="#" id="sidebar-sign-out"><i class="fas fa-sign-out-alt"></i> <span>Sign Out</span></a>
     </div>
 
     <!-- Leadership Bonus Section -->
-    <div class="main-content">
+   <div class="main-content">
       <div class="section">
         <h2 class="text-2xl font-bold text-[#f4c430] mb-4">Leadership Bonus</h2>
         <p class="text-[#e0e0e0] mb-4">View your earnings from leadership bonuses based on team performance.</p>
